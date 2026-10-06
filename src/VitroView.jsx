@@ -224,7 +224,7 @@ function VitroHome() {
 // the waist, and wider at the hip. Each has a fixed palette so
 // the two read as colleagues — two different scientists in the
 // same lab — not one scientist drawn twice.
-
+//
 // Props:
 //   sex      — "male" | "female"
 //   stage    — "street"  (before donning, in their own clothes)
@@ -239,108 +239,52 @@ function VitroHome() {
 function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
   const isFemale = sex === "female";
 
-  // Fixed palettes. Two distinct identities, not derived from
-  // the student's avatar — that's the point of choosing.
+  // Identity colours — literal hex, not theme tokens, since these represent
+  // the person rather than UI chrome.
   const skin = isFemale ? "#C68642" : "#6B4226";
-  const hair = isFemale ? "#1B1210" : "#1B1210";
+  const hair = "#1B1210";
   const underlayer = isFemale ? "#4C6B5A" : "#3E5E7A";
-  const labCoat = "#F4F6FA";
-  const trousers = isFemale ? "#2E3A55" : "#2E3A55";
-  const shoes = "#1B1B1F";
+  const trousers = "#2E3A55";
+  const shoeColor = "#1B1B1F";
+  const coatColor = "#F4F6FA";
+  const faceDot = "#2A2016";
 
-  // Body outline stroke, theme-aware so the figure flips with
-  // dark / light / system.
-  const outline = "var(--line-2)";
+  const cx = 70;
 
-  // The torso silhouette. Female: narrower at the shoulder,
-  // tapered at the waist, wider at the hip. Male: broader at
-  // the shoulder, straighter down, narrower at the hip.
-  const torsoPath = isFemale
-    ? `
-        M46,96
-        Q52,80 62,76
-        L78,76
-        Q88,80 94,96
-        Q100,108 100,128
-        Q100,146 96,168
-        L84,168
-        Q86,148 86,132
-        Q86,118 84,110
-        Q82,120 82,132
-        L82,168
-        L58,168
-        L58,132
-        Q58,120 56,110
-        Q54,118 54,132
-        Q54,148 56,168
-        L44,168
-        Q40,146 40,128
-        Q40,108 46,96
-        Z
-      `
-    : `
-        M40,96
-        Q48,78 62,74
-        L78,74
-        Q92,78 100,96
-        Q106,110 106,132
-        Q106,150 104,168
-        L86,168
-        Q88,148 88,132
-        Q88,118 86,108
-        Q84,118 84,132
-        L84,168
-        L56,168
-        L56,132
-        Q56,118 54,108
-        Q52,118 52,132
-        Q52,148 54,168
-        L36,168
-        Q34,150 34,132
-        Q34,110 40,96
-        Z
-      `;
+  // Shared anchors — these stay identical across sexes so the parent's
+  // mask / eyewear / glove overlays always land correctly.
+  const headCy = 46;
+  const headR = 20;
+  const eyeY = 44;
+  const shoulderY = 82;
+  const waistY = 130;
+  const hipY = 150;
+  const ankleY = 226;
+  const footY = 243;
+  const handY = 179;
 
-  // The lab coat shape, drawn over the torso path when stage
-  // is "donned". Open collar so the underlayer's collar peeks
-  // through — a lab coat is worn open at the collar, not sealed
-  // to the throat.
-  const coatPath = isFemale
-    ? `
-        M42,94
-        Q50,78 62,74
-        L66,80
-        L74,80
-        L78,74
-        Q90,78 98,94
-        Q102,108 102,130
-        Q102,148 100,168
-        L40,168
-        Q38,148 38,130
-        Q38,108 42,94
-        Z
-      `
-    : `
-        M38,94
-        Q48,76 62,72
-        L66,78
-        L74,78
-        L78,72
-        Q92,76 102,94
-        Q108,108 108,132
-        Q108,150 106,168
-        L34,168
-        Q32,150 32,132
-        Q32,108 38,94
-        Z
-      `;
+  // Sex-specific silhouette widths — only shoulders, waist, hip and neck
+  // length vary, per spec.
+  const shoulderHalf = isFemale ? 27 : 34;
+  const waistHalf = isFemale ? 15 : 24;
+  const hipHalf = isFemale ? 27 : 19;
+  const collarHalf = 7;
+  const neckTopY = isFemale ? 60 : 68;
 
-  // Hair shapes. Front-on head, so the hair is a crown that
-  // comes down over the ears on both sides. The female version
-  // is slightly fuller at the sides.
-  const hairPath = isFemale
-    ? "M48,44 Q48,16 70,16 Q92,16 92,44 Q88,28 70,26 Q52,28 48,44 Z"
-    : "M50,42 Q50,20 70,20 Q90,20 90,42 Q86,28 70,28 Q54,28 50,42 Z";
+  const handXLeft = 32;
+  const handXRight = 108;
+  const shoulderXLeft = cx - shoulderHalf + 7;
+  const shoulderXRight = cx + shoulderHalf - 7;
+
+  // Lab coat geometry (only used when donned).
+  const coatShoulderHalf = shoulderHalf + 6;
+  const coatHemHalf = waistHalf + 15;
+  const coatHemY = 206;
+  const coatNotchY = shoulderY + 16;
+
+  const label = isFemale
+    ? "Female medical laboratory scientist"
+    : "Male medical laboratory scientist";
 
   return (
     <svg
@@ -348,184 +292,281 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
       width={(height / 260) * 140}
       style={{ display: "block" }}
       role="img"
-      aria-label={isFemale ? "Female medical laboratory scientist" : "Male medical laboratory scientist"}
+      aria-label={label}
     >
-      {/* ---- LEGS: tapered from hip to ankle ---- */}
+      {/* ---------- 1. Legs (trousers) ---------- */}
       <path
-        d="
-          M56,168
-          L56,224
-          Q56,232 60,232
-          L66,232
-          Q70,232 70,224
-          L70,176
-          Q70,174 72,174
-          Q74,174 74,176
-          L74,224
-          Q74,232 78,232
-          L84,232
-          Q88,232 88,224
-          L88,168
-          Z
-        "
+        d={`M${cx - waistHalf},${waistY}
+            L${cx - hipHalf},${hipY}
+            L${cx - 13},${ankleY}
+            L${cx - 4},${ankleY}
+            L${cx - 3},${hipY + 10}
+            L${cx + 3},${hipY + 10}
+            L${cx + 4},${ankleY}
+            L${cx + 13},${ankleY}
+            L${cx + hipHalf},${hipY}
+            L${cx + waistHalf},${waistY}
+            Z`}
         fill={trousers}
-        stroke={outline}
-        strokeWidth="1"
+        stroke="var(--line-2)"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <line
+        x1={cx - waistHalf + 2}
+        y1={waistY + 1}
+        x2={cx + waistHalf - 2}
+        y2={waistY + 1}
+        stroke="#1B283F"
+        strokeWidth="2"
+        opacity="0.35"
+      />
+
+      {/* ---------- 2. Shoes ---------- */}
+      <path
+        d={`M${cx - 15},${ankleY} L${cx - 3},${ankleY} L${cx - 3},${footY - 3} L${cx - 22},${footY} Q${cx - 26},${footY - 4} ${cx - 15},${ankleY} Z`}
+        fill={shoeColor}
+        stroke="var(--line-2)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path
+        d={`M${cx + 15},${ankleY} L${cx + 3},${ankleY} L${cx + 3},${footY - 3} L${cx + 22},${footY} Q${cx + 26},${footY - 4} ${cx + 15},${ankleY} Z`}
+        fill={shoeColor}
+        stroke="var(--line-2)"
+        strokeWidth="1.5"
         strokeLinejoin="round"
       />
 
-      {/* ---- SHOES: turned out, laced ---- */}
+      {/* ---------- 3. Torso underlayer (shirt) ---------- */}
       <path
-        d="M54,232 Q52,240 58,243 L68,243 Q72,243 71,232 Z"
-        fill={shoes}
-        stroke={outline}
-        strokeWidth="1"
-      />
-      <path
-        d="M72,232 Q71,243 75,243 L85,243 Q90,240 86,232 Z"
-        fill={shoes}
-        stroke={outline}
-        strokeWidth="1"
-      />
-      <line x1="58" y1="238" x2="68" y2="238" stroke={outline} strokeWidth="0.6" />
-      <line x1="75" y1="238" x2="85" y2="238" stroke={outline} strokeWidth="0.6" />
-
-      {/* ---- TORSO: underlayer. Covered by the coat when donned. ---- */}
-      <path
-        d={torsoPath}
+        d={`M${shoulderXLeft - 7},${shoulderY}
+            Q${cx - shoulderHalf - 4},${shoulderY + 22} ${cx - waistHalf},${waistY}
+            L${cx - collarHalf},${neckTopY + 10}
+            L${cx},${neckTopY + 16}
+            L${cx + collarHalf},${neckTopY + 10}
+            L${cx + waistHalf},${waistY}
+            Q${cx + shoulderHalf + 4},${shoulderY + 22} ${shoulderXRight + 7},${shoulderY}
+            L${cx + collarHalf + 2},${shoulderY - 6}
+            L${cx},${shoulderY + 6}
+            L${cx - collarHalf - 2},${shoulderY - 6}
+            Z`}
         fill={underlayer}
-        stroke={outline}
-        strokeWidth="1"
+        stroke="var(--line-2)"
+        strokeWidth="2"
         strokeLinejoin="round"
       />
-      {/* Collar of the underlayer — reads as a shirt, and shows
-          through the open lab coat collar when the coat is on. */}
+
+      {/* ---------- 4. Collar of the underlayer ---------- */}
       <path
-        d="M64,78 Q70,86 76,78 Q74,82 70,82 Q66,82 64,78 Z"
+        d={`M${cx - 6},${neckTopY + 10} L${cx},${neckTopY} L${cx + 6},${neckTopY + 10} Z`}
         fill={underlayer}
-        stroke={outline}
-        strokeWidth="0.8"
+        stroke="var(--line-2)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
       />
 
-      {/* ---- NECK ---- */}
-      <path
-        d="M64,74 L64,66 Q64,64 70,64 Q76,64 76,66 L76,74 Z"
+      {/* ---------- 5. Neck ---------- */}
+      <rect
+        x={cx - 6}
+        y={neckTopY}
+        width="12"
+        height={shoulderY - neckTopY + 2}
+        rx="3"
         fill={skin}
-        stroke={outline}
-        strokeWidth="1"
+        stroke="var(--line-2)"
+        strokeWidth="1.5"
       />
 
-      {/* ---- HEAD ---- */}
-      <ellipse
-        cx="70"
-        cy="46"
-        rx={isFemale ? 18 : 19}
-        ry={isFemale ? 21 : 22}
+      {/* ---------- 6. Head ---------- */}
+      <circle
+        cx={cx}
+        cy={headCy}
+        r={headR}
         fill={skin}
-        stroke={outline}
-        strokeWidth="1"
+        stroke="var(--line-2)"
+        strokeWidth="2"
       />
 
-      {/* ---- HAIR ---- */}
-      <path d={hairPath} fill={hair} />
+      {/* ---------- 7. Hair ---------- */}
+      {isFemale ? (
+        <path
+          d={`M${cx - 24},54
+              C${cx - 26},18 ${cx + 26},18 ${cx + 24},54
+              C${cx + 22},40 ${cx - 22},40 ${cx - 24},54 Z`}
+          fill={hair}
+          stroke="var(--line-2)"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+      ) : (
+        <path
+          d={`M${cx - 20},40
+              C${cx - 20},24 ${cx + 20},24 ${cx + 20},40
+              C${cx + 20},35 ${cx - 20},35 ${cx - 20},40 Z`}
+          fill={hair}
+          stroke="var(--line-2)"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+      )}
 
-      {/* ---- FACE ---- */}
-      <circle cx="62" cy="44" r="2.4" fill="#2A2016" />
-      <circle cx="78" cy="44" r="2.4" fill="#2A2016" />
+      {/* ---------- 8. Face ---------- */}
+      <circle cx={cx - 7} cy={eyeY} r="2.4" fill={faceDot} />
+      <circle cx={cx + 7} cy={eyeY} r="2.4" fill={faceDot} />
       <path
         d="M63,54 Q70,58 77,54"
-        stroke="#2A2016"
-        strokeWidth="1.8"
         fill="none"
+        stroke={faceDot}
+        strokeWidth="2"
         strokeLinecap="round"
       />
 
-      {/* ---- ARMS: hang from the shoulder, curve at the elbow.
-           Sleeve colour matches the underlayer before the coat,
-           coat white after. ---- */}
+      {/* ---------- 9. Arms (thick strokes, outline then fill) ---------- */}
       <path
-        d="M44,100 Q32,132 34,170"
-        stroke={stage === "donned" ? labCoat : underlayer}
+        d={`M${shoulderXLeft},${shoulderY + 6} Q${cx - shoulderHalf - 6},${shoulderY + 48} ${handXLeft},${handY}`}
+        fill="none"
+        stroke="var(--line-2)"
         strokeWidth="13"
         strokeLinecap="round"
-        fill="none"
       />
       <path
-        d="M96,100 Q108,132 106,170"
-        stroke={stage === "donned" ? labCoat : underlayer}
+        d={`M${shoulderXLeft},${shoulderY + 6} Q${cx - shoulderHalf - 6},${shoulderY + 48} ${handXLeft},${handY}`}
+        fill="none"
+        stroke={underlayer}
+        strokeWidth="10"
+        strokeLinecap="round"
+      />
+      <path
+        d={`M${shoulderXRight},${shoulderY + 6} Q${cx + shoulderHalf + 6},${shoulderY + 48} ${handXRight},${handY}`}
+        fill="none"
+        stroke="var(--line-2)"
         strokeWidth="13"
         strokeLinecap="round"
+      />
+      <path
+        d={`M${shoulderXRight},${shoulderY + 6} Q${cx + shoulderHalf + 6},${shoulderY + 48} ${handXRight},${handY}`}
         fill="none"
+        stroke={underlayer}
+        strokeWidth="10"
+        strokeLinecap="round"
       />
 
-      {/* ---- HANDS: rounded palm, hint of a thumb ---- */}
-      <path
-        d="M28,170 Q24,170 24,174 L24,184 Q24,188 28,188 L36,188 Q40,188 40,184 L40,174 Q40,170 36,170 Z"
+      {/* ---------- 10. Hands ---------- */}
+      <ellipse
+        cx={handXLeft}
+        cy={handY}
+        rx="9"
+        ry="11"
         fill={skin}
-        stroke={outline}
-        strokeWidth="1"
+        stroke="var(--line-2)"
+        strokeWidth="1.5"
       />
       <path
-        d="M100,170 Q96,170 96,174 L96,184 Q96,188 100,188 L108,188 Q112,188 112,184 L112,174 Q112,170 108,170 Z"
+        d={`M${handXLeft + 7},${handY - 4} Q${handXLeft + 12},${handY - 2} ${handXLeft + 8},${handY + 4}`}
+        fill="none"
+        stroke="var(--line-2)"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
+      <ellipse
+        cx={handXRight}
+        cy={handY}
+        rx="9"
+        ry="11"
         fill={skin}
-        stroke={outline}
-        strokeWidth="1"
+        stroke="var(--line-2)"
+        strokeWidth="1.5"
+      />
+      <path
+        d={`M${handXRight - 7},${handY - 4} Q${handXRight - 12},${handY - 2} ${handXRight - 8},${handY + 4}`}
+        fill="none"
+        stroke="var(--line-2)"
+        strokeWidth="1.2"
+        strokeLinecap="round"
       />
 
-      {/* ---- LAB COAT: only when stage === "donned" ---- */}
+      {/* ---------- 11. Lab coat (donned only) ---------- */}
       {stage === "donned" && (
-        <g>
+        <>
           <path
-            d={coatPath}
-            fill={labCoat}
-            stroke={outline}
-            strokeWidth="1"
+            d={`M${cx - coatShoulderHalf},${shoulderY - 2}
+                L${cx - coatHemHalf},${coatHemY}
+                L${cx + coatHemHalf},${coatHemY}
+                L${cx + coatShoulderHalf},${shoulderY - 2}
+                L${cx + collarHalf + 5},${shoulderY - 12}
+                L${cx},${coatNotchY}
+                L${cx - collarHalf - 5},${shoulderY - 12}
+                Z`}
+            fill={coatColor}
+            stroke="var(--line-2)"
+            strokeWidth="2"
             strokeLinejoin="round"
           />
-          {/* Left lapel */}
           <path
-            d="M62,74 L66,80 L64,104"
-            stroke={outline}
-            strokeWidth="0.8"
+            d={`M${cx - collarHalf - 5},${shoulderY - 12} L${cx - 9},${waistY}`}
             fill="none"
-            strokeLinejoin="round"
+            stroke="var(--line-2)"
+            strokeWidth="1.5"
           />
-          {/* Right lapel */}
           <path
-            d="M78,74 L74,80 L76,104"
-            stroke={outline}
-            strokeWidth="0.8"
+            d={`M${cx + collarHalf + 5},${shoulderY - 12} L${cx + 9},${waistY}`}
             fill="none"
-            strokeLinejoin="round"
+            stroke="var(--line-2)"
+            strokeWidth="1.5"
           />
-          {/* Front seam */}
           <line
-            x1="70"
-            y1="80"
-            x2="70"
-            y2="168"
-            stroke={outline}
-            strokeWidth="0.6"
-            strokeDasharray="2 2"
-            opacity="0.55"
+            x1={cx}
+            y1={coatNotchY}
+            x2={cx}
+            y2={coatHemY}
+            stroke="var(--line-2)"
+            strokeWidth="1.2"
           />
-          {/* Pocket */}
           <rect
-            x={isFemale ? "48" : "46"}
-            y="140"
-            width="12"
-            height="10"
+            x={cx - 26}
+            y={150}
+            width="16"
+            height="12"
             rx="1.5"
-            fill="none"
-            stroke={outline}
-            strokeWidth="0.7"
+            fill="#E8EDF5"
+            stroke="var(--line-2)"
+            strokeWidth="1.2"
           />
-        </g>
+          {/* Embroidered microscope — MLS professional mark.
+              Stitched in the same line colour as the coat
+              outline, at low opacity, so it reads as thread
+              on the pocket rather than a printed patch. */}
+          <g
+            transform={`translate(${cx - 24},152)`}
+            fill="none"
+            stroke="var(--line-2)"
+            strokeWidth="0.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.75"
+          >
+            {/* Eyepiece */}
+            <path d="M6,1.2 L6,3.4" />
+            <path d="M5.2,3.4 L6.8,3.4" />
+            {/* Body tube */}
+            <path d="M5.6,3.4 L5.6,6.4" />
+            <path d="M6.4,3.4 L6.4,6.4" />
+            {/* Stage */}
+            <path d="M3.2,6.4 L8.8,6.4" />
+            {/* Objective */}
+            <path d="M6,6.4 L6,7.8" />
+            {/* Arm and base */}
+            <path d="M8.4,4 L8.4,8" />
+            <path d="M2.6,8 L9.4,8" />
+            {/* Focus knob */}
+            <circle cx="7.4" cy="5.2" r="0.5" />
+          </g>
+        </>
       )}
     </svg>
   );
 }
-
 // ------------------------------------------------------------------
 // VitroCharacterPicker — the "choose your medical laboratory
 // scientist" screen. Two figures, side by side, one male and one
@@ -707,11 +748,43 @@ const DONNING_ORDER_ERRORS = {
   wash: null, // wash is the first step, so it can never be too early
 };
 
-function VitroDonning({ onPass, character }) {
+// ------------------------------------------------------------------
+// DONNING_NARRATION — what the voice says on the donning screen.
+// The screen itself shows only short headlines; the voice does
+// the teaching. That is deliberate: this is the moment a student
+// learns the sequence, and hearing it while seeing the figure
+// react is the whole point.
+//
+// `welcome` fires once when a student first arrives at donning.
+// `step` fires each time a new step becomes the active one.
+// `wrongOrder` fires when a tap is out of sequence, before the
+// on-screen error panel appears.
+// `complete` fires when all five items are placed.
+// ------------------------------------------------------------------
+const DONNING_NARRATION = {
+  welcome:
+    "Welcome to ASCEND VITRO. Before you can enter the laboratory, you need to put on your personal protective equipment in the correct order. There are five items. The order matters — a mistake at the bench can mean a contaminated sample, a false result, or a risk to you. I will talk you through it. Tap each item on the cart when you are ready.",
+  step: {
+    wash: "First, hand hygiene. Wash your hands with soap and water, or with alcohol gel if your hands are not visibly soiled. Dry them fully. Everything else goes on after clean hands, not before.",
+    gown: "Next, the lab coat. Your own clothing is not lab-safe, so the coat becomes the outer layer. Fasten it before you touch the mask or eyewear — that way you are not reaching up past a clean face with contaminated sleeves.",
+    mask: "Now the mask. Fit it over your nose and mouth, and press the metal strip at the top so it seals against the bridge of your nose. A mask that sits below the nose is not doing anything.",
+    eye: "Next, eyewear. Glasses or goggles go on over your eyes, protecting you from splashes and aerosols. Fit them now, before gloves, so you can adjust the fit with clean hands.",
+    gloves:
+      "Finally, gloves. One pair, once, and only now. From this point on, your hands are the barrier — everything you touch from here until you take them off must be treated as contaminated.",
+  },
+  wrongOrder:
+    "Not yet. That is not the next item in the sequence. Check the order and try again. If you are not sure why the order matters, think about what each item is protecting you from.",
+  complete:
+    "Your personal protective equipment is on correctly, in the right order. You are ready to enter the laboratory. I will take you there now.",
+};
+
+function VitroDonning({ onPass, character, speak, stopSpeaking }) {
   const [placed, setPlaced] = useState([]);
   const [error, setError] = useState(null);
-  const [gownPending, setGownPending] = useState(false);
   const [animating, setAnimating] = useState(null);
+  // Tracks whether the welcome line has already been spoken, so
+  // it fires once on entry and not on every re-render.
+  const welcomeSpokenRef = useRef(false);
 
   const nextStep = DONNING_STEPS[placed.length] || null;
   const done = placed.length === DONNING_STEPS.length;
@@ -721,29 +794,83 @@ function VitroDonning({ onPass, character }) {
   const STEP_HEADLINES = {
     wash: "Wash your hands.",
     gown: "Put on the lab coat.",
-    mask: "Fit the mask — nose and mouth.",
+    mask: "Fit the mask.",
     eye: "Put on the eyewear.",
     gloves: "Put on the gloves — last.",
   };
+    // ---- Donning voice ----
+  // The welcome fires ONCE PER SESSION. A page refresh during
+  // the same sitting does not replay it; closing the tab or
+  // PWA and reopening does, because sessionStorage is scoped
+  // to the tab's lifetime. Same idea as the donning gate
+  // itself — the session is the unit.
+  //
+  // Browsers block speech synthesis until the page has seen
+  // at least one user gesture, so a student who lands directly
+  // on this screen (a refresh, or a resumed PWA) would miss
+  // the welcome. The retry below fires on the first tap
+  // anywhere on the screen, once, and only if the welcome has
+  // not already been spoken this session.
+  const WELCOME_KEY = "ascend_vitro_welcome_played";
+  useEffect(() => {
+    if (typeof speak !== "function") return;
 
+    let alreadyPlayed = false;
+    try {
+      alreadyPlayed = sessionStorage.getItem(WELCOME_KEY) === "1";
+    } catch {}
+
+    if (alreadyPlayed) {
+      welcomeSpokenRef.current = true;
+      return;
+    }
+
+    // Mark it as played before we attempt playback, so a very
+    // fast refresh during the utterance does not replay it.
+    try {
+      sessionStorage.setItem(WELCOME_KEY, "1");
+    } catch {}
+    welcomeSpokenRef.current = true;
+
+    const ok = speak(DONNING_NARRATION.welcome);
+    // If the browser blocked autoplay, do not retry on this
+    // screen — the student has already been marked as having
+    // heard the welcome this session, which is what matters.
+    // A blocked first attempt is rare; the gesture that got
+    // them here (tapping the scientist) has usually unlocked
+    // it already.
+    return () => {
+      if (typeof stopSpeaking === "function") stopSpeaking();
+    };
+  }, [speak, stopSpeaking]);
+
+  // Speak the next step's guidance whenever a new step becomes
+  // active. Silent when animating (a step is in progress) or
+  // when done.
+  useEffect(() => {
+    if (typeof speak !== "function") return;
+    if (animating) return;
+    if (placed.length >= DONNING_STEPS.length) return;
+    const upcoming = DONNING_STEPS[placed.length];
+    if (!upcoming) return;
+    const line = DONNING_NARRATION.step[upcoming.id];
+    if (line) speak(line);
+  }, [placed.length, animating, speak]);
   const tap = (id) => {
     if (placed.includes(id)) return;
     if (animating) return;
     if (nextStep && id === nextStep.id) {
-      if (id === "gown" && !gownPending) {
-        setGownPending(true);
-        setError(null);
-        return;
-      }
       setError(null);
       setAnimating(id);
       setTimeout(() => {
         setPlaced((prev) => [...prev, id]);
         setAnimating(null);
-        if (id === "gown") setGownPending(false);
       }, ANIM_MS);
       if (placed.length + 1 === DONNING_STEPS.length) {
-        setTimeout(() => onPass && onPass(), ANIM_MS + 400);
+        if (typeof speak === "function") {
+          speak(DONNING_NARRATION.complete);
+        }
+        setTimeout(() => onPass && onPass(), ANIM_MS + 1800);
       }
       return;
     }
@@ -755,6 +882,9 @@ function VitroDonning({ onPass, character }) {
         ? entry.why
         : `${wrongItem ? wrongItem.label : "That"} is not the next step. ${skipped ? skipped.label + " first." : ""}`.trim();
     setError({ id, message });
+    if (typeof speak === "function") {
+      speak(DONNING_NARRATION.wrongOrder);
+    }
   };
 
   // The picked scientist drives the figure. The donning check
@@ -801,6 +931,32 @@ function VitroDonning({ onPass, character }) {
         .vitro-anim-glove { animation: vitro-glove-in 550ms cubic-bezier(.2,.9,.3,1) both }
         .vitro-anim-wash  { animation: vitro-wash-pulse 550ms ease-out both }
         .vitro-anim-fade  { animation: vitro-fade-in 300ms ease-out both }
+        @keyframes vitro-label-appear {
+          0%   { opacity: 0; transform: scale(0.6) }
+          60%  { opacity: 1; transform: scale(1.08) }
+          100% { opacity: 1; transform: scale(1) }
+        }
+        @keyframes vitro-tube-shake {
+          0%, 100% { transform: rotate(0deg) }
+          25%      { transform: rotate(-3deg) }
+          75%      { transform: rotate(3deg) }
+        }
+        .vitro-anim-label-appear {
+          animation: vitro-label-appear 400ms cubic-bezier(.2,.9,.3,1) both;
+        }
+        .vitro-anim-tube-shake {
+          animation: vitro-tube-shake 400ms ease-in-out both;
+        }
+                @keyframes vitro-clay-drop {
+          0%   { transform: translateY(-12px); opacity: 0 }
+          60%  { transform: translateY(0);     opacity: 1 }
+          100% { transform: translateY(0);     opacity: 1 }
+        }
+        .vitro-anim-clay-drop {
+          animation: vitro-clay-drop 400ms cubic-bezier(.2,.9,.3,1) both;
+          transform-origin: center top;
+        }
+
       `}</style>
 
       <div className="card" style={{ borderColor: "var(--amber)", padding: 18 }}>
@@ -983,7 +1139,6 @@ function VitroDonning({ onPass, character }) {
               const isPlaced = placed.includes(s.id);
               const isNext = nextStep && nextStep.id === s.id;
               const wasErrored = error && error.id === s.id;
-              const isPendingGown = s.id === "gown" && gownPending && !isPlaced;
               const isAnimatingNow = animating === s.id;
               return (
                 <button
@@ -996,8 +1151,6 @@ function VitroDonning({ onPass, character }) {
                     borderRadius: 10,
                     border: wasErrored
                       ? "1.5px solid var(--bad)"
-                      : isPendingGown
-                      ? "1.5px solid var(--amber-2)"
                       : isAnimatingNow
                       ? "1.5px solid var(--good)"
                       : isNext
@@ -1009,8 +1162,6 @@ function VitroDonning({ onPass, character }) {
                       ? "var(--bg-2)"
                       : wasErrored
                       ? "var(--bad-dim)"
-                      : isPendingGown
-                      ? "var(--amber-dim)"
                       : isAnimatingNow
                       ? "var(--good-dim)"
                       : "var(--bg-3)",
@@ -1030,15 +1181,11 @@ function VitroDonning({ onPass, character }) {
                       borderRadius: 5,
                       background: isPlaced
                         ? "var(--good-dim)"
-                        : isPendingGown
-                        ? "var(--amber)"
                         : isAnimatingNow
                         ? "var(--good)"
                         : "var(--bg-2)",
                       color: isPlaced
                         ? "var(--good)"
-                        : isPendingGown
-                        ? "#1B1405"
                         : isAnimatingNow
                         ? "#08210F"
                         : "var(--text-3)",
@@ -1050,7 +1197,7 @@ function VitroDonning({ onPass, character }) {
                       fontWeight: 700,
                     }}
                   >
-                    {isPlaced ? "✓" : isPendingGown ? "!" : ""}
+                    {isPlaced ? "✓" : ""}
                   </span>
                   <span style={{ fontWeight: 650, fontSize: 13.5 }}>
                     {s.label}
@@ -1060,28 +1207,7 @@ function VitroDonning({ onPass, character }) {
             })}
           </div>
 
-          {gownPending && !placed.includes("gown") && (
-            <div
-              className="card"
-              style={{
-                marginTop: 12,
-                borderColor: "var(--amber-2)",
-                background: "var(--amber-dim)",
-                padding: 14,
-              }}
-            >
-              <div style={{ fontWeight: 750, fontSize: 14.5, marginBottom: 6 }}>
-                The lab coat is not optional.
-              </div>
-              <div style={{ color: "var(--text-2)", fontSize: 13, lineHeight: 1.55 }}>
-                Your own clothes are not lab-safe. The lab coat is the outer layer. It goes on over a clean underlayer.
-              </div>
-              <div style={{ color: "var(--text)", fontSize: 13, marginTop: 8, fontWeight: 650 }}>
-                Tap "Lab coat" again to put it on.
-              </div>
-            </div>
-          )}
-
+          
           {error && (
             <div
               className="card"
@@ -1253,7 +1379,7 @@ const VITRO_SCRIPTS = {
     title: "Estimation of Packed Cell Volume (Haematocrit)",
     patientLabel: "Ama Mensah · 34 F",
     request:
-      "A 34-year-old female presents with fatigue and pallor. Request: packed cell volume (PCV) on a fresh venous sample.",
+      "Ama Mensah is a 34-year-old woman in her eighth month of pregnancy. She came to the antenatal clinic today complaining of tiredness that has been getting worse over the last few weeks, and of feeling short of breath when she walks upstairs. Her conjunctivae are pale. Her midwife has asked us to measure her packed cell volume — the percentage of her blood that is made up of red cells — from a fresh venous sample, so the team can decide whether she is anaemic. Before you pick a tube: say out loud, in one sentence, which tube you need and why. If you cannot say the reason, read the theory again before you run the test.",
     correctTube: "purple",
     // Narrator lines — spoken aloud as the bench advances.
     // Plain English, clinical register, short. Read by the
@@ -1290,16 +1416,16 @@ const VITRO_SCRIPTS = {
     // the tube, says why it is wrong for this practical specifically,
     // and points at the correct one. No generic "incorrect."
     wrongTubes: {
-      red: "Red-top has no anticoagulant — the blood will clot before it reaches the centrifuge. A clotted sample cannot give a packed cell volume; you would see a solid plug, not a packed column of red cells. For a PCV, the sample has to be in a tube that keeps it liquid from draw to spin.",
-      blue: "Blue-top is a coagulation tube. It contains liquid trisodium citrate and is filled to a fixed mark so the citrate-to-blood ratio is exactly 1:9. That dilution is the point for a PT or an APTT, and it is exactly what you do not want for a PCV — it would read artificially low because the plasma volume is inflated by the anticoagulant.",
-      green: "Green-top contains heparin. Heparin keeps blood liquid, but it preserves cell morphology poorly, and for haematology work it produces a blue background on the film that obscures morphology. For a packed cell volume you want a tube designed for cell counts — that is EDTA, not heparin.",
-      gray: "Gray-top contains sodium fluoride and potassium oxalate. Its job is to stop glycolysis in the sample — it is the glucose and lactate tube. Oxalate alters red cell membranes, so a PCV from a gray-top is not reliable. Right tube, wrong purpose.",
-      yellow: "Yellow-top is a blood-culture or tissue-typing tube. It has no role in routine haematology and gives no valid PCV. Save it for the microbiology bench.",
+      red: "The red-top tube has nothing inside it to stop blood clotting. By the time you load it into the centrifuge, the blood has already turned into a solid jelly. A jelly cannot be spun into layers, so this tube gives you no result at all. The right tube needs to keep the blood liquid from the moment it leaves her arm until the moment it is spun.",
+      blue: "The blue-top tube is meant for testing how well blood clots — not for counting cells. It contains a liquid that dilutes the blood on purpose, at exactly nine parts blood to one part liquid. That dilution is what the clotting tests need. If you run a packed cell volume on a diluted sample, the result comes out falsely low. The dilution is the whole point of the tube, and it is the exact opposite of what this test needs.",
+      green: "The green-top tube keeps blood liquid, which is good — but the chemical it uses to do that changes the shape of white blood cells and stains the background of a blood film blue. For counting cells and measuring their size, this tube is the wrong choice. You need a tube whose only job is to keep cells exactly as they are, so the numbers you report reflect her blood and not the tube.",
+      gray: "The gray-top tube is meant for measuring glucose — the sugar in blood. Its chemicals stop the red cells from eating the glucose while the sample is waiting to be tested. Those same chemicals also damage the red cell membrane, so the cells do not pack down cleanly when you spin them, and the packed cell volume is unreliable. Right kind of tube, wrong purpose.",
+      yellow: "The yellow-top tube is used to grow bacteria from blood, or to prepare samples for genetic testing. It has nothing to do with counting red cells, and running a packed cell volume on it gives you nothing useful. That tube belongs at the microbiology bench.",
     },
     // What the student sees when the correct tube is picked. Teaches
     // the reason, not just the fact.
     correctTubesFeedback:
-      "Purple-top, EDTA. EDTA chelates calcium irreversibly, so the sample never clots — and it preserves cell morphology, which is exactly what a packed cell volume depends on. The analyser is calibrated for EDTA-anticoagulated whole blood. This is the right tube.",
+      "Correct — the purple-top tube. Inside it is a chemical called EDTA, sprayed onto the wall as a thin film. When the blood hits it, the EDTA grabs the calcium in the blood. Calcium is what makes blood clot, so with the calcium held, the blood stays liquid. Just as importantly, the red cells keep their exact shape so the machine can measure them properly. This is the tube this test was designed around.",
     // What the student has to do at the bench after picking the
     // tube, in order. Each step is a button they tap; the bench
     // tracks progress and only unlocks the analyser at the right
@@ -1309,25 +1435,25 @@ const VITRO_SCRIPTS = {
         id: "label",
         label: "Label the tube",
         instruction:
-          "Label the tube with the patient's name, the date and time of collection, and your initials — at the bedside, before you leave the patient. A mislabelled tube is a rejected tube.",
+          "Write on the tube before you leave the patient's side: her name, the date and time you took the sample, and your initials. A tube with no label, or with a label written later from memory, is thrown away by the laboratory and the sample is taken again. This is not a formality — it is the single most common reason a blood sample is rejected.",
       },
       {
         id: "fill",
         label: "Fill the capillary tube",
         instruction:
-          "Fill a heparinised microhaematocrit capillary to about three-quarters. Wipe the outside of the tube clean — blood on the outside will contaminate the centrifuge and skew the reading.",
+          "A capillary tube is a thin glass tube, narrower than a drinking straw. You will hold it against the drop of blood and the blood will rise up it on its own. Let it fill to about three-quarters of its length, then stop. Wipe the outside of the tube with gauze — blood left on the outside gets flung off inside the centrifuge and dirties the machine.",
       },
       {
         id: "seal",
-        label: "Seal the capillary end",
+        label: "Seal the dry end",
         instruction:
-          "Seal the dry end with sealing clay or a plastic cap. Never seal the end that touched the blood — you would trap a bubble and destroy the column.",
+          "One end of the tube has touched the blood. The other end is still dry. Push the dry end into a block of sealing clay — the clay plugs that end and stops blood escaping when the tube spins. Never seal the wet end: the plug would push air into the tube and break the column of blood.",
       },
       {
         id: "load",
         label: "Load the centrifuge",
         instruction:
-          "Load the capillary into a microhaematocrit centrifuge, sealed end outward against the rubber gasket. Always load a balanced tube opposite it — even a single microhaematocrit capillary unbalances the rotor at 12,000 g.",
+          "The centrifuge is a machine that spins samples at very high speed. Put your tube into one of the holes in the rotor, with the sealed end facing the outside wall of the machine. Then put a second, empty capillary in the hole directly opposite yours, to balance the rotor. A centrifuge with a tube on only one side will shake itself and can be damaged.",
       },
     ],
     analyser: {
@@ -1345,24 +1471,39 @@ const VITRO_SCRIPTS = {
     // this becomes a scored competency check; for now it is read
     // as a lesson.
     outcome:
-      "PCV is 0.31 L/L (31%), which is below the adult female reference range of 0.36–0.46 L/L. This is anaemia. The next step in a real lab would be a full blood count and a blood film to work out whether this is a microcytic, normocytic or macrocytic anaemia — the PCV alone tells you that she is anaemic, not why.",
+      "Ama's packed cell volume is 0.31. The normal range for a non-pregnant woman is 0.36 to 0.46, so she is below the range — she is anaemic. Her haemoglobin of 9.4 g/dL agrees. The number tells us she is anaemic; it does not tell us why. To find the cause, the clinician needs two more tests: a full blood count, which will show the size of her red cells, and a blood film, which lets a scientist look at the cells under the microscope. Those two together will point at iron deficiency, folate deficiency, or something else. That is the next step, and the report we send should say so.",
     // The interpretation question. Scored as its own competency,
     // because interpretation is what the practical is for.
-    interpretation: {
+        interpretation: {
       question:
-        "The PCV is 0.31 L/L. Given the adult female reference range of 0.36–0.46 L/L, how do you report this?",
+        "Ama's packed cell volume reads 0.31 L/L. The normal range for a non-pregnant woman is 0.36 to 0.46 L/L. She is 34 weeks pregnant, and pregnancy does lower the packed cell volume slightly by diluting the blood. Taking that into account, what does her result mean?",
       options: [
-        "Normal — within reference range.",
-        "Below reference range — this is anaemia.",
-        "Above reference range — this is polycythaemia.",
-        "Cannot be interpreted from a PCV alone.",
+        "Normal for late pregnancy; record it and take no further action now.",
+        "Below the normal range; this is anaemia and it must be reported as such.",
+        "Too low to comment on; the sample should be taken again and re-run.",
+        "Above the normal range; this is a high red cell count caused by pregnancy.",
       ],
       correctIndex: 1,
-      // Why each wrong option is wrong, specific to this result.
       wrongFeedback: {
-        0: "0.31 L/L is below 0.36 L/L. The result is not normal. Reference range is the whole point of running the test — always compare the number against it, not against what looks like a reasonable figure.",
-        2: "Above reference would mean a PCV higher than 0.46 L/L in an adult female. 0.31 is well below that. Anaemia is the low end, polycythaemia the high end — check which side of the range the number sits on.",
-        3: "A PCV on its own can absolutely be interpreted — that is what the reference range is for. 0.31 L/L against a range of 0.36–0.46 L/L reads as anaemia. What the PCV cannot tell you is the cause. That is a different question.",
+        0: "Pregnancy does dilute the blood and lower the packed cell volume a little, but not down to 0.31. That figure is well below the normal range even after allowing for the effect of pregnancy. Calling it normal would mean a real problem gets filed without anyone acting on it — which is exactly what a laboratory result is supposed to prevent.",
+        2: "The result can be commented on. The reference range exists precisely so a number like 0.31 can be judged against it, and against her clinical picture — tiredness, breathlessness, pale conjunctivae. Asking for a new sample is not the right response; the sample is fine, the result is real, and it should be reported.",
+        3: "Pregnancy lowers the packed cell volume, it does not raise it. And 0.31 is below the normal range, not above it. Reading the number against the range — and then allowing for how pregnancy shifts that range — is the whole skill being tested here.",
+      },
+    },
+    reportableAction: {
+      question:
+        "You have written the result on the report form and marked it as below the normal range. What is the next thing you actually do with it?",
+      options: [
+        "File the report; the clinician will read the antenatal results at the next clinic.",
+        "Run the test again on a second sample to be sure before reporting anything.",
+        "Send the result to the clinician and suggest a full blood count and a blood film.",
+        "Phone the clinician now, as a same-hour emergency, because the value is critical.",
+      ],
+      correctIndex: 2,
+      wrongFeedback: {
+        0: "Filing without flagging is how abnormal results get missed. The clinician asked for this test because they were already worried — tiredness, breathlessness, pallor. A result that confirms their suspicion is the one thing they need to see. It does not sit in a pile waiting for the next antenatal clinic.",
+        1: "Repeating the sample adds nothing. The result makes sense — she is a pregnant woman with the symptoms and signs of anaemia, and a haemoglobin that fits. What is missing is not a repeat packed cell volume; it is the tests that will tell us why she is anaemic. Repeating without escalating just delays that.",
+        3: "This is not a same-hour emergency. A result that would require a phone call within the hour is one where the patient is in immediate danger — for example, a packed cell volume so low she needs blood right now. Ama's result is significant, but she is walking and talking, and the correct action is a routine report with a suggestion that the clinician order further tests.",
       },
     },
   },
@@ -1433,7 +1574,7 @@ const VITRO_COMPETENCIES = {
 function vitroSpeak(text, onEnd) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) {
     if (typeof onEnd === "function") onEnd();
-    return;
+    return false;
   }
   try {
     window.speechSynthesis.cancel();
@@ -1471,7 +1612,10 @@ function vitroSpeak(text, onEnd) {
   }
   try {
     window.speechSynthesis.speak(utter);
-  } catch {}
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function vitroStopSpeaking() {
@@ -1556,7 +1700,7 @@ function recordVitroAttempt(progress, scriptId, competencyMap) {
 //   filled   — whether the tube body shows blood
 //   size     — width in pixels; height is derived from the viewBox
 // ------------------------------------------------------------------
-function VitroTubeSvg({ cap, filled, size = 46 }) {
+function VitroTubeSvg({ cap, filled, labelled = false, labelText = "", size = 46 }) {
   // A map from key to the actual cap colour, so the SVG matches
   // what the student would see on the bench. Purple and gray are
   // the two that most often look "wrong" if you just pick a
@@ -1591,8 +1735,51 @@ function VitroTubeSvg({ cap, filled, size = 46 }) {
       {filled && (
         <ellipse cx="16" cy="16" rx="8" ry="2" fill="#5A1A18" opacity="0.65" />
       )}
-      {/* Label strip — the white patch where the tube is written on */}
-      <rect x="10" y="38" width="12" height="22" rx="2" fill="#FFFFFF" opacity="0.9" />
+      {/* Label strip — the white patch where the tube is written
+          on. Empty by default (a blank strip); when `labelled`
+          is true, the strip carries the patient's name and the
+          date, drawn as real text so it is legible. */}
+      <rect x="9" y="36" width="14" height="26" rx="2" fill="#FFFFFF" opacity="0.95" stroke="#D0D6E0" strokeWidth="0.4" />
+      {labelled && (
+        <g
+          className="vitro-anim-label-appear"
+          style={{ transformOrigin: "16px 49px" }}
+        >
+          <text
+            x="16"
+            y="44"
+            textAnchor="middle"
+            fontFamily="Arial, sans-serif"
+            fontSize="3.4"
+            fontWeight="700"
+            fill="#1B1405"
+          >
+            {labelText.split("\n")[0] || ""}
+          </text>
+          <text
+            x="16"
+            y="49"
+            textAnchor="middle"
+            fontFamily="Arial, sans-serif"
+            fontSize="3"
+            fontWeight="600"
+            fill="#1B1405"
+          >
+            {labelText.split("\n")[1] || ""}
+          </text>
+          <text
+            x="16"
+            y="54"
+            textAnchor="middle"
+            fontFamily="Arial, sans-serif"
+            fontSize="3"
+            fontWeight="600"
+            fill="#1B1405"
+          >
+            {labelText.split("\n")[2] || ""}
+          </text>
+        </g>
+      )}
     </svg>
   );
 }
@@ -1845,18 +2032,24 @@ function VitroCapillarySvg({ fill = "empty", sealed = false, height = 120 }) {
           style={{ transition: "height 600ms ease-out, y 600ms ease-out" }}
         />
       )}
-      {/* Sealing clay plug at the top (dry) end */}
+      {/* Sealing clay plug at the top (dry) end. Slides down
+          from above when it appears, so the seal is a visible
+          action, not a static detail. */}
       {sealed && (
-        <rect
-          x="3.5"
-          y="0"
-          width="7"
-          height="8"
-          rx="2"
-          fill="#C4A57B"
-          stroke="var(--line-2)"
-          strokeWidth="0.6"
-        />
+        <g className="vitro-anim-clay-drop">
+          <rect
+            x="3"
+            y="0"
+            width="8"
+            height="10"
+            rx="2.5"
+            fill="#C4A57B"
+            stroke="#8A6E45"
+            strokeWidth="0.7"
+          />
+          {/* Highlight so the plug reads as a rounded object */}
+          <ellipse cx="6" cy="3" rx="2.6" ry="1" fill="#E0C89C" opacity="0.85" />
+        </g>
       )}
     </svg>
   );
@@ -1886,6 +2079,15 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
   // Narration on by default. A student can mute from the bench
   // header; the choice lasts for the session on this bench only.
   const [muted, setMuted] = useState(false);
+  // Flips true for 400ms right when the label is being written,
+  // so the tube visibly reacts. Purely a presentation flag.
+  const [animatingLabel, setAnimatingLabel] = useState(false);
+  // Flips true for 400ms right when the seal is going on.
+  const [animatingSeal, setAnimatingSeal] = useState(false);
+  // One-way latch: set true the moment the spin button is tapped
+  // and never unset. Prevents a fast double-tap from re-entering
+  // the spin handler while the animation is running.
+  const [spinInProgress, setSpinInProgress] = useState(false);
 
   // Per-bench-step visual state. Each one is a boolean that
   // flips when the student performs that step, and the SVG
@@ -1923,6 +2125,7 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
     setCapillaryFill("empty");
     setCapillarySealed(false);
     setCentrifugeLoaded(false);
+    setSpinInProgress(false);
     setCompetency({
       tube_selection: undefined,
       sample_handling: undefined,
@@ -1933,10 +2136,20 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
     setActionPick(null);
   }, [scriptId]);
 
-  // ---- Narration ----
-  // Speak the line for the current phase whenever the phase
-  // changes. Cancels whatever was speaking first, so a fast
-  // student tapping through does not stack voices.
+    // ---- Narration ----
+  // The narrator reads the text the student is already looking
+  // at, not a separate script. For the four bench steps that
+  // means `steps[i].instruction`, which is the same string
+  // rendered in the worktop card. For the analyser step it
+  // means `script.analyser.action`. For the framing moments
+  // (the request, feedback after a tube pick, the two
+  // questions, the results) it means the short intro/feedback
+  // lines in `script.narration`, which do not duplicate any
+  // on-screen paragraph — those phases have no long
+  // instruction, just the question or the feedback itself.
+  //
+  // No parallel caption bar. The text on screen IS the
+  // narration. Muting silences the voice, nothing else changes.
   const narration = (script && script.narration) || {};
   useEffect(() => {
     if (muted) {
@@ -1948,17 +2161,19 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
         case "rack":
           return narration.intro;
         case "picked":
-          return correct ? narration.afterCorrectTube : narration.afterWrongTube;
+          return correct
+            ? narration.afterCorrectTube
+            : narration.afterWrongTube;
         case "labelling":
-          return narration.labelling;
+          return steps && steps[0] ? steps[0].instruction : null;
         case "filling":
-          return narration.filling;
+          return steps && steps[1] ? steps[1].instruction : null;
         case "sealing":
-          return narration.sealing;
+          return steps && steps[2] ? steps[2].instruction : null;
         case "loading":
-          return narration.loading;
+          return steps && steps[3] ? steps[3].instruction : null;
         case "spinning":
-          return analyserRan ? narration.reading : narration.spinning;
+          return analyserRan ? narration.reading : script.analyser.action;
         case "interpret":
           return narration.interpret;
         case "action":
@@ -1970,8 +2185,7 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
       }
     })();
     if (line) vitroSpeak(line);
-    
-  }, [phase, analyserRan, muted]);
+  }, [phase, analyserRan, muted, stepIdx]);
 
   // Stop the voice the moment the student leaves the bench.
   useEffect(() => {
@@ -2026,11 +2240,15 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
   // one visible thing on the bench, then advances the phase.
   const doLabel = () => {
     if (phase !== "labelling") return;
-    setLabelled(true);
+    setAnimatingLabel(true);
+    // The visible label lands a beat after the shake starts, so
+    // the pen-then-text sequence reads correctly.
+    setTimeout(() => setLabelled(true), 200);
+    setTimeout(() => setAnimatingLabel(false), 700);
     setTimeout(() => {
       setStepIdx(1);
       setPhase("filling");
-    }, 500);
+    }, 900);
   };
 
   const doFill = () => {
@@ -2045,11 +2263,13 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
 
   const doSeal = () => {
     if (phase !== "sealing") return;
+    setAnimatingSeal(true);
     setCapillarySealed(true);
+    setTimeout(() => setAnimatingSeal(false), 700);
     setTimeout(() => {
       setStepIdx(3);
       setPhase("loading");
-    }, 500);
+    }, 900);
   };
 
   const doLoad = () => {
@@ -2063,12 +2283,17 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
   };
 
   const doSpin = () => {
-    if (phase !== "spinning" || analyserRan) return;
+    // Three guards, all belt-and-suspenders, in case a fast
+    // double-tap races the state update:
+    //   1. phase must still be "spinning"
+    //   2. analyserRan must still be false
+    //   3. spinInProgress must still be false
+    // The spin is one-way. Nothing stops it once started.
+    if (phase !== "spinning" || analyserRan || spinInProgress) return;
+    setSpinInProgress(true);
     setAnalyserRan(true);
     setCompetency((c) => ({ ...c, instrument_operation: true }));
-    // The spin animation runs for 3s; the readout appears at
-    // the end, and the phase advances to interpretation/results.
-        setTimeout(() => {
+    setTimeout(() => {
       setPhase(interpretation ? "interpret" : "results");
     }, 3000);
   };
@@ -2112,6 +2337,7 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
     setCapillaryFill("empty");
     setCapillarySealed(false);
     setCentrifugeLoaded(false);
+    setSpinInProgress(false);
     setCompetency({
       tube_selection: undefined,
       sample_handling: undefined,
@@ -2246,12 +2472,20 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
         </div>
       )}
 
-      {/* The bench — tube rack on the left, worktop on the right.
-          Stacks on phones. */}
+      
+
+      {/* The bench — tube rack on the left, worktop on the right
+          on wide screens; stacked on narrow phones so the
+          centrifuge stays on screen. The minmax(0, 1fr) on each
+          column is deliberate: without the 0 minimum, a column
+          with a fixed-width child (the centrifuge SVG) forces the
+          grid wider than the viewport and pushes content off the
+          right edge, which is what made the machine invisible on
+          phones. */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "minmax(200px, 1fr) minmax(200px, 1fr)",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
           gap: 12,
           marginTop: 12,
         }}
@@ -2394,35 +2628,23 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
                 marginBottom: 12,
               }}
             >
-              <div style={{ position: "relative" }}>
+              <div
+                style={{ position: "relative" }}
+                className={animatingLabel ? "vitro-anim-tube-shake" : ""}
+              >
                 <VitroTubeSvg
                   cap={pickedTube}
                   filled={phase !== "picked" && phase !== "rack"}
-                  size={44}
+                  labelled={labelled}
+                  labelText={
+                    script.patientLabel.split(" ")[0] +
+                    "\n" +
+                    todayLabel +
+                    "\n" +
+                    "VITRO"
+                  }
+                  size={52}
                 />
-                {labelled && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: 12,
-                      left: 6,
-                      padding: "1px 4px",
-                      borderRadius: 3,
-                      background: "#FFFFFF",
-                      border: "0.5px solid var(--line-2)",
-                      fontSize: 5,
-                      fontWeight: 700,
-                      color: "#1B1405",
-                      lineHeight: 1.1,
-                      textAlign: "center",
-                      maxWidth: 24,
-                    }}
-                  >
-                    {script.patientLabel.split(" ")[0]}
-                    <br />
-                    {todayLabel}
-                  </div>
-                )}
               </div>
               <div style={{ minWidth: 0 }}>
                 <div style={{ fontWeight: 650, fontSize: 13.5 }}>
@@ -2506,8 +2728,12 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
               >
                 {steps[0].instruction}
               </div>
-              <button className="btn btn-a btn-sm" onClick={doLabel}>
-                Write the label
+              <button
+                className="btn btn-a btn-sm"
+                onClick={doLabel}
+                disabled={animatingLabel}
+              >
+                {animatingLabel ? "Writing…" : "Write the label"}
               </button>
             </div>
           )}
@@ -2525,8 +2751,12 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
               >
                 {steps[1].instruction}
               </div>
-              <button className="btn btn-a btn-sm" onClick={doFill}>
-                Fill the capillary
+              <button
+                className="btn btn-a btn-sm"
+                onClick={doFill}
+                disabled={capillaryFill !== "empty"}
+              >
+                {capillaryFill !== "empty" ? "Filling…" : "Fill the capillary"}
               </button>
             </div>
           )}
@@ -2544,8 +2774,12 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
               >
                 {steps[2].instruction}
               </div>
-              <button className="btn btn-a btn-sm" onClick={doSeal}>
-                Seal the dry end
+              <button
+                className="btn btn-a btn-sm"
+                onClick={doSeal}
+                disabled={animatingSeal}
+              >
+                {animatingSeal ? "Sealing…" : "Seal the dry end"}
               </button>
             </div>
           )}
@@ -2563,13 +2797,24 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
               >
                 {steps[3].instruction}
               </div>
-              <button className="btn btn-a btn-sm" onClick={doLoad}>
-                Load the centrifuge
+              <button
+                className="btn btn-a btn-sm"
+                onClick={doLoad}
+                disabled={centrifugeLoaded}
+              >
+                {centrifugeLoaded ? "Loading…" : "Load the centrifuge"}
               </button>
             </div>
           )}
 
-          {/* ---- Step: spinning ---- */}
+          {/* ---- Step: spinning ----
+              Three states, and the button is a one-way action:
+                • Idle (before tap)      — "Start the spin" button.
+                • Running (during spin)  — "Spinning…" disabled
+                                            button, cannot be stopped.
+                • Done (after spin)      — button gone, readout shown.
+              The spin cannot be interrupted. Nothing on this screen
+              stops the rotor; only the timer inside doSpin ends it. */}
           {phase === "spinning" && (
             <div>
               <div
@@ -2582,11 +2827,17 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
               >
                 {script.analyser.action}
               </div>
+
               {!analyserRan && (
-                <button className="btn btn-a btn-sm" onClick={doSpin}>
-                  Start the spin
+                <button
+                  className="btn btn-a btn-sm"
+                  onClick={doSpin}
+                  disabled={spinInProgress}
+                >
+                  {spinInProgress ? "Spinning…" : "Start the spin"}
                 </button>
               )}
+
               {analyserRan && (
                 <>
                   <div
@@ -3155,11 +3406,16 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
   }
 
   // ---- Stage 2: donning ----
+  // The donning screen uses the same voice engine as the bench.
+  // The speak and stopSpeaking helpers are shared through the
+  // props, so muting once carries across both screens.
   if (!donned) {
     return (
       <VitroDonning
         onPass={passDonning}
         character={character}
+        speak={vitroSpeak}
+        stopSpeaking={vitroStopSpeaking}
       />
     );
   }
