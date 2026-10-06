@@ -137,6 +137,7 @@ function startKeepAlive() {
         !window.speechSynthesis.paused &&
         !window.speechSynthesis.pending
       ) {
+        try { console.log("[speech] keep-alive nudge | t:", Date.now() % 100000); } catch {}
         window.speechSynthesis.pause();
         window.speechSynthesis.resume();
       }
@@ -201,6 +202,7 @@ function installVisibilityHandler() {
 // utterance. That path is what Atlas and VITRO use.
 // ------------------------------------------------------------
 function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
+  try { console.log("[speech] speak called:", String(text || "").slice(0, 60), "| rate:", rate, "| gender:", gender, "| t:", Date.now() % 100000); } catch {}
   if (typeof window === "undefined" || !("speechSynthesis" in window)) {
     if (onEnd) onEnd();
     return;
@@ -250,6 +252,7 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
     clearTimers();
     stopKeepAlive();
     visibility.currentText = null;
+    try { console.log("[speech] finish fired | t:", Date.now() % 100000); } catch {}
     if (onEnd) onEnd();
   };
 
@@ -282,6 +285,7 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
 
     utter.onstart = () => {
       started = true;
+      try { console.log("[speech] onstart | t:", Date.now() % 100000); } catch {}
       if (startupTimer) { clearTimeout(startupTimer); startupTimer = null; }
       finishTimer = setTimeout(finish, finishMs);
       startKeepAlive();
