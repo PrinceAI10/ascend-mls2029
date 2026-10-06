@@ -45,6 +45,13 @@ let voicesCache = null;
 // between calls, and skipping it is what stops the stutter.
 const voiceByGender = { male: undefined, female: undefined };
 
+// Identity token for the current speak() call. Every new speak()
+// bumps this, and every stopSpeaking() bumps it. The mobile piece
+// sequencer checks its own captured token before speaking each
+// piece - if the token has moved on, the sequence abandons itself
+// instead of continuing to speak a step the user has already left.
+let speakToken = 0;
+
 function getVoices() {
   return new Promise((resolve) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
@@ -302,10 +309,13 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
         utter.rate = 1.0 * rate;
       }
 
+      const myToken = ++speakToken;
       utter.onstart = () => {
+        if (myToken !== speakToken) return;
         started = true;
         if (startupTimer) { clearTimeout(startupTimer); startupTimer = null; }
         finishTimer = setTimeout(() => {
+          if (myToken !== speakToken) return;
           if (!finished) { finished = true; clearTimers(); visibility.currentText = null; }
           if (onEnd) onEnd();
         }, finishMs);
@@ -313,6 +323,7 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
         if (onStart) onStart();
       };
       utter.onend = () => {
+        if (myToken !== speakToken) return;
         if (finished) return;
         finished = true;
         clearTimers();
@@ -345,18 +356,29 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
   const PER_WORD_MS = 800; // very generous; real TTS is ~500ms/word
 
   (async () => {
+    // Capture this call's identity. If another speak() or a
+    // stopSpeaking() bumps the global token before this sequence
+    // finishes, the sequence abandons itself - it does not speak
+    // any more pieces and does not fire onEnd.
+    const myToken = ++speakToken;
+
     const g = gender || readGender();
     let voice = voiceByGender[g];
     if (voice === undefined) {
       voice = await pickVoice(g);
       voiceByGender[g] = voice || null;
     }
-    if (finished) return;
+    // If a newer speak() or a stopSpeaking() has happened while
+    // we awaited the voice, abandon.
+    if (finished || myToken !== speakToken) return;
 
     let onStartFired = false;
 
     const speakPiece = (idx) => {
-      if (finished) return;
+      // Every entry point into a piece checks the token first.
+      // This is what makes "advance fast" cancel the previous
+      // step's narration instead of letting it finish.
+      if (finished || myToken !== speakToken) return;
       if (idx >= pieces.length) {
         finished = true;
         visibility.currentText = null;
@@ -385,12 +407,16 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
         if (pieceDone) return;
         pieceDone = true;
         if (pieceTimer) { clearTimeout(pieceTimer); pieceTimer = null; }
+        // Token check before scheduling the next piece. If the
+        // user has already moved on, do not queue another piece.
+        if (finished || myToken !== speakToken) return;
         // Small beat between pieces so the join sounds natural,
         // not spliced.
         setTimeout(() => speakPiece(idx + 1), 60);
       };
 
       utter.onstart = () => {
+        if (myToken !== speakToken) return;
         if (!onStartFired) {
           onStartFired = true;
           visibility.currentText = fullText;
@@ -597,6 +623,12 @@ function speakQueued(text, { onEnd, onStart, rate = 1, gender = null } = {}) {
 // queue ticker, the keep-alive, the visibility flag.
 // ------------------------------------------------------------
 function stopSpeaking() {
+  // Bump the token first, so any pending piece timeout in the
+  // mobile sequencer sees the change and abandons itself the
+  // moment it wakes up. This is what makes "leave the podcast
+  // page" actually stop the narration, including on engines
+  // where cancel() alone does not kill the current utterance.
+  speakToken++;
   if (typeof window !== "undefined" && window.speechSynthesis) {
     try { window.speechSynthesis.cancel(); } catch {}
   }

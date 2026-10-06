@@ -3852,7 +3852,12 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
           case "loading":
             return steps && steps[3] ? steps[3].instruction : null;
                   case "spinning":
-          return analyserRan ? narration.reading : script.analyser.action;
+          // The reading line is spoken by doSpin AFTER the rotor
+          // has stopped. Never here - if the effect also speaks
+          // it, the line plays twice (once during the spin, once
+          // after). So the effect only speaks the pre-spin
+          // instruction.
+          return analyserRan ? null : script.analyser.action;
         case "interpret":
           // Handled specially below — the question and its
           // options are read in full, not just a header line.
@@ -4018,31 +4023,55 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
     // card that has just appeared on the bench. Without this,
     // the question card lands on top of a readout the student
     // has not had time to look at.
-    // The run is over. In a real machine the rotor coasts to
-    // a halt the moment the timer ends, and the scientist
-    // reads the result only after the rotor has stopped. So:
-    // stop the rotor first, give the student a beat to see it
-    // stop, and only then speak the "spin is complete" line.
-    // If the voice said it the moment the timer expired, it
-    // would say "complete" while the rotor was still visibly
-    // turning — which is the bug this sequencing fixes.
-    setTimeout(() => setRotorStopped(true), 3000);
-
+    // The run is over. Sequence is strict and chained, not
+    // scheduled via two independent timers (which could fire
+    // out of order if the main thread is busy with the voice
+    // engine — the bug that made the rotor still visibly
+    // turning while the voice said "spin complete"):
+    //
+    //   1. Let the rotor spin for 3 seconds.
+    //   2. Flip rotorStopped so the CSS spin class is removed.
+    //   3. Wait one animation frame PLUS a short settle delay
+    //      so the stopped rotor has actually painted.
+    //   4. THEN speak the reading line.
+    //   5. When the reading line finishes, wait 300ms, then
+    //      advance to interpret.
+    //
+    // Every step waits for the previous one. Nothing is
+    // scheduled on a parallel timer that could race.
     const readingLine = (script.narration && script.narration.reading) || "";
-    const ROTOR_SETTLE_MS = 800;
+    const ROTOR_SPIN_MS = 3000;
+    const ROTOR_SETTLE_AFTER_PAINT_MS = 400;
+
     setTimeout(() => {
-      if (readingLine) {
-        vitroSpeak(readingLine, () => {
-          setTimeout(() => {
-            setPhase(interpretation ? "interpret" : "results");
-          }, 300);
-        });
-      } else {
+      // Step 2: stop the rotor.
+      setRotorStopped(true);
+
+      // Step 3: wait one animation frame for the class removal
+      // to take effect, then a short beat so the stopped rotor
+      // is what the student is looking at.
+      requestAnimationFrame(() => {
         setTimeout(() => {
-          setPhase(interpretation ? "interpret" : "results");
-        }, 300);
-      }
-    }, 3000 + ROTOR_SETTLE_MS);
+          // Step 4: now speak the reading line.
+          //
+          // The phase effect no longer speaks this line (see
+          // next step). doSpin is the only caller. Sequence is
+          // strict: rotor stops, one frame, 400ms beat, THEN
+          // the voice says "spin complete". Never before.
+          if (readingLine) {
+            vitroSpeak(readingLine, () => {
+              setTimeout(() => {
+                setPhase(interpretation ? "interpret" : "results");
+              }, 300);
+            });
+          } else {
+            setTimeout(() => {
+              setPhase(interpretation ? "interpret" : "results");
+            }, 300);
+          }
+        }, ROTOR_SETTLE_AFTER_PAINT_MS);
+      });
+    }, ROTOR_SPIN_MS);
   };
 
   const answerInterpretation = (idx) => {
