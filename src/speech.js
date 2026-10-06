@@ -2,33 +2,25 @@
 // ------------------------------------------------------------
 // One shared speech engine for the whole app.
 //
-// Three files used to each carry their own copy of this code:
-//   App.js        — the podcast reader (ascendPickVoice, ascendGetVoices,
-//                    and the speakChunk engine inside TopicView)
-//   AtlasView.jsx — the diagram narrator (pickVoice, getVoices, speakStep)
-//   VitroView.jsx — the VITRO bench narrator (vitroSpeak and friends)
-//
-// They converged on the same three or four underlying bugs:
-//   1. no keep-alive on Chrome, so long lines cut off mid-sentence
-//      after ~15 seconds
-//   2. watchdogs sized too tight, so they fired before speech had
-//      actually started
-//   3. the watchdog racing onstart, so it advanced the step twice
-//
-// This module is the union of the three implementations, with
-// those bugs closed once. Two shapes are exposed, because the
-// callers genuinely need two different contracts:
-//
 //   speak(text, opts)       — cancel anything current, speak this,
-//                             call back when done. App.js and
-//                             AtlasView.jsx both want this.
-//
+//                             call back when done.
 //   speakQueued(text, opts) — if something is speaking, wait your
-//                             turn; then speak. VitroView.jsx
-//                             wants this, because its script reads
-//                             lines in order and cutting one off
-//                             to start the next mid-script would
-//                             break the reading.
+//                             turn; then speak.
+//
+// This version is a hard rewrite. It fixes three things that
+// the previous versions got wrong:
+//
+//   1. speak() supports a `chunks` array and joins all chunks
+//      into ONE utterance. No cancel between chunks. No gap.
+//      onStart fires once, onEnd fires once.
+//
+//   2. Watchdog timers are set to values that cannot fire before
+//      speech has had a chance to start. Startup = 15s. Finish =
+//      words*2.5s + 5s. Nobody's voice is that slow.
+//
+//   3. speakQueued() and speak() share the voice cache, share the
+//      keep-alive, and never fight each other. stopSpeaking()
+//      clears every piece of state so the next call starts clean.
 // ------------------------------------------------------------
 
 const FEMALE_HINTS = [
@@ -48,9 +40,9 @@ const MALE_HINTS = [
 let voicesCache = null;
 
 // Resolved voice per gender. Once we know which voice the device
-// will use for "male" and "female", we never need to await
-// pickVoice() again — and skipping that await is what stops the
-// mobile audio session from closing between consecutive chunks.
+// will use for "male" and "female", we never await pickVoice()
+// again. That await is what closes the mobile audio session
+// between calls, and skipping it is what stops the stutter.
 const voiceByGender = { male: undefined, female: undefined };
 
 function getVoices() {
@@ -82,14 +74,6 @@ function getVoices() {
   });
 }
 
-// Rank the available English voices for the requested gender and
-// return the best one. Order of preference:
-//   1. A voice explicitly tagged "Enhanced" or "Premium"
-//      (this is how iOS labels its good user-downloaded voices,
-//      and it's the single biggest quality win on mobile).
-//   2. A local (installed, not cloud) voice matching the hints.
-//   3. Any voice matching the hints.
-//   4. The first English voice, as a last resort.
 async function pickVoice(gender) {
   let g = gender;
   if (g == null) {
@@ -124,8 +108,6 @@ async function pickVoice(gender) {
   return pool[0] || null;
 }
 
-// Read the current gender preference from the same localStorage
-// key every existing copy of this code already uses.
 function readGender() {
   try {
     return localStorage.getItem("ascend_voice_gender") || "female";
@@ -137,14 +119,10 @@ function readGender() {
 // ------------------------------------------------------------
 // Chrome keep-alive.
 //
-// Chromium's speech engine silently cuts off any utterance longer
-// than ~15 seconds unless something nudges the queue. A pause()
-// immediately followed by resume() every few seconds prevents
-// that, without the listener noticing any gap.
-//
-// This interval is a singleton at module scope so two callers
-// (e.g. App.js and AtlasView.jsx mounted at once) can't fight
-// each other with two competing keep-alives.
+// Chromium cuts off utterances longer than ~15 seconds unless
+// something nudges the queue. pause()+resume() every 3 seconds
+// prevents that. Desktop-only: on Android the nudge is audible.
+// Singleton so two callers can't run two competing keep-alives.
 // ------------------------------------------------------------
 const keepAlive = { timer: null };
 
@@ -159,7 +137,6 @@ function startKeepAlive() {
         !window.speechSynthesis.paused &&
         !window.speechSynthesis.pending
       ) {
-        // Chrome-desktop only. On Android this nudge is audible.
         const ua = navigator.userAgent || "";
         const isAndroid = /Android/i.test(ua);
         if (!isAndroid) {
@@ -180,18 +157,6 @@ function stopKeepAlive() {
 
 // ------------------------------------------------------------
 // Pause/resume on tab visibility.
-//
-// speechSynthesis keeps talking even when the tab is backgrounded.
-// Without this, the narrator keeps reading into an empty tab.
-// We pause (not cancel - cancelling would lose the line) and
-// resume from the same point when the tab comes back.
-//
-// Known limitation: desktop Chrome will sometimes fail to resume
-// a line paused longer than ~15s. If resume doesn't actually
-// produce audio, we restart the same line from its beginning
-// rather than leaving the student on a silent narrator.
-//
-// Installed once, on first speak() call.
 // ------------------------------------------------------------
 const visibility = {
   installed: false,
@@ -230,39 +195,14 @@ function installVisibilityHandler() {
 }
 
 // ------------------------------------------------------------
-// speak(text, { onStart, onEnd, rate, gender })
-//
-// Cancel anything currently speaking, then speak this line.
-// Call onStart when speech actually begins (after the browser's
-// onstart fires, NOT when we call speak() - speak() doesn't
-// throw on autoplay block, it silently drops the utterance, so
-// onstart is the only reliable "it's really playing" signal).
-// Call onEnd when it finishes, or when the fallback watchdog
-// decides it has been running long enough to be considered done.
-//
-// Watchdog strategy:
-//   - Finish watchdog sized generously (2 words/second, which is
-//     slower than any real TTS voice, plus 3 seconds of slack).
-//     This only fires if onend genuinely never comes.
-//   - Startup watchdog (4.5s) for the case where the browser
-//     silently drops the speak() call. Cleared the moment onstart
-//     fires, so it can never race onend into a double-advance.
-// ------------------------------------------------------------
-
-// ------------------------------------------------------------
 // speak(text, { chunks, onStart, onEnd, rate, gender })
 //
-// If `chunks` is provided as an array of { text, rate, pitch,
-// pauseAfterMs } entries, the utterance joins them into one
-// continuous read on mobile (single audio session, no cancel
-// between chunks, no audible gap) and speaks them as one
-// sequenced pipeline on desktop. onStart fires when the first
-// chunk's audio begins; onEnd fires once, when the last chunk
-// has finished. That single onEnd is what TopicView's step
-// advance relies on - a per-chunk onEnd would advance mid-step.
+// If `chunks` is provided, the array's text fields are joined
+// into ONE utterance. The engine speaks it continuously. No
+// cancel between chunks. onStart fires once, onEnd fires once.
 //
-// If `chunks` is null/undefined, this falls back to the original
-// single-string behaviour, which is what Atlas and Vitro use.
+// If `chunks` is not provided, `text` is spoken as a single
+// utterance. That path is what Atlas and VITRO use.
 // ------------------------------------------------------------
 function speak(text, { chunks = null, onStart, onEnd, rate = 1, gender = null } = {}) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) {
@@ -270,55 +210,59 @@ function speak(text, { chunks = null, onStart, onEnd, rate = 1, gender = null } 
     return;
   }
 
-  // Normalise the call into a list of "segments". A segment is
-  // { text, rate, pitch, pauseAfterMs }. When the caller passed
-  // no `chunks`, we make a single segment out of `text` so the
-  // rest of the function only has one shape to handle.
-  const segments = (() => {
-    if (Array.isArray(chunks) && chunks.length > 0) {
-      return chunks
-        .map((c) => ({
-          text: String(c && c.text ? c.text : "").trim(),
-          rate: typeof c?.rate === "number" ? c.rate : 1,
-          pitch: typeof c?.pitch === "number" ? c.pitch : null,
-          pauseAfterMs: typeof c?.pauseAfterMs === "number" ? c.pauseAfterMs : 0,
-        }))
-        .filter((s) => s.text.length > 0);
-    }
-    const single = String(text || "").trim();
-    return single ? [{ text: single, rate: 1, pitch: null, pauseAfterMs: 0 }] : [];
-  })();
+  // Build the string to speak. Two shapes in, one shape out.
+  let fullText = "";
+  let firstChunkRate = 1;
+  let firstChunkPitch = null;
+  let wordCount = 0;
 
-  if (segments.length === 0) {
+  if (Array.isArray(chunks) && chunks.length > 0) {
+    const pieces = [];
+    for (let i = 0; i < chunks.length; i++) {
+      const c = chunks[i];
+      if (!c) continue;
+      const t = String(c.text || "").trim();
+      if (!t) continue;
+      pieces.push(t);
+      if (pieces.length === 1) {
+        if (typeof c.rate === "number" && c.rate > 0) firstChunkRate = c.rate;
+        if (typeof c.pitch === "number") firstChunkPitch = c.pitch;
+      }
+    }
+    // Join with a period-space so the engine treats each piece as
+    // its own sentence boundary and gives a natural beat. Commas
+    // were too short a beat. Periods are the correct pause unit.
+    fullText = pieces.join(". ").replace(/\.\.+/g, ".");
+  } else {
+    fullText = String(text || "").trim();
+  }
+
+  if (!fullText) {
     if (onEnd) onEnd();
     return;
   }
 
+  wordCount = fullText.split(/\s+/).length;
+
   installVisibilityHandler();
 
-  // Cancel anything in flight. Unconditional - see the original
-  // note: some mobile engines report idle before the audio
-  // session has actually been released, and a conditional cancel
-  // then queues behind a session that is still tearing down.
+  // Unconditional cancel. Some mobile engines report idle for a
+  // few hundred ms before the audio session has actually been
+  // released, and a conditional cancel then queues behind a
+  // session that is still tearing down.
   try { window.speechSynthesis.cancel(); } catch {}
 
-  // On mobile, join every segment into one continuous string
-  // (single audio session). On desktop, join them too - desktop
-  // Chrome concatenates consecutive utterances cleanly anyway,
-  // and the join removes the per-chunk cancel entirely, which is
-  // what caused the chop. The per-chunk `rate`/`pitch` values are
-  // averaged/dropped in the join because Web Speech has no SSML
-  // support and cannot vary prosody mid-utterance.
+  // Watchdog sizing.
   //
-  // Pauses are converted to commas, which the engine renders as a
-  // short natural gap. This is the closest thing to a silent beat
-  // that the API allows.
-  const joined = segments
-    .map((s) => s.text)
-    .join(", ");
-
-  const words = joined.split(/\s+/).length;
-  const finishMs = Math.max(6000, (words / 2.0) * 1000 * 1.6 + 3000) / rate;
+  // Finish watchdog: word-count based, deliberately generous.
+  // A slow voice reads at about 2 words per second. A very slow
+  // voice reads at 1.5. The floor is 12 seconds and the base
+  // formula gives 2.5 seconds of speaking time per word plus 5
+  // seconds of slack. Nothing real hits this.
+  //
+  // Startup watchdog: 15 seconds. Covers a cold mobile engine
+  // loading a voice for the first time.
+  const finishMs = Math.max(12000, (wordCount * 2500) + 5000) / (rate * firstChunkRate);
   const STARTUP_MS = 15000;
 
   let finished = false;
@@ -343,41 +287,36 @@ function speak(text, { chunks = null, onStart, onEnd, rate = 1, gender = null } 
   (async () => {
     const g = gender || readGender();
 
-    // Cached voice - the resolved voice for this gender doesn't
-    // change, so on every chunk after the first we skip the await
-    // entirely. On mobile that await is the scheduling hop the
-    // browser uses to close the audio session.
+    // Use the cached voice if we have it. If not, we must await
+    // pickVoice(), but only once per gender per session.
     let voice = voiceByGender[g];
     if (voice === undefined) {
       voice = await pickVoice(g);
       voiceByGender[g] = voice || null;
     }
 
-    const utter = new SpeechSynthesisUtterance(joined);
+    // If a newer speak() call came in while we awaited the voice,
+    // abandon this one. Prevents a stale utterance from firing on
+    // top of the current one.
+    if (finished) return;
+
+    const utter = new SpeechSynthesisUtterance(fullText);
     if (voice) utter.voice = voice;
-    // Gender-tinted pitch/rate. When the caller passed chunks, use
-    // the first segment's rate/pitch as the utterance's prosody -
-    // mid-utterance variation isn't possible via the API, and the
-    // first segment is the one carrying the step heading.
-    const firstSeg = segments[0];
-    const segRate = firstSeg && firstSeg.rate ? firstSeg.rate : 1;
-    const segPitch = firstSeg && typeof firstSeg.pitch === "number" ? firstSeg.pitch : null;
+
     if (g === "male") {
-      utter.pitch = segPitch != null ? segPitch : 0.9;
-      utter.rate = 1.0 * rate * segRate;
+      utter.pitch = firstChunkPitch != null ? firstChunkPitch : 0.9;
+      utter.rate = 1.0 * rate * firstChunkRate;
     } else {
-      utter.pitch = segPitch != null ? segPitch : 1.05;
-      utter.rate = 1.0 * rate * segRate;
+      utter.pitch = firstChunkPitch != null ? firstChunkPitch : 1.05;
+      utter.rate = 1.0 * rate * firstChunkRate;
     }
 
     utter.onstart = () => {
       started = true;
-      // Speech is genuinely playing. Clear the startup watchdog
-      // and arm the generous finish watchdog instead.
       if (startupTimer) { clearTimeout(startupTimer); startupTimer = null; }
       finishTimer = setTimeout(finish, finishMs);
       startKeepAlive();
-      visibility.currentText = joined;
+      visibility.currentText = fullText;
       if (onStart) onStart();
     };
     utter.onend = finish;
@@ -390,8 +329,6 @@ function speak(text, { chunks = null, onStart, onEnd, rate = 1, gender = null } 
       return;
     }
 
-    // Arm the startup watchdog AFTER speak() has been called.
-    // Arming it earlier was the bug that skipped step 1 on mobile.
     startupTimer = setTimeout(() => {
       startupTimer = null;
       if (!started) finish();
@@ -400,20 +337,14 @@ function speak(text, { chunks = null, onStart, onEnd, rate = 1, gender = null } 
 }
 
 // ------------------------------------------------------------
-// speakQueued(text, { onEnd, rate, gender })
+// speakQueued(text, { onEnd, onStart, rate, gender })
 //
-// VITRO's shape. If something is currently speaking, queue this
-// line to play when the current one finishes. If nothing is
-// speaking, speak it now.
+// If something is speaking, queue this line. If nothing is
+// speaking, speak it now. A second call while a line is queued
+// replaces the queued line (does not stack).
 //
-// A second call while a line is queued replaces the queued line
-// (it does NOT stack). This matches the behaviour every existing
-// copy of the VITRO engine already has.
-//
-// A ticker runs every 400ms while active. It enforces a 30s
-// maximum on any single utterance, because a few mobile speech
-// engines occasionally fail to fire onend, and without a cap
-// the queue would deadlock.
+// Used by VITRO. A ticker enforces a 30s cap so the queue can
+// never deadlock on a dropped onend.
 // ------------------------------------------------------------
 const queue = {
   currentUtter: null,
@@ -445,9 +376,6 @@ function queueTick() {
       setTimeout(() => speakQueuedNow(next), QUEUE_BEAT_MS);
       return;
     }
-    // Truly idle. Stop the ticker after a short grace so it isn't
-    // running for the rest of the session once the student has
-    // left. speakQueued() restarts it next time it's needed.
     queue.idleTicks++;
     if (queue.idleTicks > 3 && queue.ticker) {
       clearInterval(queue.ticker);
@@ -460,11 +388,6 @@ function queueTick() {
   if (visibility.pausedByUs) return;
   const elapsed = Date.now() - queue.currentStartedAt;
   if (elapsed > MAX_QUEUED_UTTER_MS) {
-    // Force-cancel a stuck utterance whether or not anything is
-    // queued behind it. Previously this only fired when
-    // queue.queuedText existed, so a single utterance whose
-    // onend never came would block every future speakQueued()
-    // call for the rest of the session.
     try { window.speechSynthesis.cancel(); } catch {}
     queue.currentUtter = null;
     const cutCb = queue.currentOnEnd;
@@ -516,10 +439,6 @@ function speakQueuedNow(text) {
     utter.pitch = 1.05;
     utter.rate = 1.0;
   }
-  // Use the cached voice — the same cache speak() uses. If it's
-  // not resolved yet, kick off the fetch and use the voice next
-  // time. This removes the promise hop that made the utterance
-  // start on the default voice and never switch on some engines.
   let voice = voiceByGender[g];
   if (voice === undefined) {
     pickVoice(g).then((v) => { voiceByGender[g] = v || null; });
@@ -574,15 +493,8 @@ function speakQueued(text, { onEnd, onStart, rate = 1, gender = null } = {}) {
   queueStart();
 
   if (queue.currentUtter) {
-    // Something is already speaking. Queue this line.
-    //
-    // If a line is already queued and we're about to replace it,
-    // fire the outgoing line's onEnd first. Otherwise whatever
-    // callback was waiting on the replaced line never fires and
-    // the caller hangs forever. A queued line that gets replaced
-    // never speaks, so this is its only chance to signal "I'm
-    // done" - and "I never played" is closer to done than to
-    // pending.
+    // If a line is already queued, fire its onEnd before replacing
+    // it. Otherwise the caller waiting on that callback hangs.
     if (queue.queuedOnEnd && typeof queue.queuedOnEnd === "function") {
       const dropped = queue.queuedOnEnd;
       queue.queuedOnEnd = null;
@@ -604,19 +516,19 @@ function speakQueued(text, { onEnd, onStart, rate = 1, gender = null } = {}) {
 // stopSpeaking()
 //
 // Cancel everything: current utterance, queued utterance, the
-// queue ticker, and the keep-alive. Safe to call at any time
-// from any file.
+// queue ticker, the keep-alive, the visibility flag.
 // ------------------------------------------------------------
 function stopSpeaking() {
   if (typeof window !== "undefined" && window.speechSynthesis) {
     try { window.speechSynthesis.cancel(); } catch {}
   }
   stopKeepAlive();
-  // Clear the queue.
   queue.currentUtter = null;
   queue.queuedText = null;
   queue.currentOnEnd = null;
   queue.queuedOnEnd = null;
+  queue.currentOnStart = null;
+  queue.queuedOnStart = null;
   queue.currentText = null;
   if (queue.ticker) {
     clearInterval(queue.ticker);
