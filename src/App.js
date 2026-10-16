@@ -667,6 +667,7 @@ const Ic = {
   check: ({ p = 20, style }) => <I s={p} style={style} w={2.4} d={<path d="m5 12 5 5L20 6" />} />,
   x: ({ p = 20, style }) => <I s={p} style={style} w={2.4} d={<path d="M6 6 18 18M18 6 6 18" />} />,
   plus: ({ p = 20, style }) => <I s={p} style={style} w={2.2} d={<path d="M12 5v14M5 12h14" />} />,
+  iosShare: ({ p = 20, style }) => <I s={p} style={style} w={2} d={<><path d="M12 3v12" /><path d="m8 7 4-4 4 4" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" /></>} />,
   play: ({ p = 20, style }) => <I s={p} style={style} fill="currentColor" w={0} d={<path d="M8 5v14l11-7z" />} />,
   pause: ({ p = 20, style }) => <I s={p} style={style} fill="currentColor" w={0} d={<><rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" /></>} />,
   voiceMale: ({ p = 28, style }) => <I s={p} style={style} d={<><circle cx="12" cy="8" r="4.2" /><path d="M4.5 20.5c0-4.14 3.36-7 7.5-7s7.5 2.86 7.5 7" /></>} />,
@@ -6222,6 +6223,14 @@ function ascendIsIOS() {
 function ascendIsStandalone() {
   try {
     return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || window.navigator.standalone === true;
+  } catch (e) { return false; }
+}
+// iPad's Share icon lives top-right in Safari's toolbar, not bottom-center like iPhone,
+// so the toast + pointing arrow need to flip position on iPad.
+function ascendIsIPad() {
+  try {
+    const ua = navigator.userAgent || "";
+    return /ipad/i.test(ua) || (ua.includes("Macintosh") && navigator.maxTouchPoints > 1);
   } catch (e) { return false; }
 }
 
@@ -15916,6 +15925,8 @@ export default function App() {
       <style>{CSS}</style>
       <style>{`@keyframes rankUpPop{0%{transform:scale(.75);opacity:0}60%{transform:scale(1.04);opacity:1}100%{transform:scale(1)}}`}</style>
       <style>{`@keyframes updateToastIn{0%{transform:translateY(-16px);opacity:0}100%{transform:translateY(0);opacity:1}}`}</style>
+      <style>{`@keyframes ascendBounceDown { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } } @keyframes ascendBounceUp { 0%,100% { transform: translateY(0) rotate(180deg); } 50% { transform: translateY(-6px) rotate(180deg); } }`}</style>
+      
       {resumeOverlay}
       {rankUpOverlay}
       {achOverlay}
@@ -15986,11 +15997,37 @@ export default function App() {
                   ><Ic.plus p={18} /></button>
                 )}
                 {iosInstallHelpOpen && createPortal(
-                  <div className={rootCls} style={{ position: "fixed", inset: 0, zIndex: 10000, background: "rgba(6,9,16,.72)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }} onClick={() => setIosInstallHelpOpen(false)}>
-                    <div className="card" style={{ maxWidth: 340, padding: "20px 20px 16px" }} onClick={(e) => e.stopPropagation()}>
-                      <h3 style={{ fontSize: 17, margin: "0 0 6px" }}>Install ASCEND on your iPhone/iPad</h3>
-                      <p style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6, margin: "0 0 16px" }}>Tap the Share icon in Safari's toolbar (the square with an arrow), then choose "Add to Home Screen". ASCEND will then open full-screen, like a real app.</p>
-                      <button className="btn btn-a btn-sm" style={{ width: "100%" }} onClick={() => setIosInstallHelpOpen(false)}>Got it</button>
+                  <div className={rootCls} style={{ position: "fixed", inset: 0, zIndex: 10000, background: "rgba(6,9,16,.35)" }} onClick={() => setIosInstallHelpOpen(false)}>
+                    {/* iPhone: Safari's Share icon sits bottom-center, so the toast + arrow sit at the bottom.
+                        iPad: Safari's Share icon sits top-right, so flip the toast and arrow to the top. */}
+                    <div
+                      style={{
+                        position: "fixed",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        ...(ascendIsIPad() ? { top: "calc(env(safe-area-inset-top, 0px) + 54px)" } : { bottom: "calc(env(safe-area-inset-bottom, 0px) + 14px)" }),
+                        width: "min(92vw, 360px)",
+                        zIndex: 10001,
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {ascendIsIPad() && (
+                        <div style={{ display: "flex", justifyContent: "flex-end", paddingRight: 28, marginBottom: 2 }}>
+                          <span style={{ animation: "ascendBounceUp 1.1s ease-in-out infinite" }}><Ic.iosShare p={22} style={{ transform: "rotate(180deg)", color: "var(--accent, #4f8cff)" }} /></span>
+                        </div>
+                      )}
+                      <div className="card" style={{ padding: "14px 16px", display: "flex", alignItems: "center", gap: 12, boxShadow: "0 8px 28px rgba(0,0,0,.35)" }}>
+                        <Ic.iosShare p={22} style={{ flexShrink: 0, color: "var(--accent, #4f8cff)" }} />
+                        <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.5, color: "var(--text-1)", flex: 1 }}>
+                          Tap <strong>Share</strong> {ascendIsIPad() ? "above" : "below"}, then <strong>Add to Home Screen</strong>
+                        </p>
+                        <button className="iconbtn" onClick={() => setIosInstallHelpOpen(false)} title="Dismiss" style={{ flexShrink: 0 }}><Ic.x p={16} /></button>
+                      </div>
+                      {!ascendIsIPad() && (
+                        <div style={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+                          <span style={{ animation: "ascendBounceDown 1.1s ease-in-out infinite" }}><Ic.iosShare p={22} style={{ color: "var(--accent, #4f8cff)" }} /></span>
+                        </div>
+                      )}
                     </div>
                   </div>,
                   document.body
