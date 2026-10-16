@@ -666,6 +666,7 @@ const Ic = {
   chevR: ({ p = 20, style }) => <I s={p} style={style} d={<path d="m9 6 6 6-6 6" />} />,
   check: ({ p = 20, style }) => <I s={p} style={style} w={2.4} d={<path d="m5 12 5 5L20 6" />} />,
   x: ({ p = 20, style }) => <I s={p} style={style} w={2.4} d={<path d="M6 6 18 18M18 6 6 18" />} />,
+  plus: ({ p = 20, style }) => <I s={p} style={style} w={2.2} d={<path d="M12 5v14M5 12h14" />} />,
   play: ({ p = 20, style }) => <I s={p} style={style} fill="currentColor" w={0} d={<path d="M8 5v14l11-7z" />} />,
   pause: ({ p = 20, style }) => <I s={p} style={style} fill="currentColor" w={0} d={<><rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" /></>} />,
   voiceMale: ({ p = 28, style }) => <I s={p} style={style} d={<><circle cx="12" cy="8" r="4.2" /><path d="M4.5 20.5c0-4.14 3.36-7 7.5-7s7.5 2.86 7.5 7" /></>} />,
@@ -6192,6 +6193,38 @@ var LockIcon = function(color) {
 /* Slim banner shown while offline. Notes, materials, and saved questions are
    cached by the service worker and keep working; this just says so plainly
    so nobody thinks the app is broken, and makes clear AI/diagrams are paused. */
+// Shared by the tour's last step and the persistent topbar button. Fires the
+// browser's native "Add to Home Screen" prompt captured in __ascendInstallPrompt
+// (see beforeinstallprompt listener). The deferred prompt can only be used
+// once, so it's cleared after use regardless of the user's choice.
+async function ascendTriggerInstall() {
+  const p = window.__ascendInstallPrompt;
+  if (!p) return false;
+  try {
+    p.prompt();
+    await p.userChoice;
+  } catch (err) {}
+  window.__ascendInstallPrompt = null;
+  return true;
+}
+
+// iOS Safari never fires beforeinstallprompt - there's no API to trigger
+// install there. Detect it so the tour/topbar can fall back to manual
+// instructions instead of silently doing nothing.
+function ascendIsIOS() {
+  try {
+    const ua = navigator.userAgent || "";
+    // iPadOS 13+ reports as "Macintosh" but has touch - a real Mac never does.
+    return /iphone|ipad|ipod/i.test(ua) || (ua.includes("Macintosh") && navigator.maxTouchPoints > 1);
+  } catch (e) { return false; }
+}
+// True once the app is actually running as an installed PWA, on iOS or Android.
+function ascendIsStandalone() {
+  try {
+    return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || window.navigator.standalone === true;
+  } catch (e) { return false; }
+}
+
 function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
   const steps = [
     { selector: null, title: "Welcome to ASCEND", body: "Built by Prince, Ansah, Jeffery and Dacosta - the climb to First Class, together. This quick tour points out the basics. Tap Next to move on, or Skip any time." },
@@ -6203,8 +6236,11 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
     { selector: '[data-tour="nav-askai"]', title: "Ask ASCEND AI anything", body: "Stuck on a concept? Open Ask ASCEND AI to chat about any course - no topic needed, and your conversation is kept for you." },
     { selector: '[data-tour="nav-tools"]', title: "Study Tools, on demand", body: "Generate flashcards, mind maps, and flow diagrams for any topic here - type one in, or paste your own notes." },
     { selector: '[data-tour="nav-papers"]', title: "Drill real past questions", body: "Passco holds real past exam papers, broken into sets. Practice mode reveals answers instantly; Exam mode times you and reviews at the end." },
-    { selector: '[data-tour="quick-actions"]', title: "Jump back in fast", body: "These four buttons on Home get you straight to Continue studying, the Daily question, Passco, or Ranks." }
-  ];
+    { selector: '[data-tour="quick-actions"]', title: "Jump back in fast", body: "These four buttons on Home get you straight to Continue studying, the Daily question, Passco, or Ranks." },
+    { selector: "__install__", title: "Install ASCEND on your device", body: "Add ASCEND to your home screen so it opens like an app - faster, full-screen, and it still works when you're offline." }
+  // Already running as the installed app (opened from the home screen icon)
+  // - nothing to offer, so drop the step entirely.
+  ].filter((st) => st.selector !== "__install__" || !ascendIsStandalone());
   const [step, setStep] = useState(0);
   const [rect, setRect] = useState(null);
   const wasMenuOpenedByTour = useRef(false);
@@ -6509,8 +6545,8 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
         />
       )}
       <div className="card" role="dialog" aria-live="polite" aria-label={s.title} style={{ ...tipStyle, padding: "20px 20px 16px" }}>
-        <h3 style={{ fontSize: 17, margin: "0 0 6px" }}>{s.title}</h3>
-        <p style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6, margin: "0 0 16px" }}>{s.body}</p>
+        <h3 style={{ fontSize: 17, margin: "0 0 6px" }}>{s.selector === "__install__" && ascendIsIOS() ? "Install ASCEND on your iPhone/iPad" : s.title}</h3>
+        <p style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6, margin: "0 0 16px" }}>{s.selector === "__install__" && ascendIsIOS() ? "Tap the Share icon in Safari's toolbar (the square with an arrow), then choose \"Add to Home Screen\". ASCEND will then open full-screen, like a real app." : s.body}</p>
         <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 14 }}>
           {steps.map((_, i) => (
             <span key={i} style={{ width: i === step ? 16 : 6, height: 6, borderRadius: 3, background: i === step ? "var(--amber)" : "var(--line)", transition: "width .2s" }} />
@@ -6519,7 +6555,21 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
         <div style={{ display: "flex", gap: 6 }}>
           {!isFirst && <button className="btn btn-g btn-sm" style={{ flex: 1 }} onClick={() => setStep(step - 1)}>Back</button>}
           {!isLast && <button className="btn btn-g btn-sm" style={{ flex: 1 }} onClick={finish}>Skip</button>}
-          <button className="btn btn-a btn-sm" style={{ flex: isLast ? 2 : 1.4 }} onClick={() => isLast ? finish() : setStep(step + 1)}>{isLast ? "Let's go" : "Next"}</button>
+          {isLast && s.selector === "__install__" && window.__ascendInstallPrompt && <button className="btn btn-g btn-sm" style={{ flex: 1 }} onClick={finish}>Not now</button>}
+          <button
+            className="btn btn-a btn-sm"
+            style={{ flex: isLast ? 2 : 1.4 }}
+            onClick={async () => {
+              if (isLast && s.selector === "__install__" && window.__ascendInstallPrompt) { await ascendTriggerInstall(); }
+              if (isLast) finish(); else setStep(step + 1);
+            }}
+          >
+            {isLast
+              ? (s.selector === "__install__" && window.__ascendInstallPrompt
+                  ? "Add to Home Screen"
+                  : (s.selector === "__install__" && ascendIsIOS() ? "Got it" : "Let's go"))
+              : "Next"}
+          </button>
         </div>
       </div>
     </>
@@ -14134,6 +14184,10 @@ export default function App() {
     setAvatarPickerOpen(true);
   }, [progress]);
   const [showWelcomeTour, setShowWelcomeTour] = useState(false);
+  const [installAvailable, setInstallAvailable] = useState(false);
+  const [iosInstallHelpOpen, setIosInstallHelpOpen] = useState(false);
+  // Device/display-mode don't change mid-session, so a plain const is fine.
+  const iosInstallable = ascendIsIOS() && !ascendIsStandalone();
   const [lastTopic, setLastTopic] = useState(null);
   const [showTop, setShowTop] = useState(false);
   // App-wide online presence: tracked here at the root so a student counts as
@@ -14824,9 +14878,17 @@ export default function App() {
 
     // Capture the install prompt so the app can offer "Add to home screen"
     // later. We stash it rather than preventing default, so browsers that show
-    // their own install affordance still work.
+    // their own install affordance still work. installAvailable drives both
+    // the one-time tour install step and the persistent topbar plus button.
     window.addEventListener("beforeinstallprompt", (e) => {
       try { window.__ascendInstallPrompt = e; } catch (err) {}
+      setInstallAvailable(true);
+    });
+    // Once installed (via either affordance, or the browser's own menu),
+    // drop the stashed prompt and hide every install affordance.
+    window.addEventListener("appinstalled", () => {
+      try { window.__ascendInstallPrompt = null; } catch (err) {}
+      setInstallAvailable(false);
     });
 
     (async () => {
@@ -15913,6 +15975,26 @@ export default function App() {
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }} className="topbar-icons">
                 <span className="chip streakchip" data-tour="streak"><Ic.flame p={15} /><span className="val"><AnimatedCounter value={progress?.streak || 0} /></span></span>
                 <button className="iconbtn" onClick={() => go("search")} title="Search all courses"><Ic.search p={17} /></button>
+                {(installAvailable || iosInstallable) && (
+                  <button
+                    className="iconbtn"
+                    onClick={async () => {
+                      if (installAvailable) { await ascendTriggerInstall(); setInstallAvailable(false); }
+                      else setIosInstallHelpOpen(true);
+                    }}
+                    title="Add ASCEND to your home screen"
+                  ><Ic.plus p={18} /></button>
+                )}
+                {iosInstallHelpOpen && createPortal(
+                  <div className={rootCls} style={{ position: "fixed", inset: 0, zIndex: 10000, background: "rgba(6,9,16,.72)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }} onClick={() => setIosInstallHelpOpen(false)}>
+                    <div className="card" style={{ maxWidth: 340, padding: "20px 20px 16px" }} onClick={(e) => e.stopPropagation()}>
+                      <h3 style={{ fontSize: 17, margin: "0 0 6px" }}>Install ASCEND on your iPhone/iPad</h3>
+                      <p style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6, margin: "0 0 16px" }}>Tap the Share icon in Safari's toolbar (the square with an arrow), then choose "Add to Home Screen". ASCEND will then open full-screen, like a real app.</p>
+                      <button className="btn btn-a btn-sm" style={{ width: "100%" }} onClick={() => setIosInstallHelpOpen(false)}>Got it</button>
+                    </div>
+                  </div>,
+                  document.body
+                )}
                 <button className="iconbtn" onClick={toggleFontScale} title={"Text size: " + (fontScale === "small" ? "Small" : fontScale === "large" ? "Large" : "Normal") + " (tap to change)"}><Ic.textSize p={17} /></button>
                               <button className="iconbtn" onClick={toggleTheme} title={theme === "light" ? "Theme: Light" : "Theme: Dark"}>{theme === "light" ? <Ic.sun p={17} /> : <Ic.moon p={17} />}</button>
                 <button className="iconbtn" onClick={openNotif} title="Notifications"><Ic.bell p={18} />{unreadCount > 0 && <span className="notif-badge">{unreadCount > 9 ? "9+" : unreadCount}</span>}</button>
