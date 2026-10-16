@@ -14195,8 +14195,34 @@ export default function App() {
   const [showWelcomeTour, setShowWelcomeTour] = useState(false);
   const [installAvailable, setInstallAvailable] = useState(false);
   const [iosInstallHelpOpen, setIosInstallHelpOpen] = useState(false);
+  const [iosInstallFollowUp, setIosInstallFollowUp] = useState(false);
   // Device/display-mode don't change mid-session, so a plain const is fine.
   const iosInstallable = ascendIsIOS() && !ascendIsStandalone();
+
+  // Safari's share sheet backgrounds the page (visibilitychange -> hidden) and we
+  // can't see what happened inside it. When the page becomes visible again after
+  // our toast sent them into Share, and the app still isn't installed, show a
+  // light "try again" nudge instead of claiming to know what they tapped.
+  useEffect(() => {
+    if (!iosInstallable) return;
+    let hiddenAt = null;
+    // A notification peek or a quick lock/unlock can also flip visibility - those
+    // are typically under ~1.5s. The share sheet stays open while the person reads
+    // it and scrolls to find "Add to Home Screen," so require a longer gap before
+    // treating the round-trip as a real share-sheet visit.
+    const MIN_HIDDEN_MS = 1500;
+    const onVisibility = () => {
+      if (document.visibilityState === "hidden" && iosInstallHelpOpen) {
+        hiddenAt = Date.now();
+      } else if (document.visibilityState === "visible" && hiddenAt) {
+        const hiddenMs = Date.now() - hiddenAt;
+        hiddenAt = null;
+        if (hiddenMs >= MIN_HIDDEN_MS && !ascendIsStandalone()) setIosInstallFollowUp(true);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, [iosInstallable, iosInstallHelpOpen]);
   const [lastTopic, setLastTopic] = useState(null);
   const [showTop, setShowTop] = useState(false);
   // App-wide online presence: tracked here at the root so a student counts as
@@ -15926,7 +15952,6 @@ export default function App() {
       <style>{`@keyframes rankUpPop{0%{transform:scale(.75);opacity:0}60%{transform:scale(1.04);opacity:1}100%{transform:scale(1)}}`}</style>
       <style>{`@keyframes updateToastIn{0%{transform:translateY(-16px);opacity:0}100%{transform:translateY(0);opacity:1}}`}</style>
       <style>{`@keyframes ascendBounceDown { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } } @keyframes ascendBounceUp { 0%,100% { transform: translateY(0) rotate(180deg); } 50% { transform: translateY(-6px) rotate(180deg); } }`}</style>
-      
       {resumeOverlay}
       {rankUpOverlay}
       {achOverlay}
@@ -16019,7 +16044,7 @@ export default function App() {
                       <div className="card" style={{ padding: "14px 16px", display: "flex", alignItems: "center", gap: 12, boxShadow: "0 8px 28px rgba(0,0,0,.35)" }}>
                         <Ic.iosShare p={22} style={{ flexShrink: 0, color: "var(--accent, #4f8cff)" }} />
                         <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.5, color: "var(--text-1)", flex: 1 }}>
-                          Tap <strong>Share</strong> {ascendIsIPad() ? "above" : "below"}, then <strong>Add to Home Screen</strong>
+                          Tap <strong>Share</strong> {ascendIsIPad() ? "above" : "below"}, scroll down, then tap <strong>Add to Home Screen</strong>
                         </p>
                         <button className="iconbtn" onClick={() => setIosInstallHelpOpen(false)} title="Dismiss" style={{ flexShrink: 0 }}><Ic.x p={16} /></button>
                       </div>
@@ -16028,6 +16053,26 @@ export default function App() {
                           <span style={{ animation: "ascendBounceDown 1.1s ease-in-out infinite" }}><Ic.iosShare p={22} style={{ color: "var(--accent, #4f8cff)" }} /></span>
                         </div>
                       )}
+                    </div>
+                  </div>,
+                  document.body
+                )}
+                {iosInstallFollowUp && createPortal(
+                  <div
+                    style={{
+                      position: "fixed",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      bottom: "calc(env(safe-area-inset-bottom, 0px) + 14px)",
+                      width: "min(92vw, 360px)",
+                      zIndex: 10001,
+                    }}
+                  >
+                    <div className="card" style={{ padding: "12px 16px", display: "flex", alignItems: "center", gap: 10, boxShadow: "0 8px 28px rgba(0,0,0,.35)" }}>
+                      <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: "var(--text-2)", flex: 1 }}>
+                        Didn't see ASCEND land on your home screen? <a href="#" onClick={(e) => { e.preventDefault(); setIosInstallFollowUp(false); setIosInstallHelpOpen(true); }} style={{ color: "var(--accent, #4f8cff)", fontWeight: 600 }}>Try again</a>
+                      </p>
+                      <button className="iconbtn" onClick={() => setIosInstallFollowUp(false)} title="Dismiss" style={{ flexShrink: 0 }}><Ic.x p={14} /></button>
                     </div>
                   </div>,
                   document.body
