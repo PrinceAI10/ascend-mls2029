@@ -1196,42 +1196,49 @@ function PasswordInput({ value, onChange, placeholder, label, id, autoComplete =
 // and merged in via COURSES / TOPICS at the bottom of this block, so this
 // array itself never needs to change again once tagged.
 const COURSES_L100_S2 = [
-  { id: "ana", name: "Human Anatomy", code: "SMS 186", day: "Monday", level: 100, semester: 2 },
-  { id: "phy", name: "General Physiology", code: "SMS 184", day: "Tuesday", level: 100, semester: 2 },
-  { id: "bch", name: "Biochemistry", code: "MLS 158", day: "Wednesday", level: 100, semester: 2 },
-  { id: "bio", name: "Biological Chemistry", code: "BIOL 158", day: "Thursday", level: 100, semester: 2 },
-  { id: "psy", name: "Medical Psychology", code: "SMS 154", day: "Friday", level: 100, semester: 2 },
-  { id: "com", name: "Communication Skills II", code: "ENGL 158", day: "Saturday", level: 100, semester: 2 },
-  { id: "lab", name: "Lab Safety & Instrumentation", code: "MLS 152", day: "Sunday", level: 100, semester: 2 },
-  { id: "bcp", name: "Biochemistry Practicals", code: "MLS 158P", day: "Sunday", level: 100, semester: 2 },
-  { id: "phyp", name: "Physiology Practicals", code: "SMS 184P", day: "Sunday", level: 100, semester: 2 },
+  { id: "ana", name: "Human Anatomy", code: "SMS 186", day: "Monday", level: 100, semester: 2, cr: 3 },
+  { id: "phy", name: "General Physiology", code: "SMS 184", day: "Tuesday", level: 100, semester: 2, cr: 3 },
+  { id: "bch", name: "Biochemistry", code: "MLS 158", day: "Wednesday", level: 100, semester: 2, cr: 3 },
+  { id: "bio", name: "Biological Chemistry", code: "BIOL 158", day: "Thursday", level: 100, semester: 2, cr: 3 },
+  { id: "psy", name: "Medical Psychology", code: "SMS 154", day: "Friday", level: 100, semester: 2, cr: 2 },
+  { id: "com", name: "Communication Skills II", code: "ENGL 158", day: "Saturday", level: 100, semester: 2, cr: 2 },
+  { id: "lab", name: "Lab Safety & Instrumentation", code: "MLS 152", day: "Sunday", level: 100, semester: 2, cr: 2 },
+  // bcp/phyp credit hours haven't been supplied yet (the old hardcoded
+  // planCourses list that CWA used to run on only had these other 7). Left
+  // at 0 rather than guessed - a 0-credit course just contributes nothing
+  // to the CWA calc, same as the known-0 practicals in L200 S1 below.
+  // Update these once the real credit hours are known.
+  { id: "bcp", name: "Biochemistry Practicals", code: "MLS 158P", day: "Sunday", level: 100, semester: 2, cr: 0 },
+  { id: "phyp", name: "Physiology Practicals", code: "SMS 184P", day: "Sunday", level: 100, semester: 2, cr: 0 },
 ];
 
 // ---- Level 100, Semester 1 (incoming freshmen) ----
+// Credit hours not yet supplied for this semester - left at 0 (contributes
+// nothing to CWA calc) until known. Update once available.
 const COURSES_L100_S1 = [
-  { id: "bc1", name: "Biological Chemistry I", code: "BIOL 157", level: 100, semester: 1 },
-  { id: "bph", name: "Biophysics", code: "MLS 155", level: 100, semester: 1 },
-  { id: "cm1", name: "Communication Skills I", code: "ENGL 157", level: 100, semester: 1 },
-  { id: "alg", name: "Algebra", code: "MATH 157", level: 100, semester: 1 },
-  { id: "mgn", name: "Medical Genetics", code: "BIOL 153", level: 100, semester: 1 },
-  { id: "stm", name: "Statistical Methods", code: "STAT 153", level: 100, semester: 1 },
-  { id: "cap", name: "Computer Appreciation", code: "CSM 177", level: 100, semester: 1 },
-  { id: "csf", name: "Cell Structure and Function", code: "BIOL 151", level: 100, semester: 1 },
+  { id: "bc1", name: "Biological Chemistry I", code: "BIOL 157", level: 100, semester: 1, cr: 0 },
+  { id: "bph", name: "Biophysics", code: "MLS 155", level: 100, semester: 1, cr: 0 },
+  { id: "cm1", name: "Communication Skills I", code: "ENGL 157", level: 100, semester: 1, cr: 0 },
+  { id: "alg", name: "Algebra", code: "MATH 157", level: 100, semester: 1, cr: 0 },
+  { id: "mgn", name: "Medical Genetics", code: "BIOL 153", level: 100, semester: 1, cr: 0 },
+  { id: "stm", name: "Statistical Methods", code: "STAT 153", level: 100, semester: 1, cr: 0 },
+  { id: "cap", name: "Computer Appreciation", code: "CSM 177", level: 100, semester: 1, cr: 0 },
+  { id: "csf", name: "Cell Structure and Function", code: "BIOL 151", level: 100, semester: 1, cr: 0 },
 ];
 
 // ---- Level 200, Semester 1 ----
 const COURSES_L200_S1 = [
-  { id: "ph2", name: "Physiology II", code: "SMS 283", level: 200, semester: 1 },
-  { id: "ph2p", name: "Physiology II Practicals", code: "SMS 283P", level: 200, semester: 1 },
-  { id: "micp", name: "Microbiology I Practicals", code: "SMS 293P", level: 200, semester: 1, contentMode: "practical-application", sourceCourseId: "mic" },
-  { id: "hemp", name: "Hematology I Practicals", code: "SMS 287P", level: 200, semester: 1, contentMode: "practical-application", sourceCourseId: "hem" },
-  { id: "bc2p", name: "Biochemistry II Practicals", code: "SMS 281P", level: 200, semester: 1 },
-  { id: "pat", name: "General Pathology", code: "SMS 291", level: 200, semester: 1 },
-  { id: "mic", name: "Microbiology I", code: "SMS 293", level: 200, semester: 1 },
-  { id: "bc2", name: "Biochemistry II", code: "SMS 281", level: 200, semester: 1 },
-  { id: "hem", name: "Hematology I", code: "SMS 287", level: 200, semester: 1 },
-  { id: "pha", name: "Pharmacology I", code: "SMS 295", level: 200, semester: 1 },
-  { id: "an2", name: "Anatomy II", code: "SMS 285", level: 200, semester: 1 },
+  { id: "ph2", name: "Physiology II", code: "SMS 283", level: 200, semester: 1, cr: 3 },
+  { id: "ph2p", name: "Physiology II Practicals", code: "SMS 283P", level: 200, semester: 1, cr: 0 },
+  { id: "micp", name: "Microbiology I Practicals", code: "SMS 293P", level: 200, semester: 1, contentMode: "practical-application", sourceCourseId: "mic", cr: 1 },
+  { id: "hemp", name: "Hematology I Practicals", code: "SMS 287P", level: 200, semester: 1, contentMode: "practical-application", sourceCourseId: "hem", cr: 1 },
+  { id: "bc2p", name: "Biochemistry II Practicals", code: "SMS 281P", level: 200, semester: 1, cr: 0 },
+  { id: "pat", name: "General Pathology", code: "SMS 291", level: 200, semester: 1, cr: 3 },
+  { id: "mic", name: "Microbiology I", code: "SMS 293", level: 200, semester: 1, cr: 2 },
+  { id: "bc2", name: "Biochemistry II", code: "SMS 281", level: 200, semester: 1, cr: 3 },
+  { id: "hem", name: "Hematology I", code: "SMS 287", level: 200, semester: 1, cr: 2 },
+  { id: "pha", name: "Pharmacology I", code: "SMS 295", level: 200, semester: 1, cr: 2 },
+  { id: "an2", name: "Anatomy II", code: "SMS 285", level: 200, semester: 1, cr: 3 },
 ];
 
 // Master course list. Order matters only for display fallbacks; everywhere
@@ -6157,12 +6164,20 @@ function CoursesView({ app }) {
       <div className="card" style={{ marginTop: 14 }}>
         <div className="eyebrow" style={{ marginBottom: 10 }}>Weekly rotation</div>
         <div className="grid" style={{ gap: 6 }}>
-          {[1, 2, 3, 4, 5, 6, 0].map((wd) => (
-            <div key={wd} style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5, padding: "5px 2px", color: wd === jsDay ? "var(--amber-2)" : "var(--text-2)", fontWeight: wd === jsDay ? 650 : 500 }}>
-              <span className="mono" style={{ color: wd === jsDay ? "var(--amber)" : "var(--text-3)" }}>{["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][wd]}</span>
-              <span>{courseById(DAILY[wd].courseId).name}</span>
-            </div>
-          ))}
+          {[1, 2, 3, 4, 5, 6, 0].map((wd) => {
+            // Same rotation the actual question set uses (visList, the
+            // student's real level/semester courses) - this widget used to
+            // read the hardcoded Level 100 Sem 2 DAILY map directly, so it
+            // kept showing that old schedule even for students whose daily
+            // questions were already correctly on their own level's courses.
+            const wdCourse = visList.length ? courseById(visList[wd % visList.length].id) : courseById(DAILY[wd].courseId);
+            return (
+              <div key={wd} style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5, padding: "5px 2px", color: wd === jsDay ? "var(--amber-2)" : "var(--text-2)", fontWeight: wd === jsDay ? 650 : 500 }}>
+                <span className="mono" style={{ color: wd === jsDay ? "var(--amber)" : "var(--text-3)" }}>{["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][wd]}</span>
+                <span>{wdCourse ? wdCourse.name : "-"}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -12868,23 +12883,33 @@ const MAX_VISIBLE_ANNOUNCEMENTS = 12;
 const VISIBLE_ANNOUNCEMENTS = ANNOUNCEMENTS.slice(0, MAX_VISIBLE_ANNOUNCEMENTS);
 
 /* ------------------------------- plan (CWA) ----------------------------- */
-function PlanView() {
-  const planCourses = [
-    { id: "ana", name: "Human Anatomy", cr: 3 },
-    { id: "phy", name: "General Physiology", cr: 3 },
-    { id: "bch", name: "Biochemistry", cr: 3 },
-    { id: "bio", name: "Biological Chemistry", cr: 3 },
-    { id: "psy", name: "Medical Psychology", cr: 2 },
-    { id: "com", name: "Communication Skills II", cr: 2 },
-    { id: "lab", name: "Lab Safety & Instrumentation", cr: 2 }
-  ];
+function PlanView({ app }) {
+  // Courses + credit hours now come from the student's OWN level/semester
+  // (the same gating every other tab uses), instead of a hardcoded Level
+  // 100 Sem 2 list. 0-credit courses (practicals with no credit value yet,
+  // or ones that just don't contribute to CWA) are filtered out here so
+  // they don't clutter the per-course breakdown or skew totals.
+  const planCourses = useMemo(
+    () => visibleCoursesFor(app && app.progress).filter((c) => (c.cr || 0) > 0),
+    [app && app.progress && app.progress.level, app && app.progress && app.progress.semester]
+  );
+  const defaultThisCr = planCourses.reduce((sum, c) => sum + (c.cr || 0), 0);
   const [prevCWA, setPrevCWA] = useState("");
   const [prevCr, setPrevCr] = useState("21");
-  const [thisCr, setThisCr] = useState("20");
+  const [thisCr, setThisCr] = useState(String(defaultThisCr || 20));
   const [target, setTarget] = useState("");
   const [aiScore, setAiScore] = useState("95");
   const [counts, setCounts] = useState(() => Object.fromEntries(planCourses.map((c) => [c.id, { mid: "80", fin: "200" }])));
   const AI_CR = 2;
+  // If the student's level/semester changes (e.g. they open the level
+  // picker), re-seed thisCr and the per-course counts to match the new
+  // course list rather than silently keeping stale ones.
+  const planCourseIds = planCourses.map((c) => c.id).join(",");
+  useEffect(() => {
+    setThisCr(String(defaultThisCr || 20));
+    setCounts(Object.fromEntries(planCourses.map((c) => [c.id, { mid: "80", fin: "200" }])));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [planCourseIds]);
   const pc = parseFloat(prevCWA), pcr = parseFloat(prevCr), tcr = parseFloat(thisCr), tg = parseFloat(target);
   const ai = parseFloat(aiScore);
   const valid = [pc, pcr, tcr, tg].every((x) => !isNaN(x)) && pcr > 0 && tcr > 0 && tg > 0 && tg <= 100 && pc >= 0 && pc <= 100;
@@ -15694,7 +15719,7 @@ export default function App() {
       case "search": return <SearchView app={app} />;
       case "tools": return <StudyToolsView app={app} />;
       case "papers": return <PapersView app={app} />;
-      case "plan": return <PlanView />;
+      case "plan": return <PlanView app={app} />;
       case "resources": return <ResourcesView />;
       case "slides": return <SlidesView app={app} />;
       case "atlas": return <AtlasView app={app} />;
