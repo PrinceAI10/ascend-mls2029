@@ -97,7 +97,7 @@ if (typeof window !== 'undefined') {
 }
 
 /* =========================================================================
-   ASCEND  -  MLS 2029 (KNUST) study platform
+   ASCEND  -  study platform
    Framework complete. Content objects get registered in CONTENT below.
    ========================================================================= */
 const CSS = `
@@ -183,6 +183,12 @@ html, body {
 .view{animation:fadeUp .32s cubic-bezier(.2,.7,.3,1) both;max-width:100%;overflow-x:hidden}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.view{animation:none}}
+/* Home screen: each major section rises in with its own stagger delay
+   (set inline per-section via style.animationDelay) instead of the whole
+   view just fading up as one flat block. */
+.home-rise{opacity:0;animation:riseIn .55s cubic-bezier(.2,.8,.2,1) both}
+@keyframes riseIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.home-rise{animation:none;opacity:1}}
 .mobile-sidebar-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.5);display:flex;align-items:flex-start}
 .mobile-sidebar{width:280px;max-width:80vw;height:100vh;height:100dvh;background:var(--bg-2);
   border-right:1px solid var(--line);display:flex;flex-direction:column;padding:8px 0;overflow-y:auto}
@@ -234,17 +240,26 @@ html, body {
 .brand-word{font-weight:800;letter-spacing:.02em;font-size:17px;
   font-family:'Pacifico','Brush Script MT','Segoe Script',cursive,Calibri,system-ui,sans-serif;
   visibility:hidden;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
-.brand-hero{gap:12px}
+.brand-hero{gap:12px;position:relative;animation:brandPopIn .7s cubic-bezier(.2,.8,.2,1) both}
+.brand-hero::before{content:"";position:absolute;left:50%;top:50%;width:260px;height:260px;
+  transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;z-index:-1;
+  background:radial-gradient(circle,var(--amber-dim) 0%,transparent 70%);
+  animation:haloPulse 2.4s ease-in-out infinite}
 .brand-word-hero{font-family:'Pacifico','Brush Script MT','Segoe Script',cursive,Calibri,system-ui,sans-serif;
   font-weight:400;font-size:clamp(30px,7vw,42px);letter-spacing:.01em;font-style:normal;
-  background:linear-gradient(120deg,var(--text) 0%,var(--amber) 100%);
+  background:linear-gradient(120deg,var(--text) 0%,var(--amber) 35%,var(--amber-2) 50%,var(--amber) 65%,var(--text) 100%);
+  background-size:260% 100%;
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  line-height:1;visibility:hidden}
+  line-height:1;visibility:hidden;animation:shimmerSweep 2.6s linear infinite}
 html.ascend-pacifico-ready .brand-word,html.ascend-pacifico-ready .brand-word-hero{visibility:visible}
 .brand-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--text-3);
   text-transform:uppercase;margin-top:1px}
 .brand-sub-hero{font-family:Calibri,system-ui,sans-serif;font-size:clamp(13px,2.4vw,16px);
-  letter-spacing:.32em;margin-top:4px}
+  letter-spacing:.32em;margin-top:4px;opacity:0;animation:fadeUp .5s cubic-bezier(.2,.7,.3,1) .35s both}
+@keyframes brandPopIn{0%{opacity:0;transform:scale(.82) translateY(6px)}60%{opacity:1;transform:scale(1.04) translateY(0)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes haloPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(.85)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
+@keyframes shimmerSweep{0%{background-position:0% 50%}100%{background-position:-260% 50%}}
+@media (prefers-reduced-motion:reduce){.brand-hero,.brand-hero::before,.brand-word-hero,.brand-sub-hero{animation:none;opacity:1}}
 .navi{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:var(--r-sm);
   color:var(--text-2);font-weight:550;font-size:14.5px;transition:background .15s,color .15s;width:100%;text-align:left}
 .navi:hover{background:var(--bg-3);color:var(--text)}
@@ -395,6 +410,19 @@ textarea.pastebox:focus{border-color:var(--amber)}
   border:3px solid var(--line-2);border-top-color:var(--amber);
   animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+/* Splash-screen loader: a soft outer ring plus a bright comet dot that
+   orbits it, trailing a glow - more presence than the plain spinner-ring
+   used for small in-page loading states. */
+.loader-orbit{position:relative;width:46px;height:46px}
+.loader-orbit::before{content:"";position:absolute;inset:0;border-radius:50%;
+  border:3px solid var(--line-2)}
+.loader-orbit::after{content:"";position:absolute;top:-3px;left:50%;width:10px;height:10px;
+  margin-left:-5px;border-radius:50%;background:var(--amber);
+  box-shadow:0 0 10px 2px var(--amber),0 0 20px 4px var(--amber-dim);
+  animation:orbitSpin 1.1s cubic-bezier(.5,0,.5,1) infinite;
+  transform-origin:5px 26px}
+@keyframes orbitSpin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.loader-orbit::after{animation:none}}
 @keyframes bl{0%,60%,100%{opacity:.25}30%{opacity:1}}
 .divider{height:1px;background:linear-gradient(90deg,var(--line) 0%,var(--line) 60%,transparent 100%);margin:24px 0}
 .back{display:inline-flex;align-items:center;gap:6px;color:var(--text-2);font-size:13.5px;font-weight:600;margin-bottom:14px;cursor:pointer}
@@ -3278,7 +3306,7 @@ function buildShareCardCanvas({ kind, title, subtitle, statLabel, statValue, col
   ctx.letterSpacing = "0px";
   ctx.font = "600 20px Arial";
   ctx.fillStyle = "rgba(255,255,255,0.4)";
-  ctx.fillText("MLS · Class of 2029", cardX + 48, headY + 28);
+  ctx.fillText("Study Platform", cardX + 48, headY + 28);
 
   ctx.textAlign = "right";
   const pillLabel = (kind || "MILESTONE").toUpperCase();
@@ -3501,7 +3529,7 @@ const Wordmark = ({ hero = false }) => (
       <rect x="10.8" y="9" width="4.5" height="14" rx="1.4" fill="var(--amber)" opacity=".8" />
       <rect x="18.5" y="3" width="4.5" height="20" rx="1.4" fill="var(--amber)" />
     </svg>
-    <div><div className={hero ? "brand-word brand-word-hero" : "brand-word"}>ASCEND</div><div className={hero ? "brand-sub brand-sub-hero" : "brand-sub"}>MLS 2029</div></div>
+    <div><div className={hero ? "brand-word brand-word-hero" : "brand-word"}>ASCEND</div><div className={hero ? "brand-sub brand-sub-hero" : "brand-sub"}>Study Platform</div></div>
   </div>
 );
 
@@ -11914,7 +11942,7 @@ function HomeView({ app }) {
       fontSize: "clamp(13.5px, 1.3vw, 16px)", 
       lineHeight: 1.6,
       fontWeight: 400
-    }}>Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
+    }}>Built by Prince, Ansah, Jeffery and Dacosta so every student rises together.</p>
   </div>
 </div>
 
@@ -11977,7 +12005,7 @@ function HomeView({ app }) {
         )}
       </div>
 
-      <div className="grid g4" data-tour="quick-actions" style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: 10 }}>
+      <div className="grid g4 home-rise" data-tour="quick-actions" style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: 10, animationDelay: "0.05s" }}>
         {/* FIX: the shared .card class sets overflow:hidden (needed elsewhere
             to clip other card content), and these buttons had no minHeight -
             at Normal text size a one-line label like "Continue" fits inside
@@ -12008,10 +12036,11 @@ function HomeView({ app }) {
         </button>
       </div>
 
-      <DuoStreakCard app={app} />
+      <div className="home-rise" style={{ animationDelay: "0.10s" }}><DuoStreakCard app={app} /></div>
 
-      <WeeklyRecapCard app={app} />
+      <div className="home-rise" style={{ animationDelay: "0.15s" }}><WeeklyRecapCard app={app} /></div>
 
+      <div className="home-rise" style={{ animationDelay: "0.20s" }}>
       {(() => {
         const mq = motivationForToday();
         return (
@@ -12025,15 +12054,16 @@ function HomeView({ app }) {
           </div>
         );
       })()}
+      </div>
 
-      <NextExamCard />
+      <div className="home-rise" style={{ animationDelay: "0.25s" }}><NextExamCard /></div>
 
-      <StudyCalendar progress={app.progress} />
+      <div className="home-rise" style={{ animationDelay: "0.30s" }}><StudyCalendar progress={app.progress} /></div>
 
       <div className="grid g3" style={{ marginTop: 16 }}>
         <div className="card">
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <span className="chip streakchip"><Ic.flame p={16} /><span className="val">{app.progress.streak}</span></span>
+            <span className="chip streakchip"><Ic.flame p={16} style={app.progress.streak > 0 ? { animation: "badgePulse 2.1s ease-in-out infinite" } : undefined} /><span className="val">{app.progress.streak}</span></span>
             <span className="eyebrow">Streak</span>
           </div>
           <div style={{ marginTop: 12, fontSize: 14, color: "var(--text-2)" }}>{doneToday ? "Logged today." : "Answer today's question."}</div>
@@ -12149,7 +12179,7 @@ function HomeView({ app }) {
       </span>
     ))}
   </div>
-  <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 12, lineHeight: 1.6 }}>For the MLS Class of 2029. No gatekeeping.</div>
+  <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 12, lineHeight: 1.6 }}>Built for students. No gatekeeping.</div>
   
   {/* Admin-only feedback link */}
   <div style={{ marginTop: 10, opacity: 0.3 }}>
@@ -15871,9 +15901,10 @@ export default function App() {
   if (!loaded) return (
     <div className={rootCls}>
       <style>{CSS}</style>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18, minHeight: "100vh" }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 20, minHeight: "100vh" }}>
         <Wordmark hero />
-        <div className="spinner-ring" />
+        <div className="loader-orbit" />
+        <div style={{ color: "var(--text-3)", fontSize: 12.5, letterSpacing: ".08em", opacity: 0, animation: "fadeUp .5s cubic-bezier(.2,.7,.3,1) .55s both" }}>Getting your dashboard ready…</div>
       </div>
     </div>
   );
@@ -16196,7 +16227,7 @@ export default function App() {
           </div>
 
           <footer style={{ textAlign: "center", padding: "24px 16px 32px", marginTop: 8, color: "var(--text-2)", fontSize: 12.5, lineHeight: 1.6, borderTop: "1px solid var(--line)" }}>
-            © 2026 ASCEND · Built by Prince, Ansah, Jeffery &amp; Dacosta for the MLS Class of 2029. All rights reserved.
+            © 2026 ASCEND · Built by Prince, Ansah, Jeffery &amp; Dacosta. All rights reserved.
           </footer>
           
         </div>
