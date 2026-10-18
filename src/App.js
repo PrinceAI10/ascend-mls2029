@@ -1203,27 +1203,22 @@ const COURSES_L100_S2 = [
   { id: "psy", name: "Medical Psychology", code: "SMS 154", day: "Friday", level: 100, semester: 2, cr: 2 },
   { id: "com", name: "Communication Skills II", code: "ENGL 158", day: "Saturday", level: 100, semester: 2, cr: 2 },
   { id: "lab", name: "Lab Safety & Instrumentation", code: "MLS 152", day: "Sunday", level: 100, semester: 2, cr: 2 },
-  // bcp/phyp credit hours haven't been supplied yet (the old hardcoded
-  // planCourses list that CWA used to run on only had these other 7). Left
-  // at 0 rather than guessed - a 0-credit course just contributes nothing
-  // to the CWA calc, same as the known-0 practicals in L200 S1 below.
-  // Update these once the real credit hours are known.
+  // Confirmed: Biochemistry Practicals and Physiology Practicals don't
+  // contribute to CWA - cr: 0 is correct and final, not a placeholder.
   { id: "bcp", name: "Biochemistry Practicals", code: "MLS 158P", day: "Sunday", level: 100, semester: 2, cr: 0 },
   { id: "phyp", name: "Physiology Practicals", code: "SMS 184P", day: "Sunday", level: 100, semester: 2, cr: 0 },
 ];
 
 // ---- Level 100, Semester 1 (incoming freshmen) ----
-// Credit hours not yet supplied for this semester - left at 0 (contributes
-// nothing to CWA calc) until known. Update once available.
 const COURSES_L100_S1 = [
-  { id: "bc1", name: "Biological Chemistry I", code: "BIOL 157", level: 100, semester: 1, cr: 0 },
-  { id: "bph", name: "Biophysics", code: "MLS 155", level: 100, semester: 1, cr: 0 },
-  { id: "cm1", name: "Communication Skills I", code: "ENGL 157", level: 100, semester: 1, cr: 0 },
-  { id: "alg", name: "Algebra", code: "MATH 157", level: 100, semester: 1, cr: 0 },
-  { id: "mgn", name: "Medical Genetics", code: "BIOL 153", level: 100, semester: 1, cr: 0 },
-  { id: "stm", name: "Statistical Methods", code: "STAT 153", level: 100, semester: 1, cr: 0 },
-  { id: "cap", name: "Computer Appreciation", code: "CSM 177", level: 100, semester: 1, cr: 0 },
-  { id: "csf", name: "Cell Structure and Function", code: "BIOL 151", level: 100, semester: 1, cr: 0 },
+  { id: "bc1", name: "Biological Chemistry I", code: "BIOL 157", level: 100, semester: 1, cr: 3 },
+  { id: "bph", name: "Biophysics", code: "MLS 155", level: 100, semester: 1, cr: 3 },
+  { id: "cm1", name: "Communication Skills I", code: "ENGL 157", level: 100, semester: 1, cr: 2 },
+  { id: "alg", name: "Algebra", code: "MATH 157", level: 100, semester: 1, cr: 2 },
+  { id: "mgn", name: "Medical Genetics", code: "BIOL 153", level: 100, semester: 1, cr: 3 },
+  { id: "stm", name: "Statistical Methods", code: "STAT 153", level: 100, semester: 1, cr: 2 },
+  { id: "cap", name: "Computer Appreciation", code: "CSM 177", level: 100, semester: 1, cr: 3 },
+  { id: "csf", name: "Cell Structure and Function", code: "BIOL 151", level: 100, semester: 1, cr: 3 },
 ];
 
 // ---- Level 200, Semester 1 ----
@@ -12908,7 +12903,6 @@ function PlanView({ app }) {
   useEffect(() => {
     setThisCr(String(defaultThisCr || 20));
     setCounts(Object.fromEntries(planCourses.map((c) => [c.id, { mid: "80", fin: "200" }])));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [planCourseIds]);
   const pc = parseFloat(prevCWA), pcr = parseFloat(prevCr), tcr = parseFloat(thisCr), tg = parseFloat(target);
   const ai = parseFloat(aiScore);
