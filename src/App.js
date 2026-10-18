@@ -111,6 +111,7 @@ const CSS = `
   --violet:#9A8CFF; --violet-dim:rgba(154,140,255,.14);
   --teal:#45D8C8; --teal-dim:rgba(69,216,200,.14);
   --rose:#FF8FB1; --rose-dim:rgba(255,143,177,.14);
+  --live:#2E9BFF; --live-dim:rgba(46,155,255,.14);
   --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   --r:16px; --r-sm:11px;
@@ -153,6 +154,7 @@ html, body {
   --violet:#6C5CE0; --violet-dim:rgba(108,92,224,.12);
   --teal:#0F9E8E; --teal-dim:rgba(15,158,142,.12);
   --rose:#D6457A; --rose-dim:rgba(214,69,122,.12);
+  --live:#1E7FE0; --live-dim:rgba(30,127,224,.12);
   --card-shadow:0 1px 2px rgba(20,25,40,.04),0 8px 20px -6px rgba(20,25,40,.08);
 }
 .ascend-root.light .card{box-shadow:var(--card-shadow)}
@@ -1186,7 +1188,7 @@ function HotspotDiagram({ courseId, topicIndex }) {
             style={{
               position: "absolute", left: `${p.x}%`, top: `${p.y}%`, transform: "translate(-50%,-50%)",
               width: 26, height: 26, borderRadius: "50%", background: "rgba(46,155,255,0.25)",
-              border: "2px solid #2E9BFF", color: "#2E9BFF", fontWeight: 800, fontSize: 12.5,
+              border: "2px solid var(--live)", color: "var(--live)", fontWeight: 800, fontSize: 12.5,
               display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
               animation: openIdx === i ? "none" : "ascendHotspotPulse 1.8s ease-in-out infinite",
             }}
@@ -1197,8 +1199,8 @@ function HotspotDiagram({ courseId, topicIndex }) {
       </div>
       <style>{`@keyframes ascendHotspotPulse { 0%,100%{box-shadow:0 0 0 0 rgba(46,155,255,0.45)} 50%{box-shadow:0 0 0 8px rgba(46,155,255,0)} }`}</style>
       {data.points.map((p, i) => openIdx === i && (
-        <div key={i} className="card" style={{ marginTop: 10, borderColor: "#2E9BFF", background: "rgba(46,155,255,0.06)" }}>
-          <div style={{ fontWeight: 700, color: "#2E9BFF", marginBottom: 4 }}>{i + 1}. {p.label}</div>
+        <div key={i} className="card" style={{ marginTop: 10, borderColor: "var(--live)", background: "rgba(46,155,255,0.06)" }}>
+          <div style={{ fontWeight: 700, color: "var(--live)", marginBottom: 4 }}>{i + 1}. {p.label}</div>
           <div style={{ fontSize: 13.5, color: "var(--text-2)", lineHeight: 1.6 }}>{p.explain}</div>
         </div>
       ))}
@@ -5379,7 +5381,7 @@ function TopicView({ app, rootCls }) {
         </svg>
         <span>{Math.floor(readTime / 60)}m {readTime % 60}s read</span>
         {readingAwarded && (
-          <span style={{ color: "#2E9BFF", fontWeight: 600, marginLeft: 6 }}>✓ +15 XP</span>
+          <span style={{ color: "var(--live)", fontWeight: 600, marginLeft: 6 }}>✓ +15 XP</span>
         )}
       </div>
       
@@ -5388,20 +5390,20 @@ function TopicView({ app, rootCls }) {
         <div className="card" style={{
           marginTop: 12,
           padding: "10px 16px",
-          borderColor: "#2E9BFF",
+          borderColor: "var(--live)",
           borderWidth: 1,
           background: "rgba(46,155,255,0.08)",
           display: "flex",
           alignItems: "center",
           gap: 10
         }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E9BFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--live)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 2L2 7l10 5 10-5-10-5z" />
             <path d="M2 17l10 5 10-5" />
             <path d="M2 12l10 5 10-5" />
           </svg>
           <div>
-            <span style={{ fontWeight: 600, color: "#2E9BFF" }}>+15 XP</span>
+            <span style={{ fontWeight: 600, color: "var(--live)" }}>+15 XP</span>
             <span style={{ color: "var(--text-2)", fontSize: 13.5, marginLeft: 6 }}>for reading this topic</span>
           </div>
         </div>
@@ -6992,12 +6994,12 @@ function RanksView({ app }) {
           style={{
             display: "inline-flex", alignItems: "center", gap: 7, fontSize: 13, cursor: "pointer",
             padding: "5px 11px", borderRadius: 999,
-            border: "1px solid " + (onlineOnly ? "#2E9BFF" : "var(--line)"),
+            border: "1px solid " + (onlineOnly ? "var(--live)" : "var(--line)"),
             background: onlineOnly ? "rgba(46,155,255,0.12)" : "var(--bg-2)",
-            color: onlineOnly ? "#2E9BFF" : "var(--text-2)", fontWeight: onlineOnly ? 700 : 500
+            color: onlineOnly ? "var(--live)" : "var(--text-2)", fontWeight: onlineOnly ? 700 : 500
           }}
         >
-          <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#2E9BFF", display: "inline-block", boxShadow: "0 0 0 3px rgba(46,155,255,0.22)" }} />
+          <span style={{ width: 9, height: 9, borderRadius: "50%", background: "var(--live)", display: "inline-block", boxShadow: "0 0 0 3px rgba(46,155,255,0.22)" }} />
           {onlineCount} online now
           {onlineOnly && <span style={{ fontSize: 12, marginLeft: 1 }}>&times;</span>}
         </button>
@@ -7074,7 +7076,7 @@ function RanksView({ app }) {
               </div>
               <div style={{ position: "relative", flexShrink: 0 }}>
                 {p.avatar ? <Avatar config={p.avatar} size={34} /> : <div style={{ width: 34, height: 34, borderRadius: "50%", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 13, color: "var(--text-2)" }}>{p.name[0]}</div>}
-                <span title={p.online ? "Online now" : "Offline"} style={{ position: "absolute", bottom: -1, right: -1, width: 11, height: 11, borderRadius: "50%", background: p.online ? "#2E9BFF" : "var(--text-3)", border: "2px solid var(--bg-2)", boxShadow: p.online ? "0 0 0 1px #2E9BFF55" : "none" }} />
+                <span title={p.online ? "Online now" : "Offline"} style={{ position: "absolute", bottom: -1, right: -1, width: 11, height: 11, borderRadius: "50%", background: p.online ? "var(--live)" : "var(--text-3)", border: "2px solid var(--bg-2)", boxShadow: p.online ? "0 0 0 1px var(--live)55" : "none" }} />
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontWeight: 650, fontSize: 14.5, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.name}{p.me && <span style={{ color: "#F5B93F", fontSize: 12 }}> · you</span>}</div>
@@ -7088,14 +7090,14 @@ function RanksView({ app }) {
                   <div style={{
                     fontSize: 11,
                     fontWeight: 600,
-                    color: '#2E9BFF',
+                    color: 'var(--live)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'flex-end',
                     gap: 2,
                     marginTop: 1
                   }}>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2E9BFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--live)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 19V6M6 11l6-6 6 6" />
                     </svg>
                     +{xpChange.change}
@@ -7108,7 +7110,7 @@ function RanksView({ app }) {
                   </svg>
                   {p.streak}
                   {p.me && p.streak >= 7 && (
-                    <span style={{ color: "#2E9BFF", fontSize: 9, fontWeight: 600, marginLeft: 2 }}>1.5x</span>
+                    <span style={{ color: "var(--live)", fontSize: 9, fontWeight: 600, marginLeft: 2 }}>1.5x</span>
                   )}
                 </div>
               </div>
@@ -10167,20 +10169,20 @@ function PapersView({ app }) {
         <div className="card" style={{
           marginBottom: 12,
           padding: "10px 16px",
-          borderColor: "#2E9BFF",
+          borderColor: "var(--live)",
           borderWidth: 1,
           background: "rgba(46,155,255,0.08)",
           display: "flex",
           alignItems: "center",
           gap: 10
         }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E9BFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--live)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 2L2 7l10 5 10-5-10-5z" />
             <path d="M2 17l10 5 10-5" />
             <path d="M2 12l10 5 10-5" />
           </svg>
           <div>
-            <span style={{ fontWeight: 600, color: "#2E9BFF" }}>+{passcoNotif.earned} XP</span>
+            <span style={{ fontWeight: 600, color: "var(--live)" }}>+{passcoNotif.earned} XP</span>
             <span style={{ color: "var(--text-2)", fontSize: 13.5, marginLeft: 6 }}>from past paper practice</span>
           </div>
         </div>
@@ -11309,22 +11311,26 @@ function CommunityPulseCard({ app }) {
     io.observe(el);
     return () => io.disconnect();
   }, [inView, total]);
+  // Never show fewer than 200 - the real count will usually clear this
+  // once the cohort grows, but this keeps the card from looking sparse
+  // on a small/early userbase.
+  const shownTotal = total == null ? null : Math.max(total, 200);
   useEffect(() => {
-    if (total == null || !inView) return;
+    if (shownTotal == null || !inView) return;
     const dur = 2600, start = performance.now();
     let raf;
     const tick = (t) => {
       const p = Math.min(1, (t - start) / dur);
       const eased = 1 - Math.pow(1 - p, 3);
-      setDisplay(Math.round(eased * total));
+      setDisplay(Math.round(eased * shownTotal));
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [total, inView]);
+  }, [shownTotal, inView]);
   if (total == null || total < 1) return null;
   return (
-    <div ref={ref} className="card card-feature" style={{ marginTop: 16, textAlign: "center", position: "relative", overflow: "hidden", borderColor: "var(--rose-dim)" }}>
+    <div ref={ref} className="card card-feature" style={{ marginTop: 16, textAlign: "center", position: "relative", overflow: "hidden", border: "1px solid var(--rose)", opacity: 1 }}>
       <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 0%, var(--rose-dim), transparent 70%)", pointerEvents: "none" }} />
       <div className="eyebrow" style={{ color: "var(--rose)", marginBottom: 6 }}>Community</div>
       <div className="mono" style={{ fontSize: "clamp(28px,6vw,38px)", fontWeight: 800, color: "var(--text)" }}>{display}+</div>
@@ -11373,7 +11379,7 @@ function DuoStreakCard({ app }) {
       <div className="card" style={cardStyle}>
         {mode === "choose" && (
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <div style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 10, background: "rgba(46,155,255,.12)", color: "#2E9BFF", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 10, background: "rgba(46,155,255,.12)", color: "var(--live)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <Ic.users p={19} />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
@@ -11388,11 +11394,11 @@ function DuoStreakCard({ app }) {
           <div>
             <div style={{ fontWeight: 700, fontSize: 14.5, marginBottom: 8 }}>How should the streak count each day?</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <button className="card hover" style={{ textAlign: "left", padding: 12, border: pickedMode === "either" ? "1.5px solid #2E9BFF" : undefined }} onClick={() => setPickedMode("either")}>
+              <button className="card hover" style={{ textAlign: "left", padding: 12, border: pickedMode === "either" ? "1.5px solid var(--live)" : undefined }} onClick={() => setPickedMode("either")}>
                 <div style={{ fontWeight: 700, fontSize: 13.5 }}>Either of us</div>
                 <div style={{ color: "var(--text-2)", fontSize: 12.5, marginTop: 2 }}>One of us studying today keeps it alive - lower pressure.</div>
               </button>
-              <button className="card hover" style={{ textAlign: "left", padding: 12, border: pickedMode === "both" ? "1.5px solid #2E9BFF" : undefined }} onClick={() => setPickedMode("both")}>
+              <button className="card hover" style={{ textAlign: "left", padding: 12, border: pickedMode === "both" ? "1.5px solid var(--live)" : undefined }} onClick={() => setPickedMode("both")}>
                 <div style={{ fontWeight: 700, fontSize: 13.5 }}>Both of us</div>
                 <div style={{ color: "var(--text-2)", fontSize: 12.5, marginTop: 2 }}>Both have to study today - stricter accountability.</div>
               </button>
@@ -11440,7 +11446,7 @@ function DuoStreakCard({ app }) {
     return (
       <div className="card" style={cardStyle}>
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <div style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 10, background: "rgba(46,155,255,.12)", color: "#2E9BFF", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 10, background: "rgba(46,155,255,.12)", color: "var(--live)", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <Ic.users p={19} />
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
@@ -11471,7 +11477,7 @@ function DuoStreakCard({ app }) {
   return (
     <div className="card" style={cardStyle}>
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-        <div style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 10, background: "rgba(46,155,255,.12)", color: "#2E9BFF", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 10, background: "rgba(46,155,255,.12)", color: "var(--live)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Ic.users p={19} />
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -11482,16 +11488,16 @@ function DuoStreakCard({ app }) {
           </div>
         </div>
         <div style={{ textAlign: "right", flexShrink: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 4, color: "#2E9BFF", fontWeight: 750, fontSize: 17 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 4, color: "var(--live)", fontWeight: 750, fontSize: 17 }}>
             <Ic.flame p={16} /> {pair.streak || 0}
           </div>
         </div>
       </div>
       <div style={{ display: "flex", gap: 16, marginTop: 12, fontSize: 12.5 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 5, color: myDoneToday ? "#2E9BFF" : "var(--text-3)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 5, color: myDoneToday ? "var(--live)" : "var(--text-3)" }}>
           {myDoneToday ? <Ic.check p={13} /> : <Ic.x p={13} />} You {myDoneToday ? "studied today" : "haven't studied today"}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 5, color: partnerDoneToday ? "#2E9BFF" : "var(--text-3)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 5, color: partnerDoneToday ? "var(--live)" : "var(--text-3)" }}>
           {partnerDoneToday ? <Ic.check p={13} /> : <Ic.x p={13} />} {partnerName || "Partner"} {partnerDoneToday ? "studied today" : "hasn't yet"}
         </div>
       </div>
@@ -12024,9 +12030,9 @@ function HomeView({ app }) {
       {streakEvent && (
         <div className="card" style={{
           marginTop: 16, display: "flex", alignItems: "center", gap: 12,
-          borderLeft: `3px solid ${streakEvent.type === "comeback" ? "var(--amber)" : "#2E9BFF"}`,
+          borderLeft: `3px solid ${streakEvent.type === "comeback" ? "var(--amber)" : "var(--live)"}`,
         }}>
-          <div style={{ flexShrink: 0, width: 34, height: 34, borderRadius: 10, background: streakEvent.type === "comeback" ? "var(--amber-dim)" : "rgba(46,155,255,.15)", color: streakEvent.type === "comeback" ? "var(--amber)" : "#2E9BFF", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ flexShrink: 0, width: 34, height: 34, borderRadius: 10, background: streakEvent.type === "comeback" ? "var(--amber-dim)" : "rgba(46,155,255,.15)", color: streakEvent.type === "comeback" ? "var(--amber)" : "var(--live)", display: "flex", alignItems: "center", justifyContent: "center" }}>
             {streakEvent.type === "comeback" ? <Ic.flame p={18} /> : <Ic.snow p={18} />}
           </div>
           <div>
@@ -12067,7 +12073,7 @@ function HomeView({ app }) {
               : `${dailyProgress.total - dailyProgress.answered} question${dailyProgress.total - dailyProgress.answered === 1 ? "" : "s"} left in today's set.`}
           </div>
           {freezesAvailable > 0 && (
-            <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 6, color: "#2E9BFF", fontSize: 12, fontWeight: 600 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 6, color: "var(--live)", fontSize: 12, fontWeight: 600 }}>
               <Ic.snow p={13} />
               <span>{freezesAvailable} streak freeze{freezesAvailable === 1 ? "" : "s"} banked</span>
             </div>
@@ -12093,19 +12099,19 @@ function HomeView({ app }) {
             every button a fixed minHeight tall enough for icon + 2 lines of
             label, and switching to overflow:visible, means the label always
             has room regardless of which text size is active. */}
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--teal)" }} onClick={() => resumeTopic && resumeCourse ? app.go("topic", { courseId: resumeTopic.courseId, topicId: resumeTopic.topicIndex }) : app.go("courses")}>
+        <button aria-label="Continue where you left off" className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--teal)" }} onClick={() => resumeTopic && resumeCourse ? app.go("topic", { courseId: resumeTopic.courseId, topicId: resumeTopic.topicIndex }) : app.go("courses")}>
           <Ic.target p={20} />
           <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word", color: "var(--text)" }}>Continue</div>
         </button>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--violet)" }} onClick={() => app.go("daily")}>
+        <button aria-label="Daily question" className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--violet)" }} onClick={() => app.go("daily")}>
           <Ic.flame p={20} />
           <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word", color: "var(--text)" }}>Daily question</div>
         </button>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--violet)" }} onClick={() => app.go("papers")}>
+        <button aria-label="Passco past questions" className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--violet)" }} onClick={() => app.go("papers")}>
           <Ic.file p={20} />
           <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word", color: "var(--text)" }}>Passco</div>
         </button>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--rose)" }} onClick={() => app.go("ranks")}>
+        <button aria-label="Ranks and leaderboard" className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--rose)" }} onClick={() => app.go("ranks")}>
           <Ic.trophy p={20} />
           <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word", color: "var(--text)" }}>Ranks</div>
         </button>
@@ -14461,7 +14467,7 @@ export default function App() {
       return { 
         multiplier: 1.5, 
         label: '1.5x', 
-        color: '#2E9BFF',
+        color: 'var(--live)',
         message: 'Streak bonus active! 1.5x XP for all activities.'
       };
     }
