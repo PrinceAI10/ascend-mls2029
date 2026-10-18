@@ -12314,8 +12314,7 @@ function AuthScreen({ onAuthed }) {
   // picks beyond what's built (e.g. Level 200 Sem 2, or 300/400) down to the
   // most advanced materials that actually exist, rather than showing them
   // nothing. Extend LEVEL_SEMESTER_CONTENT as higher levels get authored.
-  const [signupLevel, setSignupLevel] = useState(null);
-  const [signupSemester, setSignupSemester] = useState(null);
+  
   const [err, setErr] = useState("");
   const [ok, setOk] = useState("");
   const [busy, setBusy] = useState(false);
@@ -12428,8 +12427,7 @@ function AuthScreen({ onAuthed }) {
     if (tab === "signup") {
       if (pw !== pw2) { setErr("The two passwords do not match."); return; }
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) { setErr("Enter a valid email so you can reset your password later."); return; }
-      if (!signupLevel) { setErr("Select your current level so we can show you the right materials."); return; }
-      if (!signupSemester) { setErr("Select your current semester too."); return; }
+      
     }
     setBusy(true);
     const key = u.toLowerCase();
@@ -12445,7 +12443,7 @@ function AuthScreen({ onAuthed }) {
         // `level` isn't persisted on the account record itself (accounts are
         // just credentials) - it's carried separately into this student's
         // fresh progress object by handleAuthed, right below.
-        const acct = { username: u, email: email.trim().toLowerCase(), salt, hash, algo, createdAt: Date.now(), level: signupLevel, semester: signupSemester };
+        const acct = { username: u, email: email.trim().toLowerCase(), salt, hash, algo, createdAt: Date.now(), level: 200, semester: 1 };
         accounts[key] = acct;
         await store.set("ascend_accounts", accounts);
         await store.set("ascend_session", key);
@@ -12837,15 +12835,7 @@ function AuthScreen({ onAuthed }) {
             <label className="field"><span>Email (so you can reset your password if you forget it)</span>
               <input className="auth-input" type="email" name="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@gmail.com" autoCapitalize="none" autoCorrect="off" />
             </label>
-            <label className="field">
-              <span>Which level & semester are you in?</span>
-              <div style={{ marginTop: 6 }}>
-                <LevelSemesterPicker
-                  value={signupLevel ? { level: signupLevel, semester: signupSemester } : null}
-                  onPick={(lv, sem) => { setSignupLevel(lv); setSignupSemester(sem); }}
-                />
-              </div>
-            </label>
+            
           </>
         )}
         {!otpOpen && err && <div className="auth-err">{err}</div>}
@@ -15151,9 +15141,9 @@ export default function App() {
     // immediately - otherwise it only lives in AuthScreen's local state and
     // is lost as soon as this screen unmounts. Never overwrites an existing
     // account's already-saved values.
-    if (isNewAccount && acct.level && !finalProgress.level) {
-      finalProgress.level = acct.level;
-      finalProgress.semester = acct.semester || 1;
+    if (!finalProgress.level) {
+      finalProgress.level = (acct && acct.level) || 200;
+      finalProgress.semester = (acct && acct.semester) || 1;
       try {
         await store.set(progKey(acct.username), finalProgress);
         await db.saveProgress(localSynthId(acct.username), finalProgress);
@@ -15836,9 +15826,7 @@ export default function App() {
   // Home - nothing else renders until they answer, then it drops straight
   // into Home already filtered correctly. No dismiss/skip option, matching
   // "the question pops up, then redirects" - it isn't optional.
-  if (progress && !progress.level) {
-    return <div className={rootCls}><style>{CSS}</style><LevelSemesterGate onDone={setLevelSemester} name={progress.name} /></div>;
-  }
+  
 
   const resumeOverlay = resuming ? (
     <div style={{
