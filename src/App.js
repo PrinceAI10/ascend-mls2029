@@ -141,35 +141,38 @@ html, body {
 }
 .ascend-root{min-height:100vh;min-height:100dvh;width:100%;margin:0;padding:0}
 .ascend-root.light{
-  --bg:#F4F6FA; --bg-2:#FFFFFF; --bg-3:#EDF1F7; --raised:#FFFFFF;
-  --line:#E2E7F0; --line-2:#CED7E4;
-  --text:#131922; --text-2:#4B5A70; --text-3:#7C8798;
-  --amber:#E7A21F; --amber-2:#B4790A; --amber-dim:rgba(231,162,31,.14);
+  --bg:#F7F5F0; --bg-2:#FFFFFF; --bg-3:#F0EDE5; --raised:#FFFFFF;
+  --line:#E6E1D6; --line-2:#D4CCB8;
+  --text:#1A1F2B; --text-2:#4B5A70; --text-3:#6E7B91;
+  --amber:#C8900F; --amber-2:#8F6308; --amber-dim:rgba(200,144,15,.12);
   --good:#1E9E5E; --good-dim:rgba(30,158,94,.12);
   --bad:#D4482F; --bad-dim:rgba(212,72,47,.10);
+  --card-shadow:0 1px 2px rgba(20,25,40,.04),0 8px 20px -6px rgba(20,25,40,.08);
 }
+.ascend-root.light .card{box-shadow:var(--card-shadow)}
+.ascend-root.light .card.hover:hover{box-shadow:0 2px 4px rgba(20,25,40,.05),0 16px 32px -10px rgba(200,144,15,.18)}
 .ascend-root.light .opt.correct{color:var(--text)}
 .ascend-root.light .opt.correct{background:rgba(30,158,94,.20);border-color:var(--good);color:var(--text)}
 .ascend-root.light .opt.wrong{background:rgba(212,72,47,.16);border-color:var(--bad);color:var(--text)}
-.ascend-root.light .hero{background:linear-gradient(160deg,#E8EDF5 0%,#D5DDE8 60%)}
-.ascend-root.light .hero-h .hl{color:#B4790A}
+.ascend-root.light .hero{background:linear-gradient(160deg,#F3F0E8 0%,#E3DCC9 60%)}
+.ascend-root.light .hero-h .hl{color:var(--amber-2)}
 .ascend-root.light .hero-p{color:#4B5A70}
 .ascend-root.light .msg.a{background:var(--bg-3);color:var(--text)}
-.ascend-root.light .msg.u{background:var(--amber-dim);color:#B4790A}
-.ascend-root.light .topbar{background:rgba(244,246,250,.92)}
+.ascend-root.light .msg.u{background:var(--amber-dim);color:var(--amber-2)}
+.ascend-root.light .topbar{background:rgba(247,245,240,.92)}
 .ascend-root.light .lesson-p{color:var(--text)}
-.ascend-root.light .lesson-q{color:#B4790A}
+.ascend-root.light .lesson-q{color:var(--amber-2)}
 .ascend-root.light .qa-a{color:var(--text)}
-.ascend-root.light .qa-a:before{color:#1E9E5E}
+.ascend-root.light .qa-a:before{color:var(--good)}
 .ascend-root.light .opt{background:var(--bg-2)}
-.ascend-root.light .day-tag{color:#B4790A;background:rgba(231,162,31,.14)}
+.ascend-root.light .day-tag{color:var(--amber-2);background:var(--amber-dim)}
 .ascend-root.light .notif-panel,.ascend-root.light .notif-head,.ascend-root.light .notif-item{background:var(--bg-2)}
 .ascend-root.light .plan-in,.ascend-root.light .qbox,.ascend-root.light .chat-in input,.ascend-root.light .auth-input{background:var(--bg-2);color:var(--text)}
 .ascend-root.light .auth-card{background:var(--bg-2)}
 .ascend-root.light .seg{background:var(--bg-3)}
-.ascend-root.light .avatar{background:linear-gradient(150deg,#D5DDE8,#B8C4D4);color:#1B1405}
+.ascend-root.light .avatar{background:linear-gradient(150deg,#E3DCC9,#C9BFA0);color:#1B1405}
 .ascend-root.light .navi{color:#4B5A70}
-.ascend-root.light .navi.on{background:rgba(231,162,31,.14);color:#B4790A}
+.ascend-root.light .navi.on{background:var(--amber-dim);color:var(--amber-2)}
 .ascend-root.light .mobile-sidebar{background:var(--bg-2)}
 .shell{display:flex;min-height:100vh;max-width:1440px;margin:0 auto;width:100%}
 .side{display:none}
@@ -273,8 +276,10 @@ html.ascend-pacifico-ready .brand-word,html.ascend-pacifico-ready .brand-word-he
   border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;
   font-weight:750;font-size:13px;color:var(--amber-2);cursor:pointer;flex-shrink:0}
 .card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:20px;word-wrap:break-word;overflow:hidden}
-.card.hover{transition:border-color .16s,transform .16s,background .16s;cursor:pointer}
-.card.hover:hover{border-color:var(--line-2);background:var(--bg-3);transform:translateY(-2px)}
+.card.hover{transition:border-color .16s,transform .16s,background .16s,box-shadow .16s;cursor:pointer}
+.card.hover:hover{border-color:var(--amber);background:var(--bg-3);transform:translateY(-3px);box-shadow:0 10px 24px -8px rgba(0,0,0,.35),0 0 0 1px var(--amber-dim)}
+.card.hover:active{transform:translateY(-1px) scale(.98);transition-duration:.08s}
+@media (prefers-reduced-motion:reduce){.card.hover:hover,.card.hover:active{transform:none}}
 .card-feature{background:linear-gradient(150deg,#182847 0%,#13203a 45%,#0d1526 100%)}
 .ascend-root.light .card-feature{background:linear-gradient(150deg,#EAEFF7,#DCE4EF)}
 .card-feature.hover:hover{background:linear-gradient(150deg,#1d3252 0%,#172a48 45%,#101a2e 100%)}
@@ -11258,6 +11263,56 @@ function motivationForToday() {
 // creates a pair (picking either/both mode) and shares a short code, or
 // joins one someone shared with them. Shows nothing but a quiet "start a
 // duo streak" prompt until they actively opt in.
+// Real numbers, not a made-up "200+" string: total comes from the actual
+// class leaderboard (same source RanksView uses), test accounts excluded,
+// counted up from 0 on mount for impact. "studying right now" reuses the
+// app-wide online presence Set, so it's live, not decorative. Renders
+// nothing until the real count is in (no flashing a fake number first).
+function CommunityPulseCard({ app }) {
+  const [total, setTotal] = useState(null);
+  const [display, setDisplay] = useState(0);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const rows = await db.leaderboard();
+        const count = Array.isArray(rows) ? rows.filter((r) => !isTestAccount(r.name)).length : 0;
+        if (!cancelled) setTotal(count);
+      } catch { if (!cancelled) setTotal(null); }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+  useEffect(() => {
+    if (total == null) return;
+    const dur = 1100, start = performance.now();
+    let raf;
+    const tick = (t) => {
+      const p = Math.min(1, (t - start) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setDisplay(Math.round(eased * total));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [total]);
+  const online = app.onlineKeys ? app.onlineKeys.size : 0;
+  if (total == null || total < 1) return null;
+  return (
+    <div className="card card-feature" style={{ marginTop: 16, textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 0%, var(--amber-dim), transparent 70%)", pointerEvents: "none" }} />
+      <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 6 }}>Community</div>
+      <div className="mono" style={{ fontSize: "clamp(28px,6vw,38px)", fontWeight: 800, color: "var(--text)" }}>{display}+</div>
+      <div style={{ color: "var(--text-2)", fontSize: 14, marginTop: 4 }}>students climbing together on ASCEND</div>
+      {online > 0 && (
+        <div style={{ marginTop: 10, display: "inline-flex", alignItems: "center", gap: 6, color: "var(--good)", fontSize: 12.5, fontWeight: 600 }}>
+          <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--good)", animation: "notifPulse 1.8s ease-in-out infinite" }} />
+          {online} studying right now
+        </div>
+      )}
+    </div>
+  );
+}
+
 function DuoStreakCard({ app }) {
   const duoUid = app.supaUid || ("local-" + String(app.progress.name || "").toLowerCase().replace(/[^a-z0-9]/g, ""));
   const [pair, setPair] = useState(null);
@@ -12036,11 +12091,13 @@ function HomeView({ app }) {
         </button>
       </div>
 
-      <div className="home-rise" style={{ animationDelay: "0.10s" }}><DuoStreakCard app={app} /></div>
+      <div className="home-rise" style={{ animationDelay: "0.10s" }}><CommunityPulseCard app={app} /></div>
 
-      <div className="home-rise" style={{ animationDelay: "0.15s" }}><WeeklyRecapCard app={app} /></div>
+      <div className="home-rise" style={{ animationDelay: "0.15s" }}><DuoStreakCard app={app} /></div>
 
-      <div className="home-rise" style={{ animationDelay: "0.20s" }}>
+      <div className="home-rise" style={{ animationDelay: "0.20s" }}><WeeklyRecapCard app={app} /></div>
+
+      <div className="home-rise" style={{ animationDelay: "0.25s" }}>
       {(() => {
         const mq = motivationForToday();
         return (
@@ -12056,14 +12113,14 @@ function HomeView({ app }) {
       })()}
       </div>
 
-      <div className="home-rise" style={{ animationDelay: "0.25s" }}><NextExamCard /></div>
+      <div className="home-rise" style={{ animationDelay: "0.30s" }}><NextExamCard /></div>
 
-      <div className="home-rise" style={{ animationDelay: "0.30s" }}><StudyCalendar progress={app.progress} /></div>
+      <div className="home-rise" style={{ animationDelay: "0.35s" }}><StudyCalendar progress={app.progress} /></div>
 
       <div className="grid g3" style={{ marginTop: 16 }}>
         <div className="card">
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <span className="chip streakchip"><Ic.flame p={16} style={app.progress.streak > 0 ? { animation: "badgePulse 2.1s ease-in-out infinite" } : undefined} /><span className="val">{app.progress.streak}</span></span>
+            <span className="chip streakchip"><Ic.flame p={16} style={app.progress.streak > 0 ? { animation: "badgePulse 2.1s ease-in-out infinite" } : undefined} /><span className="val"><AnimatedCounter value={app.progress.streak} /></span></span>
             <span className="eyebrow">Streak</span>
           </div>
           <div style={{ marginTop: 12, fontSize: 14, color: "var(--text-2)" }}>{doneToday ? "Logged today." : "Answer today's question."}</div>
@@ -12073,7 +12130,7 @@ function HomeView({ app }) {
         </div>
         <div className="card">
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <span className="mono" style={{ fontWeight: 700, fontSize: 20, color: r.c }}>{app.progress.xp}</span>
+            <span className="mono" style={{ fontWeight: 700, fontSize: 20, color: r.c }}><AnimatedCounter value={app.progress.xp} /></span>
             <span className="eyebrow">XP · {r.name}</span>
           </div>
           <div className="bar" style={{ marginTop: 14 }}><i style={{ width: (r.next ? Math.min((app.progress.xp - r.min) / (r.next.min - r.min), 1) : 1) * 100 + "%", background: r.c }} /></div>
@@ -14932,6 +14989,10 @@ export default function App() {
       m.name = "apple-mobile-web-app-title"; m.content = "ASCEND";
       document.head.appendChild(m);
     }
+    // Force the browser tab / tab-switcher title to just "ASCEND" regardless
+    // of whatever index.html's <title> actually says (stale builds, old
+    // cached HTML, etc). Cheap insurance on top of fixing it at the source.
+    if (document.title !== "ASCEND") document.title = "ASCEND";
     if (!document.querySelector('meta[name="theme-color"]')) {
       const m = document.createElement("meta");
       m.name = "theme-color"; m.content = (typeof effectiveTheme !== "undefined" && effectiveTheme === "light") ? "#F4F6FA" : "#0A0F1A";
