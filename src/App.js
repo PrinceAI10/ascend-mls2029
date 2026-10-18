@@ -108,6 +108,9 @@ const CSS = `
   --amber:#F5B93F; --amber-2:#FFD583; --amber-dim:rgba(245,185,63,.13);
   --good:#54D08A; --good-dim:rgba(84,208,138,.12);
   --bad:#F0776A; --bad-dim:rgba(240,119,106,.12);
+  --violet:#9A8CFF; --violet-dim:rgba(154,140,255,.14);
+  --teal:#45D8C8; --teal-dim:rgba(69,216,200,.14);
+  --rose:#FF8FB1; --rose-dim:rgba(255,143,177,.14);
   --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   --r:16px; --r-sm:11px;
@@ -147,6 +150,9 @@ html, body {
   --amber:#C8900F; --amber-2:#8F6308; --amber-dim:rgba(200,144,15,.12);
   --good:#1E9E5E; --good-dim:rgba(30,158,94,.12);
   --bad:#D4482F; --bad-dim:rgba(212,72,47,.10);
+  --violet:#6C5CE0; --violet-dim:rgba(108,92,224,.12);
+  --teal:#0F9E8E; --teal-dim:rgba(15,158,142,.12);
+  --rose:#D6457A; --rose-dim:rgba(214,69,122,.12);
   --card-shadow:0 1px 2px rgba(20,25,40,.04),0 8px 20px -6px rgba(20,25,40,.08);
 }
 .ascend-root.light .card{box-shadow:var(--card-shadow)}
@@ -189,8 +195,8 @@ html, body {
 /* Home screen: each major section rises in with its own stagger delay
    (set inline per-section via style.animationDelay) instead of the whole
    view just fading up as one flat block. */
-.home-rise{opacity:0;animation:riseIn .55s cubic-bezier(.2,.8,.2,1) both}
-@keyframes riseIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.home-rise{opacity:0;animation:riseIn .68s cubic-bezier(.16,.84,.24,1) both}
+@keyframes riseIn{0%{opacity:0;transform:translateY(24px) scale(.96)}60%{opacity:1}100%{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.home-rise{animation:none;opacity:1}}
 .mobile-sidebar-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.5);display:flex;align-items:flex-start}
 .mobile-sidebar{width:280px;max-width:80vw;height:100vh;height:100dvh;background:var(--bg-2);
@@ -259,8 +265,8 @@ html.ascend-pacifico-ready .brand-word,html.ascend-pacifico-ready .brand-word-he
   text-transform:uppercase;margin-top:1px}
 .brand-sub-hero{font-family:Calibri,system-ui,sans-serif;font-size:clamp(13px,2.4vw,16px);
   letter-spacing:.32em;margin-top:4px;opacity:0;animation:fadeUp .5s cubic-bezier(.2,.7,.3,1) .35s both}
-@keyframes brandPopIn{0%{opacity:0;transform:scale(.82) translateY(6px)}60%{opacity:1;transform:scale(1.04) translateY(0)}100%{opacity:1;transform:scale(1) translateY(0)}}
-@keyframes haloPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(.85)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
+@keyframes brandPopIn{0%{opacity:0;transform:scale(.72) translateY(10px)}55%{opacity:1;transform:scale(1.08) translateY(-2px)}80%{transform:scale(.98)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes haloPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(.85)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.14)}}
 @keyframes shimmerSweep{0%{background-position:0% 50%}100%{background-position:-260% 50%}}
 @media (prefers-reduced-motion:reduce){.brand-hero,.brand-hero::before,.brand-word-hero,.brand-sub-hero{animation:none;opacity:1}}
 .navi{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:var(--r-sm);
@@ -276,13 +282,13 @@ html.ascend-pacifico-ready .brand-word,html.ascend-pacifico-ready .brand-word-he
   border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;
   font-weight:750;font-size:13px;color:var(--amber-2);cursor:pointer;flex-shrink:0}
 .card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:20px;word-wrap:break-word;overflow:hidden}
-.card.hover{transition:border-color .16s,transform .16s,background .16s,box-shadow .16s;cursor:pointer}
-.card.hover:hover{border-color:var(--amber);background:var(--bg-3);transform:translateY(-3px);box-shadow:0 10px 24px -8px rgba(0,0,0,.35),0 0 0 1px var(--amber-dim)}
+.card.hover{transition:border-color .22s cubic-bezier(.2,.8,.2,1),transform .22s cubic-bezier(.2,.8,.2,1),background .22s,box-shadow .22s cubic-bezier(.2,.8,.2,1);cursor:pointer}
+.card.hover:hover{border-color:var(--amber);background:var(--bg-3);transform:translateY(-5px) scale(1.012);box-shadow:0 18px 36px -10px rgba(0,0,0,.4),0 0 0 1px var(--amber-dim),0 0 24px -4px var(--amber-dim)}
 .card.hover:active{transform:translateY(-1px) scale(.98);transition-duration:.08s}
 @media (prefers-reduced-motion:reduce){.card.hover:hover,.card.hover:active{transform:none}}
-.card-feature{background:linear-gradient(150deg,#182847 0%,#13203a 45%,#0d1526 100%)}
-.ascend-root.light .card-feature{background:linear-gradient(150deg,#EAEFF7,#DCE4EF)}
-.card-feature.hover:hover{background:linear-gradient(150deg,#1d3252 0%,#172a48 45%,#101a2e 100%)}
+.card-feature{background:linear-gradient(150deg,#182847 0%,#1c2b52 30%,#13203a 60%,#0d1526 100%);position:relative}
+.ascend-root.light .card-feature{background:linear-gradient(150deg,#EAEFF7,#F0E9FB 50%,#DCE4EF)}
+.card-feature.hover:hover{background:linear-gradient(150deg,#1d3252 0%,#223764 30%,#172a48 60%,#101a2e 100%)}
 .slide-links{display:flex;flex-direction:column;gap:6px;margin:10px 0 4px}
 .slide-chip{display:flex;align-items:center;gap:9px;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;text-decoration:none;color:var(--text);font-size:13.5px;font-weight:550;transition:border-color .15s,background .15s}
 .slide-chip:hover{border-color:var(--line-2);background:var(--bg-3)}
@@ -634,7 +640,7 @@ mark.lesson-hl-yellow{background:rgba(245,214,80,.45)}
 .badge.current .badge-medal{animation:badgePulse 2.1s ease-in-out infinite}
 .badge-name{font-size:12px;font-weight:750;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .badge-sub{font-size:10px;font-family:var(--mono);color:var(--text-3);margin-top:2px;line-height:1.2}
-@keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes badgePulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 0 transparent)}50%{transform:scale(1.1);filter:drop-shadow(0 0 10px var(--amber-dim))}}
 .iconbtn{position:relative;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
   background:var(--bg-2);color:var(--text-2);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
 .iconbtn:hover{color:var(--text);border-color:var(--line-2)}
@@ -4287,7 +4293,7 @@ function AITutor({ topicTitle, context }) {
     if (!text || busy) return;
     const next = [...msgs, { role: "user", content: text }];
     setMsgs(next); setInput(""); setBusy(true);
-    const sys = `You are the ASCEND tutor for KNUST medical laboratory science students. Teach the WHY and the mechanism, step by step. Keep each answer complete but focused. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac. Accuracy is critical: only state specific facts, numbers, or mechanisms you are confident are correct, and describe concepts in general terms rather than inventing a precise figure you are unsure of.\n\nTOPIC: ${topicTitle}\n\nSOURCE:\n${context}`;
+    const sys = `You are the ASCEND tutor for university students. Teach the WHY and the mechanism, step by step. Keep each answer complete but focused. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac. Accuracy is critical: only state specific facts, numbers, or mechanisms you are confident are correct, and describe concepts in general terms rather than inventing a precise figure you are unsure of.\n\nTOPIC: ${topicTitle}\n\nSOURCE:\n${context}`;
     const apiMsgs = next.slice(1);
     try {
       const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })), 4096);
@@ -4475,7 +4481,7 @@ function QuizView({ app }) {
         const prompt = "Generate exactly " + needed + " unique, non-repeating single-best-answer MCQs for " + t.title + ". Use the lesson notes below. Return ONLY a JSON array; each item needs q, o (four strings), correct (the exact text of the correct option copied verbatim from o), and w (short explanation). Double-check that \"correct\" is copied character-for-character from one of the four options in \"o\". Do not repeat a question already in the bank.\n\nLESSON NOTES:\n" + source;
         
         try {
-          const raw = await callClaude("Create accurate KNUST medical laboratory science MCQs. Return compact JSON only. Every question must have exactly one unambiguously correct option - double-check your own \"correct\" field actually matches one of the four options verbatim before responding.", [{ role: "user", content: prompt }], 10000);
+          const raw = await callClaude("Create accurate university-level MCQs. Return compact JSON only. Every question must have exactly one unambiguously correct option - double-check your own \"correct\" field actually matches one of the four options verbatim before responding.", [{ role: "user", content: prompt }], 10000);
           const generated = (Array.isArray(parseAIJson(raw)) ? parseAIJson(raw) : []).map(resolveMcqAnswer).filter(Boolean);
           complete = uniqueQuestions([...complete, ...generated]);
         } catch (genErr) {
@@ -4688,7 +4694,7 @@ function TopicFlowDiagram({ title, context }) {
     setBusy(true); setErr(""); setCode("");
     try {
       const raw = await callClaude(
-        "You write Mermaid flowchart code for KNUST medical laboratory science students. Output ONLY Mermaid code - no prose, no markdown fences. The first line must be exactly: flowchart TD. Wrap EVERY node label in double quotes, e.g. A[\"Glycolysis\"] --> B[\"Pyruvate\"]. Use curly braces only for yes/no decisions, e.g. C{\"Oxygen present?\"}. Never use parentheses, semicolons, or the word 'end' as a node id. Show the pathway as a clear step-by-step flow.",
+        "You write Mermaid flowchart code for university students. Output ONLY Mermaid code - no prose, no markdown fences. The first line must be exactly: flowchart TD. Wrap EVERY node label in double quotes, e.g. A[\"Glycolysis\"] --> B[\"Pyruvate\"]. Use curly braces only for yes/no decisions, e.g. C{\"Oxygen present?\"}. Never use parentheses, semicolons, or the word 'end' as a node id. Show the pathway as a clear step-by-step flow.",
         [{ role: "user", content: `Draw a Mermaid flowchart of the key process, pathway or logical flow in this topic: "${title}".\n\nBase it on this lesson material:\n${(context || "").slice(0, 3500)}\n\nUse 6 to 14 nodes. Every label in double quotes. Output only the code.` }],
         1500
       );
@@ -7467,17 +7473,17 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
       ? `\nThese are questions ${progress.from} to ${progress.to} of a ${progress.total}-question set that gets harder as it goes. Make this batch ${progress.level}.`
       : "";
     const syllabusNote = topicName
-      ? `\nStay STRICTLY within the KNUST syllabus topic "${topicName}". Do not test anything outside it.`
-      : `\nStay STRICTLY within the KNUST syllabus for ${course.name}. Do not test anything outside the course.`;
+      ? `\nStay STRICTLY within the syllabus topic "${topicName}". Do not test anything outside it.`
+      : `\nStay STRICTLY within the syllabus for ${course.name}. Do not test anything outside the course.`;
     // "Generate similar" mode: base fresh questions on a pasted sample question.
     if (sampleQuestion && sampleQuestion.trim()) {
       const anchorNote = topicName
         ? `The pasted question is only a style/format reference. Every generated question MUST stay strictly within the "${topicName}" topic as defined above, even if the pasted question's own concept sits elsewhere - in that case, keep the pasted question's structure/style but write about "${topicName}" instead.`
         : `If the pasted question's concept falls outside the syllabus topics above, anchor the new questions to the closest syllabus topic instead of following the pasted question off-curriculum.`;
-      return `Here is a passco exam question:\n\n${sampleQuestion}\n\nGenerate exactly ${n} fresh MCQs testing the same concept(s) and matching this question's style and structure, for a KNUST first-year student in ${course.name} (${course.code}).\n\n${curriculum}\n${anchorNote}${syllabusNote}${diffNote}${avoidNote}\n\n${PRACTICE_MCQ_RULES}`;
+      return `Here is a passco exam question:\n\n${sampleQuestion}\n\nGenerate exactly ${n} fresh MCQs testing the same concept(s) and matching this question's style and structure, for a first-year student in ${course.name} (${course.code}).\n\n${curriculum}\n${anchorNote}${syllabusNote}${diffNote}${avoidNote}\n\n${PRACTICE_MCQ_RULES}`;
     }
     const topicPart = topicName ? `Focus specifically on the topic: ${topicName}.` : `Cover a mix of topics across the course.`;
-    return `Generate exactly ${n} passco-style exam MCQs for a KNUST first-year student in ${course.name} (${course.code}). ${topicPart}\n\n${curriculum}${syllabusNote}${diffNote}${avoidNote}\n\n${PRACTICE_MCQ_RULES}`;
+    return `Generate exactly ${n} passco-style exam MCQs for a first-year student in ${course.name} (${course.code}). ${topicPart}\n\n${curriculum}${syllabusNote}${diffNote}${avoidNote}\n\n${PRACTICE_MCQ_RULES}`;
   };
 
   // Request only a few questions per AI call. A single 10-question generation is
@@ -7531,7 +7537,7 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
       let got = [];
       try {
         const text = await callClaude(
-          "You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid, compact, complete JSON array of exactly " + need + " questions, no prose, no markdown, no trailing commas. Keep each question and option short. Every question must be UNIQUE within the set and have exactly one unambiguously correct option - double-check your \"correct\" field matches one of the four options verbatim.",
+          "You generate exam-style medical laboratory science questions. Return ONLY a valid, compact, complete JSON array of exactly " + need + " questions, no prose, no markdown, no trailing commas. Keep each question and option short. Every question must be UNIQUE within the set and have exactly one unambiguously correct option - double-check your \"correct\" field matches one of the four options verbatim.",
           [{ role: "user", content: buildPrompt(need, avoidStems, progress) }],
           need * 260 + 400
         );
@@ -7796,7 +7802,7 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
 
 
 /*
-   Real KNUST past papers, extracted into interactive questions. Answers were
+   Real past papers, extracted into interactive questions. Answers were
    worked out and verified (a few genuinely ambiguous specimen-ID questions are
    marked flag:true so they can be double-checked against the lecturer). Each
    paper auto-chunks into sets of 50 in the UI so students aren't overwhelmed.
@@ -8729,7 +8735,7 @@ const PAST_PAPERS = [
   },
   // ============================================================
   // COMMUNICATION SKILLS II PASSCO - ENGL 158:211 (End of Semester, August 2023)
-  // Solved from the KNUST Virtual Examroom review export (100-item paper).
+  // Solved from past exam review exports (100-item paper).
   // Answers taken from the paper's own red answer-key annotations, cross-checked
   // against the marked (saved) option, the course content, and external sources.
   // All items were re-verified; two keyed answers were corrected against sources
@@ -10092,7 +10098,7 @@ function PapersView({ app }) {
     const thisBatch = Math.min(BATCH_SIZE, remaining);
     try {
       const text = await callClaude(
-        "You generate KNUST-style medical laboratory science exam questions based on the specific course content provided. Return ONLY a valid, compact, complete JSON array of exactly " + thisBatch + " questions, no prose, no markdown, no trailing commas. Keep each question and option short. Every question must have exactly one unambiguously correct option - double-check your \"correct\" field matches one of the four options verbatim.",
+        "You generate exam-style medical laboratory science questions based on the specific course content provided. Return ONLY a valid, compact, complete JSON array of exactly " + thisBatch + " questions, no prose, no markdown, no trailing commas. Keep each question and option short. Every question must have exactly one unambiguously correct option - double-check your \"correct\" field matches one of the four options verbatim.",
         [{ role: "user", content: usr.replace(/exactly \d+/, "exactly " + thisBatch) }],
         Math.min(4000, thisBatch * 300 + 500)
       );
@@ -10147,7 +10153,7 @@ function PapersView({ app }) {
         contentSample += "Topic " + (i+1) + ": " + t.title + ". Key concepts: " + noteText + "\n";
       }
     }
-    genSet("Generate exactly " + count + " passco-style exam MCQs for a KNUST first-year student in " + courseById(courseId).name + " (" + courseById(courseId).code + ").\n\nIMPORTANT: Questions MUST be based on these specific topics: " + topicNames + "\n\nHere is sample content from the course to guide you:\n" + contentSample + "\n\nGenerate questions that test understanding of these specific topics. Do not ask general anatomy questions.\n\n" + RULES);
+    genSet("Generate exactly " + count + " passco-style exam MCQs for a first-year student in " + courseById(courseId).name + " (" + courseById(courseId).code + ").\n\nIMPORTANT: Questions MUST be based on these specific topics: " + topicNames + "\n\nHere is sample content from the course to guide you:\n" + contentSample + "\n\nGenerate questions that test understanding of these specific topics. Do not ask general anatomy questions.\n\n" + RULES);
   };
   
   const startSimilar = function() {
@@ -10635,7 +10641,7 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
   );
 }
 /* ------------------------------- resources ------------------------------ */
-const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical laboratory science students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it to superscript). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac. Accuracy is critical - these are medical facts students will be examined on. Only state specific numbers, values, classifications, enzyme names, or mechanisms you are confident are correct. If you are not certain of an exact figure or detail, describe the concept accurately without inventing a precise number.";
+const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for university students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it to superscript). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac. Accuracy is critical - these are medical facts students will be examined on. Only state specific numbers, values, classifications, enzyme names, or mechanisms you are confident are correct. If you are not certain of an exact figure or detail, describe the concept accurately without inventing a precise number.";
 const SOCRATIC_TASK = "Break this study material into a focused Socratic lesson of 4 to 6 steps. For each step: state the question, explain the answer in one or two clear paragraphs, then give the crucial insight in one line. End with three short self-test questions and their answers. Be economical so the whole lesson is complete and never cut off. " +
   "Base the lesson on the readable text of the material only - ignore any stray symbols, misread characters, or fragments that do not form real words or sentences (this can happen when slides mix text with diagrams, charts or photos). " +
   "The material may be partial - a slide deck's text with its diagrams and pictures left out, or a file that was cut short to fit. First work out what standard course topic this material is drawn from, then teach that topic properly: use everything usable in the material as your primary source, and where it is thin, cut short, or clearly missing a step a normal class on this subject would cover, fill the gap with accurate standard knowledge of your own so the lesson is complete and genuinely useful on its own, not just a repeat of the fragments you were given.";
@@ -10884,10 +10890,10 @@ function ResourcesView() {
     <div className="view">
       <div className="eyebrow">Resources</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Bring your own material</h1>
-      <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "60ch" }}>Paste lecture notes or slides from the MELSSA Slides Group and ASCEND rebuilds it as a Socratic lesson - question, answer, crucial insight - so you learn the mechanism instead of skimming.</p>
+      <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "60ch" }}>Paste in your study materials and ASCEND rebuilds them as a Socratic lesson - question, answer, crucial insight - so you learn the mechanism instead of skimming.</p>
       <div className="card" style={{ marginTop: 16 }}>
         <label className="field"><span>Paste your material</span>
-          <textarea className="pastebox" value={text} onChange={(e) => setText(e.target.value)} placeholder="Paste lecture notes or slide text here, or upload a file below..." style={{ minHeight: "130px" }} />
+          <textarea className="pastebox" value={text} onChange={(e) => setText(e.target.value)} placeholder="Paste your study materials here, or upload a file below..." style={{ minHeight: "130px" }} />
         </label>
         <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
           <label className="btn btn-g" style={{ cursor: "pointer" }}>
@@ -10969,7 +10975,7 @@ function StudyToolsView({ app }) {
 
   const subject = source === "paste"
     ? `the following material:\n\n${material}`
-    : `the topic "${topic || "this subject"}"${courseById(courseId) ? ` in ${courseById(courseId).name} (${courseById(courseId).code})` : ""} for a KNUST first-year medical laboratory science student`;
+    : `the topic "${topic || "this subject"}"${courseById(courseId) ? ` in ${courseById(courseId).name} (${courseById(courseId).code})` : ""} for a first-year medical laboratory science student`;
 
   const genCards = async () => {
     if (busy) return;
@@ -10978,7 +10984,7 @@ function StudyToolsView({ app }) {
     setBusy(true); setErr(""); setCards(null); setFlipped({});
     try {
       const raw = await callClaude(
-        "You create study flashcards for KNUST medical laboratory science students. Each card has a short front (a question, term, or prompt) and a concise back (the answer or definition). Focus on the most important, testable facts. Return ONLY a valid, compact JSON array, no prose, no markdown, no trailing commas. Only include facts you are confident are correct - do not invent specific numbers or classifications you are unsure of.",
+        "You create study flashcards for university students. Each card has a short front (a question, term, or prompt) and a concise back (the answer or definition). Focus on the most important, testable facts. Return ONLY a valid, compact JSON array, no prose, no markdown, no trailing commas. Only include facts you are confident are correct - do not invent specific numbers or classifications you are unsure of.",
         [{ role: "user", content: `Create 10 to 14 flashcards on ${subject}. Format: [{"front":"...","back":"..."}]. Keep each side short and precise.` }],
         3000
       );
@@ -11005,7 +11011,7 @@ function StudyToolsView({ app }) {
     setBusy(true); setErr(""); setMap(null);
     try {
       const raw = await callClaude(
-        "You create hierarchical mind maps for KNUST medical laboratory science students. A mind map has a central topic, main branches, and sub-points under each. Return ONLY valid compact JSON, no prose, no markdown, no trailing commas. Only include facts you are confident are correct - do not invent specific numbers or classifications you are unsure of.",
+        "You create hierarchical mind maps for university students. A mind map has a central topic, main branches, and sub-points under each. Return ONLY valid compact JSON, no prose, no markdown, no trailing commas. Only include facts you are confident are correct - do not invent specific numbers or classifications you are unsure of.",
         [{ role: "user", content: `Create a mind map of ${subject}. Format: {"central":"topic name","branches":[{"title":"main idea","points":["sub-point","sub-point"]}],"recommendations":["short study tip","short study tip"]}. Give 4 to 6 branches, each with 2 to 4 short points. "points" must be pure high-yield EXAM facts - specifically the 20% of content that appears in ~80% of exams: the definitions, values, classifications, enzymes and mechanisms an examiner keeps testing. Each point a crisp memorisable fact, never vague prose (good: "Glycolysis nets 2 ATP, 2 NADH, 2 pyruvate"; bad: "Glycolysis is important"). "recommendations" is a separate list of 2 to 4 short, concrete study/recall tips for using this map (e.g. "Redraw this from memory, then check against the branches").` }],
         3000
       );
@@ -11033,7 +11039,7 @@ function StudyToolsView({ app }) {
     setBusy(true); setErr(""); setFlowErr(""); setFlowCode("");
     try {
       const raw = await callClaude(
-        "You write Mermaid flowchart code for KNUST medical laboratory science students. Output ONLY Mermaid code - no prose, no markdown fences. The first line must be exactly: flowchart TD. Wrap EVERY node label in double quotes, e.g. A[\"Glycolysis\"] --> B[\"Pyruvate\"]. Use curly braces only for yes/no decisions, e.g. C{\"Oxygen present?\"}. Never use parentheses, semicolons, or the word 'end' as a node id. Show the pathway as a clear step-by-step flow.",
+        "You write Mermaid flowchart code for university students. Output ONLY Mermaid code - no prose, no markdown fences. The first line must be exactly: flowchart TD. Wrap EVERY node label in double quotes, e.g. A[\"Glycolysis\"] --> B[\"Pyruvate\"]. Use curly braces only for yes/no decisions, e.g. C{\"Oxygen present?\"}. Never use parentheses, semicolons, or the word 'end' as a node id. Show the pathway as a clear step-by-step flow.",
         [{ role: "user", content: `Write a Mermaid flowchart of the process or pathway of ${subject}. Use 6 to 14 nodes. Every label in double quotes. Output only the code.` }],
         1500
       );
@@ -11106,7 +11112,7 @@ function StudyToolsView({ app }) {
           </>
         ) : (
           <>
-            <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Paste your notes or lecture material</label>
+            <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Paste your notes or study material</label>
             <textarea className="pastebox" value={material} placeholder="Paste any notes, slide text or a paragraph here..." onChange={(e) => setMaterial(e.target.value)} />
           </>
         )}
@@ -11264,13 +11270,19 @@ function motivationForToday() {
 // joins one someone shared with them. Shows nothing but a quiet "start a
 // duo streak" prompt until they actively opt in.
 // Real numbers, not a made-up "200+" string: total comes from the actual
-// class leaderboard (same source RanksView uses), test accounts excluded,
-// counted up from 0 on mount for impact. "studying right now" reuses the
-// app-wide online presence Set, so it's live, not decorative. Renders
-// nothing until the real count is in (no flashing a fake number first).
+// class leaderboard (same source RanksView uses), test accounts excluded.
+// The "studying right now" live-presence line has been removed from the
+// home screen per product decision - keep this card focused on the total.
+// Counting is scroll-triggered rather than firing on mount: the card sits
+// at 0 until it's actually scrolled into view (IntersectionObserver), then
+// counts up slowly so the user gets to watch it land instead of missing it
+// while still scrolling. Renders nothing until the real total is in (no
+// flashing a fake number first).
 function CommunityPulseCard({ app }) {
   const [total, setTotal] = useState(null);
   const [display, setDisplay] = useState(0);
+  const [inView, setInView] = useState(false);
+  const ref = useRef(null);
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -11283,8 +11295,20 @@ function CommunityPulseCard({ app }) {
     return () => { cancelled = true; };
   }, []);
   useEffect(() => {
-    if (total == null) return;
-    const dur = 1100, start = performance.now();
+    if (!ref.current || inView) return;
+    const el = ref.current;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0] && entries[0].isIntersecting) setInView(true);
+      },
+      { threshold: 0.4 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [inView]);
+  useEffect(() => {
+    if (total == null || !inView) return;
+    const dur = 2600, start = performance.now();
     let raf;
     const tick = (t) => {
       const p = Math.min(1, (t - start) / dur);
@@ -11294,21 +11318,14 @@ function CommunityPulseCard({ app }) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [total]);
-  const online = app.onlineKeys ? app.onlineKeys.size : 0;
+  }, [total, inView]);
   if (total == null || total < 1) return null;
   return (
-    <div className="card card-feature" style={{ marginTop: 16, textAlign: "center", position: "relative", overflow: "hidden" }}>
+    <div ref={ref} className="card card-feature" style={{ marginTop: 16, textAlign: "center", position: "relative", overflow: "hidden" }}>
       <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 0%, var(--amber-dim), transparent 70%)", pointerEvents: "none" }} />
       <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 6 }}>Community</div>
       <div className="mono" style={{ fontSize: "clamp(28px,6vw,38px)", fontWeight: 800, color: "var(--text)" }}>{display}+</div>
       <div style={{ color: "var(--text-2)", fontSize: 14, marginTop: 4 }}>students climbing together on ASCEND</div>
-      {online > 0 && (
-        <div style={{ marginTop: 10, display: "inline-flex", alignItems: "center", gap: 6, color: "var(--good)", fontSize: 12.5, fontWeight: 600 }}>
-          <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--good)", animation: "notifPulse 1.8s ease-in-out infinite" }} />
-          {online} studying right now
-        </div>
-      )}
     </div>
   );
 }
@@ -11750,7 +11767,7 @@ function AskAIView({ app }) {
     ? "Their courses this semester: " + myCourses.map((c) => c.name + " (" + c.code + ")").join(", ") + "."
     : "";
   const system =
-    "You are ASCEND AI, a friendly and rigorous study assistant for Medical Laboratory Science students at KNUST in Ghana. " +
+    "You are ASCEND AI, a friendly and rigorous study assistant for Medical Laboratory Science students. " +
     "Answer questions on any course, concept, exam technique, or study planning. Teach the WHY and the mechanism, step by step, in clear plain language, and keep answers focused. " +
     "Ask a short follow-up question when the request is too vague to answer well. No emojis. " +
     "Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. " +
@@ -11861,7 +11878,7 @@ function AskAIView({ app }) {
           </button>
         </div>
       </div>
-      <div className="askai-note">ASCEND AI can make mistakes - check important facts against your lecture notes.</div>
+      <div className="askai-note">ASCEND AI can make mistakes - check important facts against your study materials.</div>
     </div>
   );
 }
@@ -12162,7 +12179,7 @@ function HomeView({ app }) {
         <button className="card hover" style={{ textAlign: "left" }} onClick={() => app.go("resources")}>
           <div className="eyebrow" style={{ color: "var(--amber)" }}>Resources</div>
           <div style={{ fontWeight: 700, fontSize: 16, margin: "6px 0 2px" }}>Bring your own notes</div>
-          <div style={{ color: "var(--text-2)", fontSize: 14 }}>Turn any lecture material into a Socratic lesson.</div>
+          <div style={{ color: "var(--text-2)", fontSize: 14 }}>Turn any study material into a Socratic lesson.</div>
         </button>
       </div>
       <div className="eyebrow" style={{ margin: "26px 0 12px" }}>Jump back in</div>
@@ -13066,7 +13083,7 @@ function PlanView({ app }) {
           </svg>
           <div>
             <p style={{ color: "var(--text)", fontSize: 14, margin: 0, lineHeight: 1.7 }}>
-              <strong style={{ color: "var(--amber)" }}>How CWA works at KNUST:</strong><br />
+              <strong style={{ color: "var(--amber)" }}>How CWA works:</strong><br />
               Your CWA is your <strong>cumulative weighted average</strong> across all courses you've taken. 
               Each course has <strong>credit hours</strong> (e.g., Anatomy = 3 credits). 
               Your grade in a course is weighted by its credits to calculate your CWA.
@@ -13079,13 +13096,13 @@ function PlanView({ app }) {
       </div>
       
       <p style={{ color: "var(--text-2)", marginTop: 8, maxWidth: "60ch" }}>
-        Enter your current CWA from AIM, your target, and see exactly what you need to score this semester.
+        Enter your current CWA, your target, and see exactly what you need to score this semester.
       </p>
       
       <div className="card" style={{ marginTop: 16 }}>
         <div className="eyebrow" style={{ marginBottom: 12 }}>Where you stand</div>
         <div className="plan-row">
-          <label className="field"><span>Current CWA (from AIM)</span>
+          <label className="field"><span>Current CWA</span>
             <input className="plan-in" inputMode="decimal" value={prevCWA} onChange={(e) => setPrevCWA(e.target.value)} placeholder="e.g. 78.10" />
           </label>
           <label className="field"><span>Credits completed so far</span>
@@ -13112,7 +13129,7 @@ function PlanView({ app }) {
             <path d="M2 12l10 5 10-5" />
           </svg>
           <p style={{ color: "var(--text-2)", fontSize: 13.5, margin: 0, lineHeight: 1.6, flex: 1 }}>
-            This course has no mid-sem or final exams - you just complete it on the KNUST student portal. Most students score between 90-100%. 
+            This course has no mid-sem or final exams - you just complete it on your school's student portal. Most students score between 90-100%. 
             Enter your expected score and ASCEND will include it in your calculations.
           </p>
         </div>
@@ -13333,7 +13350,7 @@ function PlanView({ app }) {
               CWA CLASSIFICATION REFERENCE
               ============================================================ */}
           <div className="card" style={{ marginTop: 12 }}>
-            <div className="eyebrow" style={{ marginBottom: 6 }}>KNUST CWA Classification</div>
+            <div className="eyebrow" style={{ marginBottom: 6 }}>CWA Classification</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4, fontSize: 13 }}>
               <div style={{ padding: "4px 8px", color: "var(--text-2)" }}>70.00 - 100.00</div>
               <div style={{ padding: "4px 8px", fontWeight: 700, color: "var(--good)" }}>First Class</div>
@@ -13439,7 +13456,7 @@ function LAMLAView({ app }) {
       timeGuidance = "The student has a bit more time. Cover the core high-yield facts plus the most important second-tier detail. 4 to 5 bullets per topic.";
     }
 
-    const prompt = `A KNUST medical laboratory science student is cramming for their ${course.name} (${course.code}) exam with ${hours} hours left. Preparation: "${prepOptions[prep]}". Goal: ${goal}. Format: ${examType}.
+    const prompt = `A medical laboratory science student is cramming for their ${course.name} (${course.code}) exam with ${hours} hours left. Preparation: "${prepOptions[prep]}". Goal: ${goal}. Format: ${examType}.
 Topics to cover: ${topicsToCover.join("; ")}.
 
 ${timeGuidance}
@@ -13451,7 +13468,7 @@ Return ONLY compact JSON, no markdown, no trailing commas, all strings short: {"
     let lastErr = "";
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
-        const res = await callClaude("You are LAMLA, an exam-cram assistant for KNUST medical laboratory science students. You give precise, memorisable facts - definitions, values, classifications, steps - never vague study advice. Return ONLY valid, compact, complete JSON. No emojis. Accuracy matters more than confidence: only state a specific number, value, or classification if you are sure it is correct - a vaguer but true statement beats a precise but wrong one.", [{ role: "user", content: prompt }], 6000);
+        const res = await callClaude("You are LAMLA, an exam-cram assistant for medical laboratory science students. You give precise, memorisable facts - definitions, values, classifications, steps - never vague study advice. Return ONLY valid, compact, complete JSON. No emojis. Accuracy matters more than confidence: only state a specific number, value, or classification if you are sure it is correct - a vaguer but true statement beats a precise but wrong one.", [{ role: "user", content: prompt }], 6000);
         const data = parseAIJson(res);
         if (!data || !Array.isArray(data.topics) || !data.topics.length) throw new Error("unexpected shape from AI");
         setPlan(data); setOffline(false); setStep("plan"); setBusy(false);
