@@ -2236,6 +2236,19 @@ const DAILY = {
   0: { courseId: "lab", q: "Standard precautions assume that:", o: ["Only sick patients are infectious", "All blood and body fluids are potentially infectious", "Gloves give full protection", "Handwashing is optional"], a: 1, w: "All blood and body fluids are potentially infectious." }
 };
 
+// Continuous day counter (days since the Unix epoch) used to rotate the
+// daily course through a student's FULL visible course list, not just a
+// 7-day cycle. jsDay (Date.getDay(), 0-6) only ever produces 7 distinct
+// values, so `visList[jsDay % visList.length]` silently never reached course
+// index 7+ for any semester with more than 7 courses - Level 100 Sem 1 has 8,
+// Level 200 Sem 1 has 11, so one or four courses respectively never came up
+// as a daily question. This counter advances by exactly 1 every real day
+// forever, so `visList[rotationDayIndex() % visList.length]` eventually
+// cycles through every course however many there are, while still landing on
+// the exact same course on the exact same weekday every week for any
+// 7-course semester (Level 100 Sem 2's rotation is unchanged by this).
+const rotationDayIndex = () => Math.floor(Date.now() / 86400000);
+
 /* ===================== DAILY CBT (5-question set) =====================
    DAILY above only maps each weekday to a course. The actual 5 questions
    are pulled live from that course's full topic syllabus (every topic's
@@ -6008,7 +6021,12 @@ function CoursesView({ app }) {
   // directly, so it stayed stuck on the wrong course even after HomeView's
   // own card got this fix - both needed it, not just one.
   const visList = visibleCoursesFor(app.progress);
-  const dayMeta = visList.length ? { courseId: visList[jsDay % visList.length].id } : DAILY[jsDay];
+  // Course selection uses rotationDayIndex() (keeps advancing every day,
+  // not just 0-6), so course lists longer than 7 - Level 100 Sem 1 (8) and
+  // Level 200 Sem 1 (11) - actually rotate through every course instead of
+  // getting stuck only ever showing the first 7. jsDay is still used below
+  // purely to label/highlight "today" in the Weekly rotation widget.
+  const dayMeta = visList.length ? { courseId: visList[rotationDayIndex() % visList.length].id } : DAILY[jsDay];
   const c = courseById(dayMeta.courseId);
   const tk = todayKey();
   const alreadyDone = app.progress?.dailyDone?.[tk] || false;
@@ -6165,7 +6183,13 @@ function CoursesView({ app }) {
             // read the hardcoded Level 100 Sem 2 DAILY map directly, so it
             // kept showing that old schedule even for students whose daily
             // questions were already correctly on their own level's courses.
-            const wdCourse = visList.length ? courseById(visList[wd % visList.length].id) : courseById(DAILY[wd].courseId);
+            // wd is just a weekday LABEL here - the course itself has to come
+            // from that weekday's own rotationDayIndex (today's index, offset
+            // by how many days away that weekday is), not from wd directly.
+            // Using wd as the list index (old code) silently capped every
+            // course list at 7 entries, same bug as DailyView above.
+            const wdOffset = (wd - jsDay + 7) % 7;
+            const wdCourse = visList.length ? courseById(visList[(rotationDayIndex() + wdOffset) % visList.length].id) : courseById(DAILY[wd].courseId);
             return (
               <div key={wd} style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5, padding: "5px 2px", color: wd === jsDay ? "var(--amber-2)" : "var(--text-2)", fontWeight: wd === jsDay ? 650 : 500 }}>
                 <span className="mono" style={{ color: wd === jsDay ? "var(--amber)" : "var(--text-3)" }}>{["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][wd]}</span>
@@ -11750,7 +11774,12 @@ function HomeView({ app }) {
   // map hardcoded to Level 100 Sem 2 course ids regardless of what level/
   // semester is actually selected.
   const visList = visibleCoursesFor(app.progress);
-  const dailyCourseId = visList.length ? visList[jsDay % visList.length].id : DAILY[jsDay].courseId;
+  // rotationDayIndex() (not jsDay) so lists longer than 7 courses - Level
+  // 100 Sem 1 (8) and Level 200 Sem 1 (11) - actually rotate through every
+  // course instead of only ever reaching the first 7. Must match DailyView's
+  // rotation exactly, or Home and the Daily tab would show two different
+  // "today" courses.
+  const dailyCourseId = visList.length ? visList[rotationDayIndex() % visList.length].id : DAILY[jsDay].courseId;
   const todayCourse = courseById(dailyCourseId) || courseById(DAILY[jsDay].courseId);
   const tk = todayKey();
   const doneToday = app.progress.dailyDone?.[tk];
