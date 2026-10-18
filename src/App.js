@@ -6152,7 +6152,7 @@ function CoursesView({ app }) {
 
   const finish = () => {
     setFinished(true);
-    if (!alreadyDone) app.recordDaily(correctCount, questions.length);
+    if (!alreadyDone) app.recordDaily(correctCount, questions.length, { courseCode: c.code, title: c.name });
   };
 
   return (
@@ -8727,7 +8727,7 @@ const PAST_PAPERS = [
       { q: "Editing, proofreading and reviewing are part of which point in time of the non-linear method to writing?", o: ["Revision.", "Post-writing.", "Writing.", "Prewriting."], a: 1, w: "As with the earlier items on this topic, editing, proofreading and reviewing all belong to the post-writing point in the non-linear method." },
       { q: "The tutor counselled the participants that feedback is required in the communication circle because it ...........", o: ["creates an opportunity for the receiver to ask more questions.", "enables the sender to know that the message has been received.", "makes the source send another message.", "assures the receiver that the message has been well-received."], a: 1, w: "Feedback's core function in the communication cycle is to enable the sender to confirm that the message has actually been received (closing the loop), not primarily to prompt more questions or reassure the receiver." },
       { q: "Writing is not a linear activity. Which of the underlisted situations explains this?", o: ["After writing and reading a first draft, Kwame decides to restructure his project report.", "Kwame finds new information that could change his findings, and puts it in his conclusion.", "The working title that Kwame came up with is the same title he used in his final report.", "After writing an outline, Kwame writes his report and sends it for grading."], a: 1, w: "As with the earlier version of this item, discovering new information partway through and reworking the conclusion demonstrates the recursive, non-linear nature of writing." },
-      { q: "An alumnus of KNUST has a laptop with the logo of the university to show an allegiance. This constitutes the use of ........... to communicate.", o: ["objectics.", "proxemics.", "chronemics.", "haptics."], a: 0, w: "Communicating identity or allegiance through objects/possessions (like a branded laptop) is objectics (object language) - the use of material things as non-verbal communication." },
+      { q: "A university alumnus has a laptop with the logo of his alma mater to show an allegiance. This constitutes the use of ........... to communicate.", o: ["objectics.", "proxemics.", "chronemics.", "haptics."], a: 0, w: "Communicating identity or allegiance through objects/possessions (like a branded laptop) is objectics (object language) - the use of material things as non-verbal communication." },
       { q: "The following are principles for editing EXCEPT ........... (repeat item)", o: ["editing in several short blocks of time.", "finding a suitable place.", "finding a medium that allows you to edit carefully.", "editing all at once."], a: 3, w: "As above, editing all at once contradicts the recommended practice of editing in short, careful blocks of time." },
       { q: "Academics recommend that a writer should not focus on grammar at the writing phase because that will make the writer lose ...........", o: ["interest in the work.", "the flow of thought.", "some relevant expressions.", "his/her concentration."], a: 1, w: "As with the related item above, an early focus on grammar breaks the writer's flow of thought during drafting." },
       { q: "You have been selected to deliver a speech on a topic of your own. After you have spontaneously collected a record of ideas on your determined topic, what follows? (repeat item)", o: ["Cluster.", "Draft.", "Brainstorm.", "Outline."], a: 0, w: "As above, the step immediately following spontaneous idea-collection is clustering the ideas into related groups." },
@@ -8764,12 +8764,12 @@ const PAST_PAPERS = [
       { q: "A good personal profile on a CV must simply answer the following questions EXCEPT:", o: ["Who are you?", "What skills do you possess?", "Why you?", "How did you acquire your skills?"], a: 2, w: "A personal profile answers who you are, what skills you have and how you acquired them; \"Why you?\" is a selling/pitch question, not one the profile itself sets out to answer." },
       { q: "In the relative clause \"…viruses which includes procrastination, laziness…\", which statement is true?", o: ["The relative pronoun \"which\" should be \"who\"", "The clause needs no correction", "The verb \"includes\" should be \"include\"", "The verb \"include\" is correct as it is"], a: 2, w: "The antecedent \"viruses\" is plural, so the verb must agree as \"include\", not \"includes\"." },
       { q: "The Headmistress explained that the dyadic (linear) form of interpersonal communication could be in the form of:", o: ["presidential speeches", "questions and answers", "sermon delivery", "radio announcements"], a: 1, w: "Dyadic/linear interpersonal communication is two-way between individuals - a question-and-answer exchange. Speeches, sermons and announcements are one-way." },
-      { q: "Richard Mireku was admitted to KNUST to read a four-year BA English programme and now wants to submit a CV for a part-time teaching job. Most appropriately, the heading of Mireku's CV should be:", o: ["curriculum vitae", "the position he is applying for", "the institution he is applying to", "his full name"], a: 0, w: "A CV is conventionally headed \"Curriculum Vitae\" (or the applicant's name); not the post or institution." },
+      { q: "Richard Mireku was admitted to university to read a four-year BA English programme and now wants to submit a CV for a part-time teaching job. Most appropriately, the heading of Mireku's CV should be:", o: ["curriculum vitae", "the position he is applying for", "the institution he is applying to", "his full name"], a: 0, w: "A CV is conventionally headed \"Curriculum Vitae\" (or the applicant's name); not the post or institution." },
       { q: "The usefulness of the given organogram (organizational chart) is realized in organizational … communications.", o: ["international", "historical", "external", "internal"], a: 3, w: "An organogram maps reporting lines and channels inside the organization, so it serves internal communication." },
       { q: "As an item of bio-data presented on a CV, Yayra is expected to write the following EXCEPT:", o: ["references", "contacts", "languages spoken", "e-mail address"], a: 2, w: "Bio-data (personal particulars) covers contacts, e-mail and references; \"languages spoken\" belongs under skills/competencies, not bio-data." },
       { q: "According to the teacher, a message is congenial when it is …", o: ["pleasant to the sender", "pleasant to the receiver", "accessible to the sender", "accessible to the receiver"], a: 1, w: "Congeniality is about the message being agreeable/pleasant to the receiver (audience)." },
       { q: "In \"…emphasis were placed on what they can do…\", how should the subject-verb agreement be corrected?", o: ["Maintain both \"emphasis\" and \"were\"", "Change \"emphasis\" to \"emphasises\" and maintain \"were\"", "Change \"emphasis\" to \"emphases\" to suit \"were\"", "Change \"emphasis\" to \"emphases\" and change \"were\" to \"was\""], a: 2, w: "\"Emphasis\" is singular and clashes with \"were\". Making the noun plural - \"emphases were placed\" - restores agreement." },
-      { q: "Anthony Lamptey was admitted to KNUST in 2022 to read a four-year BA English programme and is in semester two. Which information best represents Lamptey's university education on his CV?", o: ["2022-Expected Date, BA English, KNUST", "First Year, BA English, KNUST", "2022-Date, BA English, KNUST", "2022-2026, BA English, KNUST"], a: 2, w: "For an ongoing programme you write the start year to \"Date\" (present) - \"2022-Date, BA English, KNUST\"." },
+      { q: "Anthony Lamptey was admitted to university in 2022 to read a four-year BA English programme and is in semester two. Which information best represents Lamptey's university education on his CV?", o: ["2022-Expected Date, BA English, University", "First Year, BA English, University", "2022-Date, BA English, University", "2022-2026, BA English, University"], a: 2, w: "For an ongoing programme you write the start year to \"Date\" (present) - \"2022-Date, BA English, University\"." },
       { q: "Which sequence correctly represents the activities in the prewriting stage?", o: ["Topic selection, audience analysis, outlining, brainstorming, clustering", "Audience analysis, topic selection, brainstorming, outlining, clustering", "Audience analysis, topic selection, brainstorming, clustering, outlining", "Topic selection, audience analysis, clustering, brainstorming, outlining"], a: 2, w: "Prewriting runs: analyse the audience, select the topic, brainstorm ideas, cluster them into groups, then outline." },
       { q: "\"He came into the room to shut the windows … He was shivering, his face was white, and he walked slowly as though it ached to move. 'What's the matter, Schatz?'\" (A Day's Wait, Ernest Hemingway). The communication between the participants in the excerpt above is best described as …", o: ["intimate", "superficial", "brief", "monotonous"], a: 2, w: "The sick boy answers in short, clipped exchanges, so the communication is brief/limited." },
       { q: "Anthony Awuah, a first-year with no job experience, is invited for a part-time teaching interview. He may appropriately attend with copies of the following documents EXCEPT:", o: ["his admission letter", "his BA certificate", "his transcript", "an attestation letter"], a: 1, w: "As a first-year, Awuah has not yet earned a BA certificate, so he cannot present one." },
@@ -8799,7 +8799,7 @@ const PAST_PAPERS = [
       { q: "During their group discussion, the facilitators reasoned that … exemplifies external communication.", o: ["team meeting", "sales report", "customer email inquiry", "performance appraisal"], a: 2, w: "External communication is with parties outside the organization - a customer email inquiry. The others are internal." },
       { q: "What interview type is used to assess the performance of senior members?", o: ["promotion", "stress", "behavioural", "appraisal"], a: 3, w: "An interview held to assess how well someone has performed is an appraisal (performance-appraisal) interview." },
       { q: "Blay is to prepare a presentation on Effective Learning Skills. Indicate the LEAST accurate statement about visual aids in oral presentation.", o: ["Visual aids enhance time management", "Visual aids emphasize and clarify main points", "Visual aids tend to lengthen oral presentations", "Visual aids improve comprehension and retention"], a: 2, w: "Well-used visual aids save time and sharpen a talk; claiming they \"tend to lengthen\" presentations is the least accurate statement." },
-      { q: "The Professor said, \"One of the aforementioned titles best fits minutes.\" Which is it?", o: ["Minutes of the 2nd General Meeting of KNUST Optometry Students Held at the Great Hall, KNUST, on 3rd August, 2022", "Minutes of the 10th Executive Board Meeting of KNUST SRC Held at the Great Hall, KNUST, on 20th June, 2022 to Discuss Students' Welfare", "Minutes of the 2nd Meeting on 19th May, 2022 at Accra", "Minutes of the 21st AGM of The Board of Directors"], a: 1, w: "A well-formed minutes title names the meeting, the body, the venue, the date and the purpose - option B carries all of these." },
+      { q: "The Professor said, \"One of the aforementioned titles best fits minutes.\" Which is it?", o: ["Minutes of the 2nd General Meeting of Optometry Students Held at the Main Hall, University, on 3rd August, 2022", "Minutes of the 10th Executive Board Meeting of the SRC Held at the Main Hall, University, on 20th June, 2022 to Discuss Students' Welfare", "Minutes of the 2nd Meeting on 19th May, 2022 at Accra", "Minutes of the 21st AGM of The Board of Directors"], a: 1, w: "A well-formed minutes title names the meeting, the body, the venue, the date and the purpose - option B carries all of these." },
       { q: "Bernard Onumah, a first-year with no job experience, wants to submit a CV for a part-time teaching job. Which personality is NOT expected to be used by Onumah as a referee?", o: ["His former SHS mate and lecturer", "His friend and lecturer", "His pastor and lecturer", "His father and lecturer"], a: 0, w: "A referee should be someone who supervised or taught you in an authoritative capacity. A former SHS mate, though now a lecturer, was Onumah's peer, so is least appropriate." },
       { q: "In J&H Company Limited the quorum is 60% of the total Board of Directors. The minimum number required to hold a legitimate meeting is technically called the …", o: ["quotient", "query", "quorum", "quota"], a: 2, w: "The minimum number that must be present for a meeting to be valid is the quorum." },
       { q: "In J&H Company Limited the directors are 20; in the meeting the attendees were 40 with 11 directors. How many Board of Directors were absent from the meeting?", o: ["29", "11", "9", "20"], a: 2, w: "20 directors minus the 11 present equals 9 directors absent (the other 29 attendees were non-directors)." },
@@ -13256,7 +13256,7 @@ function PlanView({ app }) {
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Reverse-engineer your target</h1>
       
       {/* ============================================================
-          KNUST-SPECIFIC EXPLANATION - NO EMOJIS
+          CWA EXPLANATION - NO EMOJIS
           ============================================================ */}
       <div className="card" style={{ 
         marginTop: 12, 
@@ -15593,9 +15593,18 @@ export default function App() {
     return () => clearTimeout(timer);
   }, [route, auth]);
   
-  const recordDaily = (correctCount, total) => {
+  const recordDaily = (correctCount, total, meta) => {
     const tk = todayKey();
     if (progress.dailyDone?.[tk]) return;
+    // Daily CBT attempts feed the same passcoScores bucket Passco writes
+    // to (different key prefix, same shape) - WeakTopicCard on the home
+    // screen reads every entry in it regardless of source, so daily
+    // scores now count toward "what are you actually weak in" too.
+    const dailyPct = total > 0 ? Math.round((correctCount / total) * 100) : undefined;
+    const prevScores = progress.passcoScores || {};
+    const passcoScores = meta && meta.courseCode && dailyPct !== undefined
+      ? { ...prevScores, [`daily_${tk}`]: { pct: dailyPct, correct: correctCount, total, at: Date.now(), courseCode: meta.courseCode, title: meta.title } }
+      : prevScores;
     // Trust the calendar (dailyDone), not just the lastActive field, to decide
     // whether the streak continues - and to recover the true count if the
     // streak/lastActive fields ever drift out of sync with the calendar
@@ -15659,6 +15668,7 @@ export default function App() {
       dailyDone: { ...progress.dailyDone, [tk]: true },
       frozenDays: newFrozenDays,
       streakFreezes: freezesLeft,
+      passcoScores,
     });
 
     // Opt-in duo streak: mark today done on whichever side of the pair this
@@ -15695,6 +15705,14 @@ export default function App() {
     const prevScores = progress.scores || {};
     const bestPrev = prevScores[tkey] || 0;
     const scores = { ...prevScores, [tkey]: Math.max(bestPrev, pct) };
+    // Lesson/AI-practice quizzes feed the same shared passcoScores bucket
+    // as Passco and Daily CBT, keyed by tkey, so WeakTopicCard sees every
+    // kind of practice a student does, not just past papers.
+    const quizCourse = courseById(cid);
+    const prevPassco = progress.passcoScores || {};
+    const passcoScores = total > 0 && quizCourse
+      ? { ...prevPassco, [`quiz_${tkey}`]: { pct, correct, total, at: Date.now(), courseCode: quizCourse.code, title: quizCourse.name } }
+      : prevPassco;
     
     const newXp = progress.xp + gained;
     
@@ -15718,7 +15736,8 @@ export default function App() {
       xp: newXp, 
       completed: { ...progress.completed, [tkey]: true }, 
       review: merged, 
-      scores 
+      scores,
+      passcoScores
     });
   };
 
