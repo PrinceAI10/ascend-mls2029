@@ -1981,6 +1981,13 @@ function visibleCoursesFor(progress) {
    publishes that year's Sem1->Sem2 "Students Depart" date - same yearly
    upkeep ACADEMIC_CALENDAR already requires. */
 const SEMESTER_BOUNDARIES = [
+  // New semester start, Oct 19 2026 - every student's CURRENT streak (not
+  // lifetimeStreak, not xp) resets to 0 the first time they open the app on
+  // or after this date; their old streak is banked into lifetimeStreak first
+  // (see closeSemesterIfNeeded), so it keeps building up even though the
+  // semester's own count starts over. `forYear: 2026` scopes it to the
+  // 2026/2027 academic-year window (same reasoning as the S2 entry below).
+  { date: "2026-10-19", forYear: 2026, key: "S1" },
   // First Semester 2026/2027 "Students Depart" (confirmed, KNUST calendar
   // item 1.21) -> Second Semester begins. `forYear: 2026` ties this to the
   // 2026/2027 academic-year window specifically (the window ACADEMIC_CALENDAR
@@ -2847,7 +2854,17 @@ const db = {
           toSave = {
             ...progress,
             xp: Math.max(progress.xp || 0, existing.xp || 0),
-            streak: incomingHasToday
+            // progress.forceStreak marks a genuine system-triggered reset
+            // (currently just closeSemesterIfNeeded zeroing the streak for a
+            // new semester) - without this, the floor below would always
+            // win (it takes whichever of incoming/existing is HIGHER), so
+            // the reset would get silently overwritten right back up to the
+            // old semester's number on the very next cloud sync, and the
+            // student's streak would look like it "stopped counting" at the
+            // old value forever. A forced reset still never goes negative.
+            streak: progress.forceStreak
+              ? Math.max(0, progress.streak || 0)
+              : incomingHasToday
               ? Math.max(calendarStreak, existing.streak || 0)
               : Math.max(progress.streak || 0, existing.streak || 0),
             dailyDone: mergedDailyDone,
@@ -2894,6 +2911,7 @@ const db = {
           }
         }
       } catch {} // if this safety read fails, fall through and save the payload as-is (unchanged behaviour)
+      if (toSave.forceStreak) { toSave = { ...toSave }; delete toSave.forceStreak; } // transient, one save only
       const r1 = await supabase.from("progress").upsert({ id: uid, data: toSave, updated_at: new Date().toISOString() });
       if (r1.error) console.error("saveProgress: progress upsert failed:", r1.error.message);
       const r2 = await supabase.from("profiles").upsert({
@@ -14499,8 +14517,16 @@ export default function App() {
       }
       const { closed, ...clean } = next;
       if (JSON.stringify(clean) === JSON.stringify(cur)) return cur;
-      if (supaUid) db.saveProgress(supaUid, clean);
-      else if (auth) { store.set(progKey(auth.username), clean); db.saveProgress(localSynthId(clean.name), clean); }
+      // forceStreak tells saveProgress this streak=0 is a deliberate reset,
+      // not a stale/blank payload - otherwise its "streak never goes down"
+      // safety net would take the max against the old (higher) cloud value
+      // and silently restore the just-closed semester's streak right back,
+      // making the reset look like it never happened. It's transient - only
+      // sent to saveProgress, which strips it before persisting; the local
+      // `clean` object kept in app state and local storage never has it.
+      const forSave = { ...clean, forceStreak: next.closed ? true : undefined };
+      if (supaUid) db.saveProgress(supaUid, forSave);
+      else if (auth) { store.set(progKey(auth.username), clean); db.saveProgress(localSynthId(clean.name), forSave); }
       return clean;
     });
   };
