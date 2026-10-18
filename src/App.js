@@ -12885,7 +12885,8 @@ function PlanView({ app }) {
   const [target, setTarget] = useState("");
   const [aiScore, setAiScore] = useState("95");
   const [counts, setCounts] = useState(() => Object.fromEntries(planCourses.map((c) => [c.id, { mid: "80", fin: "200" }])));
-  const AI_CR = 2;
+  const isL100S2 = !!(app && app.progress && app.progress.level === 100 && app.progress.semester === 2);
+  const AI_CR = isL100S2 ? 2 : 0;
   // If the student's level/semester changes (e.g. they open the level
   // picker), re-seed thisCr and the per-course counts to match the new
   // course list rather than silently keeping stale ones.
@@ -12967,6 +12968,7 @@ function PlanView({ app }) {
         </div>
       </div>
       
+      {isL100S2 && (
       <div className="card" style={{ marginTop: 12 }}>
         <div className="eyebrow" style={{ marginBottom: 8 }}>AI for Learning (2 credits, self-paced)</div>
         <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
@@ -12985,6 +12987,7 @@ function PlanView({ app }) {
           <input className="plan-in" inputMode="decimal" value={aiScore} onChange={(e) => setAiScore(e.target.value)} placeholder="e.g. 95" />
         </label>
       </div>
+      )}
       
       {!valid && (
         <div className="card" style={{ marginTop: 14, color: "var(--text-2)", fontSize: 14 }}>
@@ -13052,10 +13055,12 @@ function PlanView({ app }) {
                 Your current weighted marks = 
                 <br /><strong style={{ color: "var(--text)" }}>{pc} × {pcr} = {prevWeighted.toFixed(1)}</strong>
               </div>
+              {isL100S2 && (
               <div style={{ color: "var(--text-2)" }}>
                 AI course predicted marks = 
                 <br /><strong style={{ color: "var(--text)" }}>{aiVal} × {AI_CR} = {aiWeighted.toFixed(1)}</strong>
               </div>
+              )}
               <div style={{ color: "var(--text-2)" }}>
                 Remaining marks needed = 
                 <br /><strong style={{ color: "var(--amber-2)" }}>{neededExams.toFixed(1)}</strong> from exam courses
