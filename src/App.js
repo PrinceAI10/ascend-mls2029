@@ -11295,6 +11295,9 @@ function CommunityPulseCard({ app }) {
     return () => { cancelled = true; };
   }, []);
   useEffect(() => {
+    // total starts null, so the card returns null below and ref.current
+    // isn't attached yet on first run - total is in the deps so this
+    // effect re-fires once the card actually mounts into the DOM.
     if (!ref.current || inView) return;
     const el = ref.current;
     const io = new IntersectionObserver(
@@ -11305,7 +11308,7 @@ function CommunityPulseCard({ app }) {
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [inView]);
+  }, [inView, total]);
   useEffect(() => {
     if (total == null || !inView) return;
     const dur = 2600, start = performance.now();
@@ -11321,9 +11324,9 @@ function CommunityPulseCard({ app }) {
   }, [total, inView]);
   if (total == null || total < 1) return null;
   return (
-    <div ref={ref} className="card card-feature" style={{ marginTop: 16, textAlign: "center", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 0%, var(--amber-dim), transparent 70%)", pointerEvents: "none" }} />
-      <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 6 }}>Community</div>
+    <div ref={ref} className="card card-feature" style={{ marginTop: 16, textAlign: "center", position: "relative", overflow: "hidden", borderColor: "var(--rose-dim)" }}>
+      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 0%, var(--rose-dim), transparent 70%)", pointerEvents: "none" }} />
+      <div className="eyebrow" style={{ color: "var(--rose)", marginBottom: 6 }}>Community</div>
       <div className="mono" style={{ fontSize: "clamp(28px,6vw,38px)", fontWeight: 800, color: "var(--text)" }}>{display}+</div>
       <div style={{ color: "var(--text-2)", fontSize: 14, marginTop: 4 }}>students climbing together on ASCEND</div>
     </div>
@@ -12090,21 +12093,21 @@ function HomeView({ app }) {
             every button a fixed minHeight tall enough for icon + 2 lines of
             label, and switching to overflow:visible, means the label always
             has room regardless of which text size is active. */}
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={() => resumeTopic && resumeCourse ? app.go("topic", { courseId: resumeTopic.courseId, topicId: resumeTopic.topicIndex }) : app.go("courses")}>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--teal)" }} onClick={() => resumeTopic && resumeCourse ? app.go("topic", { courseId: resumeTopic.courseId, topicId: resumeTopic.topicIndex }) : app.go("courses")}>
           <Ic.target p={20} />
-          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word" }}>Continue</div>
+          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word", color: "var(--text)" }}>Continue</div>
         </button>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={() => app.go("daily")}>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--violet)" }} onClick={() => app.go("daily")}>
           <Ic.flame p={20} />
-          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word" }}>Daily question</div>
+          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word", color: "var(--text)" }}>Daily question</div>
         </button>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={() => app.go("papers")}>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--violet)" }} onClick={() => app.go("papers")}>
           <Ic.file p={20} />
-          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word" }}>Passco</div>
+          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word", color: "var(--text)" }}>Passco</div>
         </button>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={() => app.go("ranks")}>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--rose)" }} onClick={() => app.go("ranks")}>
           <Ic.trophy p={20} />
-          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word" }}>Ranks</div>
+          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word", color: "var(--text)" }}>Ranks</div>
         </button>
       </div>
 
