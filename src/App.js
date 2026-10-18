@@ -10448,7 +10448,7 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
     awardedRef.current = true;
     try { sessionStorage.setItem(doneFlagKey, "true"); } catch {}
     if (app && typeof app.setPasscoXp === "function") {
-      app.setPasscoXp(correctCount * 5, setKey, correctCount, questions.length);
+      app.setPasscoXp(correctCount * 5, setKey, correctCount, questions.length, { courseCode: paper.courseCode, title: paper.title });
     }
     if (app && typeof app.addMissedToReview === "function") {
       const missed = questions
@@ -10927,10 +10927,78 @@ function ResourcesView() {
 }
 
 // ============================================================
+// ---- Spaced repetition (SM-2 lite) for generated flashcards ----
+// Cards persist in localStorage across sessions, independent of whatever
+// topic/notes the user generated them from in a given visit, so "Review"
+// always shows what's actually due today regardless of which deck it
+// came from originally.
+const SR_KEY = "ascend_sr_deck";
+function srHash(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) | 0; }
+  return String(h);
+}
+function srLoad() {
+  try { return JSON.parse(localStorage.getItem(SR_KEY) || "[]"); } catch { return []; }
+}
+function srSave(deck) {
+  try { localStorage.setItem(SR_KEY, JSON.stringify(deck)); } catch {}
+}
+// Adds freshly-generated cards into the persistent deck. Cards already
+// known (same subject+front) are left alone so re-generating a topic
+// doesn't reset progress on cards already in rotation.
+function srMergeNew(subject, cards) {
+  const deck = srLoad();
+  const existingIds = new Set(deck.map((c) => c.id));
+  const now = Date.now();
+  let added = 0;
+  cards.forEach((c) => {
+    const id = srHash(subject + "::" + c.front);
+    if (existingIds.has(id)) return;
+    deck.push({ id, subject, front: c.front, back: c.back, due: now, interval: 0, ease: 2.5, reps: 0 });
+    added++;
+  });
+  if (added) srSave(deck);
+  return deck;
+}
+function srDueCount(deck) {
+  const now = Date.now();
+  return (deck || []).filter((c) => c.due <= now).length;
+}
+// Simplified SM-2: rating is "again" | "hard" | "good" | "easy".
+function srRate(deck, id, rating) {
+  const now = Date.now();
+  const next = deck.map((c) => {
+    if (c.id !== id) return c;
+    let { ease, interval, reps } = c;
+    if (rating === "again") {
+      reps = 0; interval = 0; ease = Math.max(1.3, ease - 0.2);
+    } else if (rating === "hard") {
+      ease = Math.max(1.3, ease - 0.15);
+      interval = Math.max(1, Math.round((interval || 1) * 1.2));
+      reps += 1;
+    } else if (rating === "good") {
+      interval = reps === 0 ? 1 : Math.round(interval * ease);
+      reps += 1;
+    } else { // easy
+      ease = ease + 0.15;
+      interval = reps === 0 ? 2 : Math.round(interval * ease * 1.3);
+      reps += 1;
+    }
+    const due = rating === "again" ? now : now + interval * 86400000;
+    return { ...c, ease, interval, reps, due };
+  });
+  srSave(next);
+  return next;
+}
+
 // StudyToolsView - Fully Debugged
 // ============================================================
 function StudyToolsView({ app }) {
-  const [tab, setTab] = useState("cards");
+  // Opens straight on the Review tab when something's actually due, so the
+  // home screen's "N due" nudge lands you on the queue instead of the
+  // generator form you'd then have to navigate away from.
+  const [tab, setTab] = useState(() => (srDueCount(srLoad()) > 0 ? "review" : "cards"));
   // Was hardcoded to "ana" (a Level 100 Sem 2 course) - defaulted every
   // student, regardless of their actual level/semester, into generating
   // flashcards/mind maps against a course they may not even be able to see
@@ -10945,6 +11013,15 @@ function StudyToolsView({ app }) {
   const [err, setErr] = useState("");
   const [cards, setCards] = useState(null);
   const [flipped, setFlipped] = useState({});
+  const [srDeck, setSrDeck] = useState(() => srLoad());
+  const [srFlipped, setSrFlipped] = useState(false);
+  const srDue = useMemo(() => srDeck.filter((c) => c.due <= Date.now()), [srDeck]);
+  const rateCurrent = (rating) => {
+    if (!srDue.length) return;
+    const next = srRate(srDeck, srDue[0].id, rating);
+    setSrDeck(next);
+    setSrFlipped(false);
+  };
   const [map, setMap] = useState(null);
   const [flowCode, setFlowCode] = useState("");
   const [flowErr, setFlowErr] = useState("");
@@ -10994,6 +11071,7 @@ function StudyToolsView({ app }) {
       const clean = (Array.isArray(arr) ? arr : []).filter((x) => x && x.front && x.back);
       if (!clean.length) throw new Error("No cards came back - try again.");
       setCards(clean);
+      setSrDeck(srMergeNew(subject, clean));
     } catch (e) {
       const msg = e && e.message ? e.message : "The AI could not respond just now.";
       if (/\b429\b|rate[ -]?limit|\bbusy\b/i.test(msg)) {
@@ -11091,10 +11169,17 @@ function StudyToolsView({ app }) {
 
       <div className="tabs">
         <button className={"tab " + (tab === "cards" ? "on" : "")} onClick={() => { setTab("cards"); setErr(""); }}>Flashcards</button>
+        <button className={"tab " + (tab === "review" ? "on" : "")} style={{ position: "relative" }} onClick={() => { setTab("review"); setErr(""); setSrFlipped(false); }}>
+          Review
+          {srDue.length > 0 && (
+            <span className="mono" style={{ marginLeft: 6, fontSize: 10.5, fontWeight: 700, color: "var(--teal)", background: "var(--teal-dim)", borderRadius: 999, padding: "1px 6px" }}>{srDue.length}</span>
+          )}
+        </button>
         <button className={"tab " + (tab === "map" ? "on" : "")} onClick={() => { setTab("map"); setErr(""); }}>Mind map</button>
         <button className={"tab " + (tab === "flow" ? "on" : "")} onClick={() => { setTab("flow"); setErr(""); }}>Flow diagram</button>
       </div>
 
+      {tab !== "review" && (
       <div className="card" style={{ marginTop: 12 }}>
         <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
           <button className="btn btn-sm" style={{ background: source === "topic" ? "var(--amber)" : "var(--bg-3)", color: source === "topic" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setSource("topic")}>From a topic</button>
@@ -11127,9 +11212,43 @@ function StudyToolsView({ app }) {
             : <button className="btn btn-a" onClick={genFlow} disabled={busy}>{busy ? "Drawing your flow diagram..." : "Build flow diagram"} <Ic.ai p={16} /></button>}
         </div>
       </div>
+      )}
 
-      {err && <div className="card" style={{ marginTop: 14, borderColor: "var(--line-2)", color: "var(--text-2)", fontSize: 14 }}>{err}</div>}
-      {busy && <div className="card" style={{ marginTop: 14 }}><span className="dots"><span /><span /><span /></span></div>}
+      {tab === "review" && (
+        srDue.length === 0 ? (
+          <div className="card" style={{ marginTop: 14, textAlign: "center", padding: 28 }}>
+            <div style={{ color: "var(--teal)", fontWeight: 700, fontSize: 15 }}>Nothing due right now</div>
+            <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 6 }}>
+              {srDeck.length === 0
+                ? "Make a deck of flashcards on the Flashcards tab, and they'll show up here for spaced review."
+                : "Cards you've already reviewed will come back once their interval is up - check back later."}
+            </div>
+          </div>
+        ) : (
+          <div style={{ marginTop: 14 }}>
+            <div className="note-hint" style={{ marginBottom: 10 }}>{srDue.length} card{srDue.length === 1 ? "" : "s"} due · say the answer out loud before you flip</div>
+            <button
+              className="card"
+              style={{ minHeight: 160, width: "100%", textAlign: "left", display: "flex", flexDirection: "column", justifyContent: "center", cursor: "pointer", border: srFlipped ? "1px solid var(--teal)" : "1px solid var(--line)" }}
+              onClick={() => setSrFlipped((f) => !f)}
+            >
+              <div className="mono" style={{ fontSize: 10.5, color: srFlipped ? "var(--teal)" : "var(--text-3)", marginBottom: 10 }}>{srFlipped ? "ANSWER" : "TAP TO FLIP"}</div>
+              <div style={{ fontWeight: srFlipped ? 500 : 650, fontSize: 16, lineHeight: 1.5, color: srFlipped ? "var(--text-2)" : "var(--text)" }}>{srFlipped ? srDue[0].back : srDue[0].front}</div>
+            </button>
+            {srFlipped && (
+              <div className="grid" style={{ gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: 8, marginTop: 12 }}>
+                <button className="btn btn-sm" style={{ background: "var(--bad-dim)", color: "var(--bad)", border: "1px solid var(--bad)" }} onClick={() => rateCurrent("again")}>Again</button>
+                <button className="btn btn-sm" style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => rateCurrent("hard")}>Hard</button>
+                <button className="btn btn-sm" style={{ background: "var(--teal-dim)", color: "var(--teal)", border: "1px solid var(--teal)" }} onClick={() => rateCurrent("good")}>Good</button>
+                <button className="btn btn-sm" style={{ background: "var(--good-dim)", color: "var(--good)", border: "1px solid var(--good)" }} onClick={() => rateCurrent("easy")}>Easy</button>
+              </div>
+            )}
+          </div>
+        )
+      )}
+
+      {tab !== "review" && err && <div className="card" style={{ marginTop: 14, borderColor: "var(--line-2)", color: "var(--text-2)", fontSize: 14 }}>{err}</div>}
+      {tab !== "review" && busy && <div className="card" style={{ marginTop: 14 }}><span className="dots"><span /><span /><span /></span></div>}
 
       {!busy && !err && tab === "cards" && !cards && (
         <div className="card" style={{ marginTop: 14, color: "var(--text-2)", fontSize: 14 }}>No flashcards yet. Pick a topic or paste material above, then tap "Make flashcards".</div>
@@ -11280,6 +11399,62 @@ function motivationForToday() {
 // counts up slowly so the user gets to watch it land instead of missing it
 // while still scrolling. Renders nothing until the real total is in (no
 // flashing a fake number first).
+// Looks at passco attempt history (progress.passcoScores, each tagged with
+// courseCode by setPasscoXp) and surfaces whichever course the student is
+// actually weakest in, by average score - rather than leaving them to guess
+// what to review next. Renders nothing until there's enough data to be
+// useful (at least 2 scored attempts, and at least one course averaging
+// below a "shaky" threshold) so it never nags on a near-empty history.
+function WeakTopicCard({ app }) {
+  const scores = app.progress.passcoScores || {};
+  const entries = Object.values(scores).filter((s) => s && s.courseCode && typeof s.pct === "number");
+  if (entries.length < 2) return null;
+  const byCourse = {};
+  entries.forEach((s) => {
+    const k = s.courseCode;
+    if (!byCourse[k]) byCourse[k] = { sum: 0, n: 0, title: s.title };
+    byCourse[k].sum += s.pct;
+    byCourse[k].n += 1;
+  });
+  let weakest = null;
+  Object.keys(byCourse).forEach((k) => {
+    const avg = byCourse[k].sum / byCourse[k].n;
+    if (!weakest || avg < weakest.avg) weakest = { code: k, avg, title: byCourse[k].title };
+  });
+  if (!weakest || weakest.avg >= 65) return null;
+  return (
+    <div className="card" style={{ marginTop: 16, borderLeft: "3px solid var(--violet)", display: "flex", gap: 12, alignItems: "flex-start" }}>
+      <div style={{ flexShrink: 0, width: 34, height: 34, borderRadius: 10, background: "var(--violet-dim)", color: "var(--violet)", display: "flex", alignItems: "center", justifyContent: "center", marginTop: 2 }}><Ic.target p={18} /></div>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div className="eyebrow" style={{ color: "var(--violet)", marginBottom: 5 }}>Needs attention</div>
+        <div style={{ fontSize: 14.5, fontWeight: 600 }}>You're averaging {Math.round(weakest.avg)}% in {weakest.code}{weakest.title ? ` (${weakest.title})` : ""}</div>
+        <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 4 }}>Worth another round of practice questions here before your next exam.</div>
+        <button className="btn btn-sm" style={{ marginTop: 10, background: "var(--violet-dim)", color: "var(--violet)", border: "1px solid var(--violet)" }} onClick={() => app.go("papers")}>Practice {weakest.code}</button>
+      </div>
+    </div>
+  );
+}
+
+// Nudges the student toward their spaced-repetition queue when cards are
+// actually due, using the same persisted deck StudyToolsView's Review tab
+// reads from (see srLoad/srDueCount above StudyToolsView). Silent when
+// nothing's due - this is a reminder, not a permanent fixture.
+function ReviewDueCard({ app }) {
+  const [due, setDue] = useState(0);
+  useEffect(() => { setDue(srDueCount(srLoad())); }, []);
+  if (due < 1) return null;
+  return (
+    <div className="card" style={{ marginTop: 16, borderLeft: "3px solid var(--teal)", display: "flex", gap: 12, alignItems: "center" }}>
+      <div style={{ flexShrink: 0, width: 34, height: 34, borderRadius: 10, background: "var(--teal-dim)", color: "var(--teal)", display: "flex", alignItems: "center", justifyContent: "center" }}><Ic.book p={18} /></div>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontWeight: 650, fontSize: 14.5 }}>{due} flashcard{due === 1 ? "" : "s"} due for review</div>
+        <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 2 }}>A couple of minutes now beats relearning it from scratch later.</div>
+      </div>
+      <button className="btn btn-sm" style={{ flexShrink: 0, background: "var(--teal-dim)", color: "var(--teal)", border: "1px solid var(--teal)" }} onClick={() => app.go("tools")}>Review</button>
+    </div>
+  );
+}
+
 function CommunityPulseCard({ app }) {
   const [total, setTotal] = useState(null);
   const [display, setDisplay] = useState(0);
@@ -12118,6 +12293,10 @@ function HomeView({ app }) {
       </div>
 
       <div className="home-rise" style={{ animationDelay: "0.10s" }}><CommunityPulseCard app={app} /></div>
+
+      <div className="home-rise" style={{ animationDelay: "0.12s" }}><ReviewDueCard app={app} /></div>
+
+      <div className="home-rise" style={{ animationDelay: "0.14s" }}><WeakTopicCard app={app} /></div>
 
       <div className="home-rise" style={{ animationDelay: "0.15s" }}><DuoStreakCard app={app} /></div>
 
@@ -15682,7 +15861,7 @@ export default function App() {
   // setKey (optional) identifies which passco set this was (paper+range+mode) so
   // the score can be recorded and shown back on the picker as "last score: X%",
   // instead of only flashing on the results screen and then disappearing.
-  const setPasscoXp = (earnedXp, setKey, correctCount, totalCount) => {
+  const setPasscoXp = (earnedXp, setKey, correctCount, totalCount, meta) => {
     const key = `passco_${Date.now()}`;
     const awarded = sessionStorage.getItem('ascend_passco_' + key);
     if (awarded) return;
@@ -15692,8 +15871,10 @@ export default function App() {
     const newXp = progress.xp + gained;
     const prevPasscoScores = progress.passcoScores || {};
     const pct = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : undefined;
+    // courseCode/title (meta) let the home screen work out which course a
+    // student is weakest in, so it can nudge them toward it directly.
     const passcoScores = setKey && pct !== undefined
-      ? { ...prevPasscoScores, [setKey]: { pct, correct: correctCount, total: totalCount, at: Date.now() } }
+      ? { ...prevPasscoScores, [setKey]: { pct, correct: correctCount, total: totalCount, at: Date.now(), courseCode: meta && meta.courseCode, title: meta && meta.title } }
       : prevPasscoScores;
     const updated = { 
       ...progress, 
